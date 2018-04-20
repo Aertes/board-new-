@@ -97,7 +97,7 @@
       <table id="camTableAn" class="data-table" style="width:100%">
         <thead>
         <tr>
-          <th>Month</th>
+          <th>{{isMonth}}</th>
           <th>Period</th>
           <th>Channel</th>
           <th>Spending</th>
@@ -110,18 +110,19 @@
         </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in camTableAnData">
-            <td :rowSpan="0" >{{item.month}}</td>
-            <td >{{item.startDate}}-{{item.endDate}}</td>
-            <td >{{item.channel}}</td>
-            <td >{{item.spending | formatThousands }}</td>
-            <td >{{item.impression | formatThousands }}</td>
-            <td >{{item.click | formatThousands }}</td>
-            <td >{{item.ctr | percentile }}</td>
-            <td >{{item.leads | formatThousands }}</td>
-            <td >{{item.costLead | round }}</td>
-            <td >{{item.conversionRate | percentile }}</td>
-          </tr>
+        <tr v-for="(item, index) in camTableAnData">
+          <td :rowspan="item.monthspan" :class="{hidden: item.monthdis}" v-if="item.type == 'month'">{{item.month}}</td>
+          <td :rowspan="item.weekspan" :class="{hidden: item.weekdis}" v-else="item.type == 'week'">{{item.week}}</td>
+          <td :rowspan="item.endDatespan" :class="{hidden: item.endDatedis}">{{item.startDate}}-{{item.endDate}}</td>
+          <td >{{item.channel}}</td>
+          <td >{{item.spending | formatThousands }}</td>
+          <td >{{item.impression | formatThousands }}</td>
+          <td >{{item.click | formatThousands }}</td>
+          <td >{{item.ctr | percentile }}</td>
+          <td >{{item.leads | formatThousands }}</td>
+          <td >{{item.costLead | round }}</td>
+          <td >{{item.conversionRate | percentile }}</td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -147,24 +148,11 @@
         AnTableSearch: {
           campaign: "MG-Mini cleanser launch campaign-2018Q1",
           category: "MG",
+          // campaign: "SEA Campaign",
+          // category: "KA",
           isDetailTable: true,
         },
-        monthIndex: {
-          Jan:0,
-          Feb:0,
-          Mar:0,
-          Apr:0,
-          May:0,
-          Jun:0,
-          Jul:0,
-          Aug:0,
-          Sept:0,
-          Oct:0,
-          Nov:0,
-          Dec:0,
-        },
-        timeIndex: [],
-        weekIndex:0,
+        isMonth:''
       }
     },
     mounted() {
@@ -252,86 +240,34 @@
         }).catch(err => console.log(err))
       },
 
-      // combineCell(list){
-      //   let field;
-      //   for (field in list) {
-      //     var k = 0;
-      //     while (k < list.length) {
-      //       list[k][field + 'span'] = 1;
-      //       list[k][field + 'dis'] = false;
-      //       for (var i = k + 1; i <= list.length - 1; i++) {
-      //         if (list[k][field] == list[i][field] && list[k][field] != '') {
-      //           list[k][field + 'span']++;
-      //           list[k][field + 'dis'] = false;
-      //           list[i][field + 'span'] = 1;
-      //           list[i][field + 'dis'] = true;
-      //         } else {
-      //           break;
-      //         }
-      //       }
-      //       k = i;
-      //     }
-      //   }
-      //   return this.camTableAnData = list;
-      // },
-
       columnIndex(data) {
-        let Date = [], month = [], week = [], time=[];
-        data.forEach((v, i)=>{
-          if(v.type == 'week'){
-            Date.push({
-              week:data[i].week,
-              data: v
-            })
-          }else{
-            Date.push({
-              month:data[i].month,
-              data:v
-            })
-          }
-        })
-        Date.forEach((j, k)=>{
-          let count = 0;
-          Date.forEach((n, m)=>{
-            if(j.type == 'week'){
-              if(j.week == n.week){
-                count++
-              }
-            }else{
-              if(j.month == n.month){
-                count++
+        let rowIndex = 0;
+        if(data[0].type == 'month'){
+          this.isMonth = 'Month'
+        }else{
+          this.isMonth = 'Week'
+        }
+        for(let row in data[0]){
+          let k = 0;
+          while (k < data.length){
+            data[k][row + 'span'] = 1;
+            data[k][row + 'dis'] = false;
+            for(var i = k+1; i <= data.length - 1; i++){
+              if (data[k][row] == data[i][row] && data[k][row] != '' || rowIndex < 2) {
+                data[k][row + 'span']++;
+                data[k][row + 'dis'] = false;
+                data[i][row + 'span'] = 1;
+                data[i][row + 'dis'] = true;
+              } else {
+                break;
               }
             }
-          })
-          if(j.type == 'week'){
-            week.push({
-              week: j.week,
-              data: j.data
-            })
-          }else{
-            month.push({
-              month: j.month,
-              data: j.data
-            })
+            k = i;
           }
-        })
-        console.log(Date)
-        console.log(week)
-        console.log(month)
-
-        // Date.forEach((v, i)=>{
-        //   let count = 0
-        //   Date.forEach((s, j)=>{
-        //     if(v == s){
-        //       count ++
-        //     }
-        //   })
-        //   arr.push({
-        //     data:v,
-        //     count:count
-        //   })
-        // })
-
+          rowIndex ++;
+        }
+        this.camTableAnData = data
+        console.log(this.camTableAnData)
       }
     },
     filters: {
@@ -357,6 +293,7 @@
     .data-table
       border-collapse collapse
       border none
+      table-layout fixed
       thead > tr
         background #538DD5
         th
@@ -367,6 +304,7 @@
           font-weight normal
           font-style italic
           white-space pre-wrap
+          word-wrap break-word
         .triangle
           position relative
           &:before
@@ -384,6 +322,8 @@
         border 1px solid #B3B3B3
         text-align center
         white-space pre-wrap
-
+        word-wrap break-word
+      .hidden
+        display none
 
 </style>
