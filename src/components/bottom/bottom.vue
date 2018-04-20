@@ -1,8 +1,6 @@
 <template>
   <div class="bottom-wrap">
-    <h5>Highlight
-      <svg-icon sign="icon-tianjia"></svg-icon>
-    </h5>
+    <h5>Highlight<svg-icon sign="icon-tianjia"></svg-icon></h5>
     <ul>
       <li>
         <input type="text" value="Overall, we achieved great performance on most of the KPIs.">
@@ -112,7 +110,7 @@
   @media screen and (max-width: 1235px)
     .bottom-wrap
       .icon
-        font-size 28px
+        display none
       ul
         li
           margin-bottom 10px
