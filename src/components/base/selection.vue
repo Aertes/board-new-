@@ -48,7 +48,7 @@
     },
     watch: {
       nowIndex: function () {
-        this.$emit('selectShow', this.selections[this.nowIndex])
+        this.$emit('selectShow', {val:this.selections[this.nowIndex],id:this.nowIndex})
       }
     }
   }

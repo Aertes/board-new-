@@ -6,7 +6,7 @@
       <h1>One China Digital Performance Dashboard</h1>
       <div class="selection-box">
         <selection :selections="yearList" ref="yearBox"></selection>
-        <selection :selections="monthList" ref="monthBox"></selection>
+        <selection :selections="monthList" ref="monthBox" @selectShow="selectShowHandle"></selection>
       </div>
       <div class="page">
         Page <span>{{type}}</span>/7
@@ -107,7 +107,7 @@
       <div class="clearfix tools-wrap">
         <div class="selection-box">
           <selection :selections="yearList" ref="yearBoxM"></selection>
-          <selection :selections="monthList" ref="monthBoxM"></selection>
+          <selection :selections="monthList" ref="monthBoxM" @selectShow="selectShowHandle"></selection>
         </div>
         <div class="page fr">
           Page <span>{{type}}</span>/7
@@ -173,10 +173,15 @@
 
         this.$refs.monthBoxM.nowIndex = this.getMonth
 
+      },
+
+      selectShowHandle(val) {
+        this.$store.commit('monthVoluation', val.id)
       }
     },
     watch: {
       getMonth() {
+        console.log(this.getYearMonth)
         this.getTimeMonth()
       }
     }
