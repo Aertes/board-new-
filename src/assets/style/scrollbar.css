@@ -1,0 +1,56 @@
+.mCSB_container_wrapper{
+  margin-right: 15px;
+  margin-bottom: 11px;
+}
+.mCSB_container_wrapper>.mCSB_container{
+  padding-right: 0;
+  padding-bottom: 0;
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  background-color: #2061AE;
+}
+
+.mCSB_scrollTools.mCSB_scrollTools_horizontal {
+  height: 8px;
+}
+
+.mCS-dark-3.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar, .mCS-light-3.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+  width: 8px;
+}
+
+.mCS-dark-3.mCSB_scrollTools .mCSB_draggerRail, .mCS-light-3.mCSB_scrollTools .mCSB_draggerRail{
+  width: 8px;
+}
+
+.mCS-dark-3.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar, .mCS-dark-3.mCSB_scrollTools_horizontal .mCSB_draggerRail, .mCS-light-3.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar, .mCS-light-3.mCSB_scrollTools_horizontal .mCSB_draggerRail{
+  width: 100%;
+}
+
+.mCS-dark-3.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar, .mCS-dark-3.mCSB_scrollTools_horizontal .mCSB_draggerRail, .mCS-light-3.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar, .mCS-light-3.mCSB_scrollTools_horizontal .mCSB_draggerRail {
+  height: 8px;
+  margin: 0;
+}
+.mCS-dark-3.mCSB_scrollTools .mCSB_draggerRail, .mCS-light-3.mCSB_scrollTools .mCSB_draggerRail{
+  background-color:#F4F5F7
+}
+
+.mCSB_scrollTools{
+  opacity: 1;
+  filter: "alpha(opacity=100)";
+  -ms-filter: "alpha(opacity=100)";
+}
+
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+  background-color: #2061AE; background-color: #2061AE;
+  filter: "alpha(opacity=100)"; -ms-filter: "alpha(opacity=100)";
+}
+
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+  background-color: #2061AE; background-color: #2061AE;
+  filter: "alpha(opacity=100)"; -ms-filter: "alpha(opacity=100)";
+}
+.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+  background-color: #2061AE; background-color: #2061AE;
+  filter: "alpha(opacity=100)"; -ms-filter: "alpha(opacity=100)";
+}

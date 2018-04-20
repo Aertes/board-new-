@@ -1,0 +1,221 @@
+*
+  margin 0 auto
+  padding 0
+  list-style none
+  box-sizing: border-box
+
+body, html
+  line-height 1
+  font-family "Calibri Light",centrale_sans_book, tahoma, arial, helvetica, sans-serif
+  background-color #F2F2F2
+
+.icon
+  width 1em
+  height 1em
+  vertical-align middle
+  fill currentColor
+  overflow hidden
+
+.btc
+  overflow hidden
+
+.relative
+  position relative
+
+.clearfix
+  &:after
+    display: block
+    content: "."
+    height: 0
+    line-height: 0
+    clear: both
+    visibility: hidden
+
+.none
+  display none!important
+
+.ellipsis
+  white-space nowrap
+  text-overflow ellipsis
+  overflow hidden
+  /*float left
+  border-left 1px solid #ddd
+  padding: 0 15px  10px !important;*/
+
+.box-shadow
+  box-shadow 3px 3px 10px 0px rgba(0, 0, 0, 0.2)
+
+a
+  text-decoration none
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill
+  -webkit-box-shadow 0 0 0px 1000px #ffffff inset !important
+  -ms-box-shadow 0 0 0px 1000px #ffffff inset !important
+
+
+#fileTable_wrapper table.dataTable tbody th,
+#fileTable_wrapper table.dataTable tbody td
+	border-bottom 1px solid #ebebeb !important
+	border-right 1px solid #ebebeb !important
+
+#fileTable_wrapper table.dataTable thead
+  background #bad7ed6b
+
+
+#fileTable_wrapper table.dataTable tbody th,
+#fileTable_wrapper table.dataTable tbody td
+  padding 10px 0px
+  color #717071
+#fileTable_wrapper .dataTables_wrapper
+  position static
+#upLoadBox
+  position relative
+#fileTable_wrapper
+		#fileTable_paginate
+			margin 40px 0 0
+			bottom -70px
+			// position absolute;
+			// left 50%
+			// transform: translateX(-50%)
+#fileTable_wrapper .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+#fileTable_wrapper .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover
+	  color #777!important
+    border medium
+    background #fff!important
+#fileTable_wrapper .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+#fileTable_wrapper .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover
+    color #777!important
+    border medium
+    background #fff !important
+#fileTable_wrapper .dataTables_empty
+		text-align center
+
+.tab-card
+  .dataTables_wrapper
+    position absolute
+    width 100%
+.layui-layer-msg
+  .layui-layer-content
+    color #fff !important
+    height inherit !important
+    padding: 20px 30px !important
+    font-size: 18px
+.layui-layer-dialog
+	.layui-layer-title
+      background-color #ffffff
+      font-size 22px
+      height 60px
+      line-height 60px
+      color #a0a0a1
+
+  .layui-layer-content
+      font-size 24px !important
+      color #5a5a5a
+      height 100px
+      line-height 60px !important
+  .layui-layer-btn
+      margin: 10px 0
+      a
+        font-size 20px
+        height 40px
+        line-height 40px
+        border-radius 10px
+      .layui-layer-btn0
+        background #2061ae
+        border-color #2061ae
+      .layui-layer-btn1
+        background #ccc
+        border-color #ccc
+        color: #fff
+
+input:-ms-input-placeholder
+  color #ccc !important
+::-moz-placeholder
+  color #ccc !important
+::-webkit-input-placeholder
+  color #ccc !important
+
+body .fontColor .layui-layer-content
+  color  #fff
+  background  rgba(43,43,43,.651)
+  border 0
+  height auto;
+
+.dataTables_scrollHead .dataTables_scrollHeadInner table thead
+  background rgba(186,215,237,.42)
+
+table.dataTable tbody tr.odd
+    background-color: #f9f9f9;
+
+/*滚动条样式*/
+.dataTables_scrollBody::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 8px;
+}
+.dataTables_scrollBody::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(30,97,175,0.8);
+    background: rgba(30,97,175,0.8);
+}
+.dataTables_scrollBody::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(244,245,247, 1);
+    border-radius: 20px;
+    background: rgba(244,245,247, 1);
+}
+
+.layui-layer-shade
+    background-color: rgb(255, 255, 255) !important
+    opacity: 0.5 !important
+
+.tab-card
+  .dataTables_wrapper
+    table
+      border-collapse: collapse
+      thead
+        background: rgba(186,215,237,.42)
+        th
+          border: 1px solid #D6E3F0
+          height 30px
+          font-size: 18px
+      tbody
+        td
+          border: 1px solid #D6E3F0!important
+          font-size: 18px
+  .dataTables_paginate
+    .paginate_button
+      font-size: 18px
+  #roleTable_wrapper table.dataTable tbody tr td:first-of-type
+    font-weight 400 !important
+
+/*css transition*/
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.28s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+/*fade*/
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+  transition: all .5s;
+}
+
+.breadcrumb-enter,
+.breadcrumb-leave-active {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.breadcrumb-move {
+  transition: all .5s;
+}
+
+.breadcrumb-leave-active {
+  position: absolute;
+}

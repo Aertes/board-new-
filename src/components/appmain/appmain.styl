@@ -1,0 +1,56 @@
+.app-main-wrap
+  position relative
+  .table-nav
+    line-height 40px
+    margin-bottom 20px
+    h3
+      float left
+      font-weight normal
+      font-size 25px
+    .color-line
+      display inline-block
+      width 10px
+      height 32px
+      vertical-align -8px
+      margin-right 15px
+      &.color
+        background-color #D9D9D9
+  .tool-box
+    float right
+    .icon-box
+      float right
+    .selection-box
+      float left
+      .dropdown-wrap
+        &:last-of-type
+          margin-left 10px
+        &:first-of-type
+          margin-left 0
+    .icon
+      font-size 30px
+      margin-left 15px
+      cursor pointer
+    .erweima-icon
+      color #3A75BA
+    .link-icon
+      color #5B819F
+    .chart-icon
+      color #EF5927
+  .table-name
+    font-size 25px
+    margin-bottom 20px
+  .table-box
+    margin-bottom 20px
+
+@media screen and (max-width: 1235px)
+  .app-main-wrap
+    .table-nav
+      h3
+        float none
+    .tool-box
+      float none
+      margin-top 20px
+      .selection-box
+      .icon
+        font-size 50px
+        vertical-align: -32px;
