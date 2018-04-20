@@ -1,14 +1,15 @@
 <template>
   <div class="nav-bar-wrap clearfix">
+
     <div class="pc-nav-bar clearfix">
       <div class="logo box-shadow"><img src="../../assets/img/logo.png" alt="philips" width="198" height="100"></div>
       <h1>One China Digital Performance Dashboard</h1>
       <div class="selection-box">
-        <selection :selections="year"></selection>
-        <selection :selections="month"></selection>
+        <selection :selections="yearList" ref="yearBox"></selection>
+        <selection :selections="monthList" ref="monthBox"></selection>
       </div>
       <div class="page">
-        Page <span>1</span>/7
+        Page <span>{{type}}</span>/7
       </div>
       <div class="user-info">
         <div class="after-login">
@@ -21,43 +22,34 @@
             <div class="user-operation box-shadow">
               <img src="../../assets/img/triangle.png" alt="triangle" class="triangle">
               <div class="a-wrap">
-                <router-link :to="{name: 'coverpage'}">
+                <a href="javascript:;" @click="linkTo('coverpage',1)">
                   <i class="color-line color1"></i>
                   <span>Cover Page</span>
-                </router-link>
-                <router-link :to="{name: 'overview'}">
+                </a>
+                <a href="javascript:;" @click="linkTo('overview',2)">
                   <i class="color-line color2"></i>
                   <span>Overview</span>
-                </router-link>
-                <router-link :to="{name: 'campaign'}">
+                </a>
+                <a href="javascript:;" @click="linkTo('campaign',3)">
                   <i class="color-line color3"></i>
                   <span>Campaign</span>
-                </router-link>
-                <router-link :to="{name: 'dotcom'}">
+                </a>
+                <a href="javascript:;" @click="linkTo('dotcom',4)">
                   <i class="color-line color4"></i>
                   <span>Dotcom</span>
-                </router-link>
-                <router-link :to="{name: 'crm'}">
+                </a>
+                <a href="javascript:;" @click="linkTo('crm',5)">
                   <i class="color-line color5"></i>
                   <span>CRM</span>
-                </router-link>
-                <router-link :to="{name: 'ratingreview'}">
+                </a>
+                <a href="javascript:;" @click="linkTo('ratingreview',6)">
                   <i class="color-line color6"></i>
                   <span>Rating & Review</span>
-                </router-link>
-                <router-link :to="{name: 'ecommerce'}">
+                </a>
+                <a href="javascript:;" @click="linkTo('ecommerce',7)">
                   <i class="color-line color7"></i>
                   <span>eCommerce</span>
-                </router-link>
-                <!--<a @click="showEditPass">
-                  <svg-icon sign="icon-user"></svg-icon>
-                  <span>PROFILE</span></a>
-                <a @click="settingShow">
-                  <svg-icon sign="icon-setting"></svg-icon>
-                  <span>SYSTEM SETTINGS</span></a>
-                <a @click="outLogin">
-                  <svg-icon sign="icon-turn-off"></svg-icon>
-                  <span>SIGN OUT</span></a>-->
+                </a>
               </div>
             </div>
           </div>
@@ -78,34 +70,34 @@
                 <span>REPORT NAVIGATION</span>
               </p>
               <div class="a-wrap">
-                <router-link :to="{name: 'coverpage'}">
+                <a href="javascript:;" @click="linkTo('coverpage',1)">
                   <i class="color-line color1"></i>
                   <span>Cover Page</span>
-                </router-link>
-                <router-link :to="{name: 'overview'}">
+                </a>
+                <a href="javascript:;" @click="linkTo('overview',2)">
                   <i class="color-line color2"></i>
                   <span>Overview</span>
-                </router-link>
-                <router-link :to="{name: 'campaign'}">
+                </a>
+                <a href="javascript:;" @click="linkTo('campaign',3)">
                   <i class="color-line color3"></i>
                   <span>Campaign</span>
-                </router-link>
-                <router-link :to="{name: 'dotcom'}">
+                </a>
+                <a href="javascript:;" @click="linkTo('dotcom',4)">
                   <i class="color-line color4"></i>
                   <span>Dotcom</span>
-                </router-link>
-                <router-link :to="{name: 'crm'}">
+                </a>
+                <a href="javascript:;" @click="linkTo('crm',5)">
                   <i class="color-line color5"></i>
                   <span>CRM</span>
-                </router-link>
-                <router-link :to="{name: 'ratingreview'}">
+                </a>
+                <a href="javascript:;" @click="linkTo('ratingreview',6)">
                   <i class="color-line color6"></i>
                   <span>Rating & Review</span>
-                </router-link>
-                <router-link :to="{name: 'ecommerce'}">
+                </a>
+                <a href="javascript:;" @click="linkTo('ecommerce',7)">
                   <i class="color-line color7"></i>
                   <span>eCommerce</span>
-                </router-link>
+                </a>
               </div>
             </div>
           </div>
@@ -114,186 +106,80 @@
 
       <div class="clearfix tools-wrap">
         <div class="selection-box">
-          <selection :selections="year"></selection>
-          <selection :selections="month"></selection>
+          <selection :selections="yearList" ref="yearBoxM"></selection>
+          <selection :selections="monthList" ref="monthBoxM"></selection>
         </div>
         <div class="page fr">
-          Page <span>1</span>/7
+          Page <span>{{type}}</span>/7
         </div>
       </div>
 
     </div>
 
-    <div class="tables-wrap" id="editPassword" v-show="isShow">
-      <div class="tables-title">
-        <span class="title">PROFILE</span>
-        <span @click="closeLayerButton"><svg-icon sign="icon-closed"></svg-icon></span>
-      </div>
-      <form action="" autocomplete="off">
-        <div class="resg">
-          <div>
-            <label>User Name</label>
-            <label for="">{{data.username}}</label>
-          </div>
-          <div>
-            <label>Old Password</label>
-            <input type="password" name="oldPassword" @change="onInput" :class="[isOldActive? 'active' : '']"
-                   v-model="data.password">
-          </div>
-          <div>
-            <label>New Password</label>
-            <input type="password" name="newPassword" @change="onInput" :class="[isNewActive? 'active' : '']"
-                   minlength="6" v-model="data.newPassword">
-          </div>
-          <div>
-            <label>Repeated Password</label>
-            <input type="password" name="surePassword" @change="onInput" :class="[isSureActive? 'active' : '']"
-                   minlength="6" v-model="data.surePassword">
-          </div>
-        </div>
-        <div class="submit-btn">
-          <button type="button" class="confirm" @click="submit">Submit</button>
-          <button type="button" class="cancel" @click="closeLayerButton">Cancel</button>
-        </div>
-      </form>
-    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import {getSessionItem} from "../../assets/config/storage.js"
-  import {removeSessionItem} from "../../assets/config/storage.js"
-  import {get, post} from "../../assets/config/http"
-  import xhrUrls from '../../assets/config/xhrUrls'
-
-  let layerId
   export default {
     name: "NavBar",
     data() {
       return {
-        isShow: false,
-        isErr: false,
-        userName: 'Login',
-        USERINFO: null,
-        isOldActive: false,
-        isNewActive: false,
-        isSureActive: false,
-        name: '',
-        errMsg: '',
-        data: {
-          password: '',
-          newPassword: '',
-          surePassword: '',
-          id: '',
-          username: ''
-        },
-        /*******/
-        year:['2018'],
-        month:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-        sideSlide:false
+        yearList: ['2018'],
+        monthList: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        sideSlide: false,
+        pageNum: 1
       }
     },
-    methods: {
-      showOperation() {
-
+    computed: {
+      type() {
+        return this.$store.state.type
       },
-      outLogin() {
-        get(xhrUrls.LOGOUT).then((res) => {
-          this.$router.push({path: "/"});
-          this.USERINFO = removeSessionItem('USERINFO')
-        }).catch((err) => {
-          console.log(err);
-        })
+      getYearMonth() {
+        return this.$store.getters.getYearMonth
       },
-      layerOpen(id) {
-        layerId = layer.open({
-          type: 1,
-          title: false,
-          closeBtn: 0,
-          shadeClose: false,
-          area: 'auto auto',
-          shade: [0.5, '#fff'],
-          content: $(`#${id}`)
-        })
+      getYear() {
+        return this.$store.state.year
       },
-      showEditPass(obj) {
-        this.layerOpen('editPassword')
-      },
-      closeLayerButton() {
-        layer.close(layerId)
-        this.data.password = ''
-        this.data.newPassword = ''
-        this.data.surePassword = ''
-        this.isOldActive = false
-        this.isNewActive = false
-        this.isSureActive = false
-      },
-      onInput() {
-        if (this.data.password != '') {
-          this.isOldActive = false;
-        }
-        if (this.data.newPassword != '') {
-          this.isNewActive = false;
-        }
-        if (this.data.surePassword != '') {
-          this.isSureActive = false;
-        }
-      },
-      submit() {
-        let that = this
-        if (this.data.password == '' && this.data.newPassword == '' && this.data.surePassword == '') {
-          this.isOldActive = true;
-          this.isNewActive = true;
-          this.isSureActive = true;
-        }
-        if (this.data.password == '') {
-          this.isOldActive = true;
-        }
-        if (this.data.newPassword == '') {
-          this.isNewActive = true;
-        }
-        if (this.data.surePassword == '') {
-          this.isSureActive = true;
-        }
-        if (this.data.newPassword != this.data.surePassword) {
-          this.isNewActive = true;
-          this.isSureActive = true;
-        }
-        if (this.data.password != '' && this.data.newPassword != '' && this.data.surePassword != '' && this.data.newPassword == this.data.surePassword)       {
-          post(xhrUrls.EDIT_PWD, this.data)
-            .then(res => {
-              if (res.data.code == 200) {
-                layer.msg('Password update success!', {
-                  time: 2000,
-                  skin: 'fontColor'
-                }, function (index) {
-                  layer.close(index);
-                  that.$router.push({path: "/"});
-                  that.USERINFO = removeSessionItem('USERINFO')
-                  layer.close(layerId)
-                })
-              } else {
-                that.isOldActive = true
-                layer.msg('Please enter the correct old password ！', {
-                  time: 2000,
-                  skin: 'fontColor'
-                }, function (index) {
-                  layer.close(index);
-                })
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        }
-      },
-      /*********/
-      sideSlideShow(){
-        this.sideSlide = !this.sideSlide
+      getMonth() {
+        return this.$store.state.month
       }
     },
     mounted() {
+
+      this.getTimeMonth()
+
     },
+    methods: {
+
+      sideSlideShow() {
+
+        this.sideSlide = !this.sideSlide
+
+      },
+
+      linkTo(val,typeNum) {
+
+        this.$router.push({name: val})
+
+        this.$store.commit('voluation',typeNum)
+
+        this.sideSlide = false
+
+      },
+
+      getTimeMonth() {
+
+        this.$refs.monthBox.nowIndex = this.getMonth
+
+        this.$refs.monthBoxM.nowIndex = this.getMonth
+
+      }
+    },
+    watch: {
+      getMonth() {
+        this.getTimeMonth()
+      }
+    }
   }
 </script>
 
@@ -324,8 +210,8 @@
           margin-left 10px
     .mobile-nav-bar
       .more-icon
-        font-size 50px!important
-        margin-left 0!important
+        font-size 50px !important
+        margin-left 0 !important
     .mobile-nav-bar
       display none
     .tools-wrap
@@ -434,9 +320,10 @@
               padding-left 40px
               &:hover
                 background-color #F5F6F8
-              &.router-link-active
+              &.link-active
                 span
                   color #00B0F0
+
   #editPassword
     width 700px
     .tables-title
@@ -496,8 +383,9 @@
         background-color #ccc
 
   @media screen and (max-width: 1235px)
-      .pc-nav-bar
-        display none
-      .mobile-nav-bar
-        display block!important
+    .pc-nav-bar
+      display none
+
+    .mobile-nav-bar
+      display block !important
 </style>

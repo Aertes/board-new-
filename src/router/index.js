@@ -19,6 +19,7 @@ export default new Router({
       children: [
         {
           path: 'coverpage',
+          name: 'coverpage',
           component: () => import('@/components/dashboard/CoverPage')
         },
         {

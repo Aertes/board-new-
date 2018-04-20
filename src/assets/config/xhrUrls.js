@@ -91,4 +91,10 @@ export default {
   TARGET_RBSEARCH: BASE_URL + 'target/rr/search',
   TARGET_RBSAVE: BASE_URL + 'target/rr/save',
 
+  //HighLight
+  HIGHT_LIGHT_SEARCH: BASE_URL + 'highlight/search',
+  HIGHT_LIGHT_SAVE: BASE_URL + 'highlight/save',
+  HIGHT_LIGHT_UPDATE: BASE_URL + 'highlight/update',
+  HIGHT_LIGHT_DELETE: BASE_URL + 'highlight/delete',
+
 }
