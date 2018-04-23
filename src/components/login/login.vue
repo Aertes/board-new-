@@ -43,13 +43,14 @@
 
 <script type="text/ecmascript-6">
   import xhrUrls from "../../assets/config/xhrUrls";
+  import {getQueryString,getHashString} from "../../assets/config/urlQuery";
   import {
     post
   } from "../../assets/config/http"
   import {
     setSessionItem
   } from "../../assets/config/storage.js"
-  
+
   export default {
     name: "login",
     data() {
@@ -68,7 +69,8 @@
           code: "",
           withCredentials: true
         },
-        USERINFO: {}
+        USERINFO: {},
+        typeOfName:''
       };
     },
     computed: {},
@@ -106,9 +108,16 @@
               if (res.data.code == 200) {
                 setTimeout(() => {
                   this.isShow = false
-                  this.$router.push({
-                    path: "/dashboard"
-                  });
+                  if(this.typeOfName==undefined){
+                    this.$router.push({
+                      name: "coverpage"
+                    });
+                  }else{
+                    this.$router.push({
+                      name: `${this.typeOfName}`
+                    });
+                  }
+
                   setSessionItem('USERINFO', JSON.stringify(res.data.data))
                 }, 1000);
               } else {
@@ -156,6 +165,7 @@
     mounted() {
       this.getCode();
       this.isShow = false
+      this.typeOfName = getHashString('type')
     }
   };
 </script>
@@ -294,7 +304,7 @@
           font-size: 24px;
           outline: none;
         }
-        
+
       }
       .err{
         color: #f00;

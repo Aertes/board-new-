@@ -44,14 +44,6 @@
     name: "bottom",
     data() {
       return {
-        time: '201801',
-        type: [
-          'overview',
-          'campaign',
-          'dotcom',
-          'ratingreview',
-          'ecommerce'
-        ],
         HighLightData: '',
         isEdit: false,
         isContext: false,
@@ -60,16 +52,23 @@
         context: ''
       }
     },
+    computed: {
+      getYearMonth() {
+        return this.$store.getters.getYearMonth
+      },
+      getTypeOfName() {
+        return this.$store.getters.typeOfName
+      }
+    },
     mounted() {
-      this.getHighLight()
+      this.getHighLight(this.$route.name)
     },
     methods: {
 
-      getHighLight() {
-        post(HIGHT_LIGHT_SEARCH, {month: this.time}).then(res => {
+      getHighLight(val) {
+        post(HIGHT_LIGHT_SEARCH, {month: this.getYearMonth,type: val}).then(res => {
           let data = res.data;
           data.code == 200 ? this.HighLightData = data.data : console.log(data.errMsg)
-          console.log(data);
         }).catch(err => console.log(err))
       },
 
@@ -84,7 +83,7 @@
         let data = {
           content: newVal,
           id: id,
-          month: this.time,
+          month: this.getYearMonth,
           type: type
         }
         post(HIGHT_LIGHT_UPDATE, data).then(res => {
@@ -94,11 +93,9 @@
             this.layerMsg('Updata success!')
             this.getHighLight()
             $('#'+that).parents('li').removeClass('edit')
-            // $('#' + id).html(newVal)
           } else {
             this.isEdit = false
             this.layerMsg('Updata failure!')
-            console.log(data.errMsg)
           }
         }).catch(err => console.log(err))
       },
@@ -113,8 +110,8 @@
         } else {
           let data = {
             content: this.context,
-            month: this.time,
-            type: this.type[2]
+            month: this.getYearMonth,
+            type: this.getTypeOfName
           }
           post(HIGHT_LIGHT_SAVE, data).then(res => {
             let data = res.data;
@@ -125,7 +122,6 @@
             } else {
               this.closeLayerButton()
               this.layerMsg('Create failure!')
-              console.log(data.errMsg)
             }
           }).catch(err => console.log(err))
         }
@@ -139,7 +135,6 @@
             this.getHighLight()
           } else {
             this.layerMsg('Delete failure!')
-            console.log(data.errMsg)
           }
         }).catch(err => console.log(err))
       },
@@ -169,6 +164,14 @@
           skin: 'fontColor'
         })
       }
+    },
+    watch:{
+      getTypeOfName(){
+        this.getHighLight()
+      },
+      getYearMonth(){
+        this.getHighLight(this.getYearMonth)
+      }
     }
   }
 </script>
@@ -190,6 +193,7 @@
       margin-left 15px
       cursor pointer
     ul
+      padding-bottom 20px
       li
         position relative
         padding-left 30px

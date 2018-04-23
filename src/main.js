@@ -29,7 +29,7 @@ $(function () {
 });
 
 //网站自适应JS库
-import 'amfe-flexible/index'
+//import 'amfe-flexible/index'
 
 //table分页条
 import "./assets/style/tablepagination.css"
@@ -45,8 +45,15 @@ import './assets/ztree/css/zTreeStyle/zTreeStyle.css'
 //图表
 import Echarts from 'echarts'
 
-Vue.prototype.$echarts = Echarts
+//复制到剪贴板
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
 
+//qrcode
+import VueQrcode from '@xkeshi/vue-qrcode'
+Vue.component('qrcode', VueQrcode);
+
+Vue.prototype.$echarts = Echarts
 
 //非父子组件通信中转站
 let Hub = new Vue();
@@ -82,19 +89,20 @@ const store = new Vuex.Store({
   getters: {
     getYearMonth: state => {
 
-      if (state.month < 10) {
+      let month = state.month+1
 
-        return state.year + '0' + state.month
+      if (month < 10) {
+
+        return state.year + '0' + month
 
       } else {
 
-        return state.year.toString() + state.month.toString()
+        return state.year.toString() + month.toString()
 
       }
 
     },
-    typesOfName: state => {
-
+    typeOfName: state => {
       switch(state.type){
         case 1:
           return 'coverpage'

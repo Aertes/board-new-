@@ -24,6 +24,9 @@
     computed: {
       type() {
         return this.$store.state.type
+      },
+      getYearMonth() {
+        return this.$store.getters.getYearMonth
       }
     },
     mounted() {

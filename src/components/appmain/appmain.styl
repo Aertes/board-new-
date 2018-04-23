@@ -29,6 +29,29 @@
     float right
     .icon-box
       float right
+      .qrcode
+        position relative
+        display inline-block
+        .qrcode-warp
+          position absolute
+          right -50px
+          margin-top 10px
+          box-shadow 1px 1px 50px rgba(0,0,0,.3)
+          height 170px
+          padding 10px
+          border-radius 10px
+          background #fff
+          z-index 8888
+          &:before
+            content ''
+            width 0
+            height 0
+            border-left 15px solid transparent
+            border-right 15px solid transparent
+            border-bottom 20px solid #fff
+            position absolute
+            top -15px
+            right 49px
     .selection-box
       float left
       .dropdown-wrap
@@ -67,3 +90,6 @@
       .icon
         font-size 50px
         vertical-align: -32px;
+      .erweima-icon
+      .link-icon
+        display none

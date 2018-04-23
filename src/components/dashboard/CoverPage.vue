@@ -4,10 +4,12 @@
         <h3><i class="color-line color"></i>Cover Page</h3>
       </div>
       <div class="content">
-        <p class="one">Philips One China Digital Dashboard</p>
-        <p class="two"><span>2018/03</span> Performance Review</p>
-        <p class="three" @click="incrementType">Start here <span  ><svg-icon sign="icon-link" class="arrow-right"></svg-icon></span></p>
-        <p class="four">BC&D China</p>
+        <div class="wrap">
+          <p class="one">Philips One China Digital Dashboard</p>
+          <p class="two"><span>{{time}}</span> Performance Review</p>
+          <p class="three">Start here <span @click="incrementType"><svg-icon sign="icon-right" class="arrow-right"></svg-icon></span></p>
+          <p class="four">BC&D China</p>
+        </div>
       </div>
     </div>
 </template>
@@ -17,26 +19,40 @@
     name: "cover-page",
     data(){
       return {
-
+        time:''
       }
     },
-    type() {
-      return this.$store.state.type
+    computed: {
+      type() {
+        return this.$store.state.type
+      },
+      getYearMonth() {
+        return this.$store.getters.getYearMonth
+      }
     },
     mounted() {
+      this.getTime()
     },
     methods: {
       incrementType() {
         this.$router.push({name:'overview'})
         this.$store.commit('increment')
+      },
+      getTime(){
+        let val = this.getYearMonth
+        this.time = val.slice(0, 4) + '/' + val.slice(4, 6)
       }
     },
     watch: {
+      getYearMonth(){
+        this.getTime()
+      }
     }
   }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
+  @import "../../assets/style/mixin.styl"
   @import "../appmain/appmain.styl"
   .cover-page-wrap
     position relative
@@ -45,27 +61,55 @@
         &.color
           background-color #a6a6a6
     .content
+      position fixed
+      top 136px
+      bottom 0
+      left 60px
+      right 60px
       background url("../../assets/img/bglog.png") center center no-repeat
       background-size cover
       text-align center
+      .wrap
+        e-pos(top:50%,y:-50%)
+        left 0
+        right 0
       .one
-        font-size 35px
-        padding-top 150px
+        font-size 45px
       .two
-        font-size 30px
-        padding-top 20px
+        font-size 40px
+        padding-top 40px
         span
           color #2E75B6
       .three
-        font-size 30px
-        padding-top 40px
+        font-size 40px
+        padding-top 60px
         padding-bottom  60px
-        width 200px
-        cursor pointer
+        span
+          cursor pointer
       .four
         font-size 30px
-        padding-top 20px
-        padding-bottom  80px
+        padding-top 50px
         color: #7F7F7F
-
+      .arrow-right
+        font-size 55px
+        margin-left 10px
+  @media screen and (max-width: 1235px)
+    .content
+      top 216px!important
+      bottom 0!important
+      left 10px!important
+      right 10px!important
+      .one
+        font-size 35px!important
+      .two
+        font-size 30px!important
+        padding-top 40px!important
+      .three
+        font-size 30px!important
+        padding-top 50px!important
+        padding-bottom  50px!important
+        cursor pointer
+      .four
+        font-size 30px!important
+        padding-top 50px!important
 </style>

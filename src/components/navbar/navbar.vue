@@ -13,10 +13,21 @@
       </div>
       <div class="user-info">
         <div class="after-login">
-          <svg-icon sign="icon-upload" class="upload-icon"></svg-icon>
-          <svg-icon sign="icon-setting" class="setting-icon"></svg-icon>
-          <svg-icon sign="icon-user" class="user-icon"></svg-icon>
-          <svg-icon sign="icon-turn-off" class="turn-off-icon"></svg-icon>
+          <svg-icon sign="icon-upload" class="upload-icon" :class="{none:isUser}"></svg-icon>
+          <svg-icon sign="icon-setting" class="setting-icon" :class="{none:isUser}"></svg-icon>
+          <div class="user-operation-hover" :class="{noHover:isUser}">
+            <span @click="goToLogin"><svg-icon sign="icon-user" class="user-icon"></svg-icon></span>
+            <div class="user-operation box-shadow">
+              <img src="../../assets/img/triangle.png" alt="triangle" class="triangle">
+              <div class="a-wrap">
+                <a href="javascript:;" @click="showEditPass">
+                  <i class="color-line color7"></i>
+                  <span>PROFILE</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <span @click="outLogin"><svg-icon sign="icon-turn-off" class="turn-off-icon" :class="{none:isUser}"></svg-icon></span>
           <div class="user-operation-hover">
             <svg-icon sign="icon-more" class="more-icon"></svg-icon>
             <div class="user-operation box-shadow">
@@ -116,10 +127,46 @@
 
     </div>
 
+    <div class="tables-wrap" id="editPassword" v-show="isShow">
+      <div class="tables-title">
+        <span class="title">PROFILE</span>
+        <span @click="closeLayerButton"><svg-icon sign="icon-closed"></svg-icon></span>
+      </div>
+      <form action="" autocomplete="off">
+        <div class="resg">
+          <div>
+            <label>User Name</label>
+            <label for="">{{data.username}}</label>
+          </div>
+          <div>
+            <label>Old Password</label>
+            <input type="password" name="oldPassword" @change="onInput" :class="[isOldActive? 'active' : '']" v-model="data.password">
+          </div>
+          <div>
+            <label>New Password</label>
+            <input type="password" name="newPassword" @change="onInput" :class="[isNewActive? 'active' : '']" minlength="6" v-model="data.newPassword">
+          </div>
+          <div>
+            <label>Repeated Password</label>
+            <input type="password" name="surePassword" @change="onInput" :class="[isSureActive? 'active' : '']" minlength="6"  v-model="data.surePassword">
+          </div>
+        </div>
+        <div class="submit-btn">
+          <button type="button" class="confirm" @click="submit">Submit</button>
+          <button type="button" class="cancel" @click="closeLayerButton">Cancel</button>
+        </div>
+      </form>
+    </div>
+
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import {getSessionItem} from "../../assets/config/storage.js"
+  import {removeSessionItem} from "../../assets/config/storage.js"
+  import {get, post} from "../../assets/config/http"
+  import xhrUrls from '../../assets/config/xhrUrls'
+
   export default {
     name: "NavBar",
     data() {
@@ -127,7 +174,22 @@
         yearList: ['2018'],
         monthList: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         sideSlide: false,
-        pageNum: 1
+        pageNum: 1,
+        layerId:null,
+        isUser: true,
+        isShow: false,
+        isErr: false,
+        USERINFO: null,
+        isOldActive:false,
+        isNewActive:false,
+        isSureActive:false,
+        data: {
+          password: '',
+          newPassword: '',
+          surePassword: '',
+          id: '',
+          username: ''
+        }
       }
     },
     computed: {
@@ -137,6 +199,9 @@
       getYearMonth() {
         return this.$store.getters.getYearMonth
       },
+      getTypeOfName() {
+        return this.$store.getters.typeOfName
+      },
       getYear() {
         return this.$store.state.year
       },
@@ -145,6 +210,18 @@
       }
     },
     mounted() {
+
+      const USERINFO = JSON.parse(getSessionItem('USERINFO'))
+
+      this.USERINFO = USERINFO
+
+      this.USERINFO ? this.isUser = false : this.isUser = true
+
+      try{
+        this.data.id = USERINFO.id;
+
+        this.data.username = USERINFO.username;
+      }catch(e){}
 
       this.getTimeMonth()
 
@@ -157,11 +234,11 @@
 
       },
 
-      linkTo(val,typeNum) {
+      linkTo(val, typeNum) {
 
         this.$router.push({name: val})
 
-        this.$store.commit('voluation',typeNum)
+        this.$store.commit('voluation', typeNum)
 
         this.sideSlide = false
 
@@ -177,11 +254,120 @@
 
       selectShowHandle(val) {
         this.$store.commit('monthVoluation', val.id)
-      }
+      },
+
+      goToLogin() {
+
+        if (this.USERINFO) return
+
+        this.$router.push({name: "login",query: { type: `${this.getTypeOfName}` }});
+
+      },
+
+      outLogin() {
+        get(xhrUrls.LOGOUT).then((res) => {
+
+          this.$router.push({name: "login",query: { type: `${this.getTypeOfName}` }});
+
+          this.USERINFO = removeSessionItem('USERINFO')
+
+        }).catch((err) => {
+
+          console.log(err);
+
+        })
+      },
+
+      layerOpen(id) {
+        this.layerId = layer.open({
+          type: 1,
+          title: false,
+          closeBtn: 0,
+          shadeClose: false,
+          area: 'auto auto',
+          shade: [0.5, '#fff'],
+          content: $(`#${id}`)
+        })
+      },
+
+      closeLayerButton() {
+        layer.close(this.layerId)
+        this.data.password = ''
+        this.data.newPassword = ''
+        this.data.surePassword = ''
+        this.isOldActive=false
+        this.isNewActive=false
+        this.isSureActive=false
+      },
+
+      showEditPass(){
+        this.layerOpen('editPassword')
+      },
+
+      onInput() {
+        if (this.data.password != '') {
+          this.isOldActive = false;
+        }
+        if (this.data.newPassword != '') {
+          this.isNewActive = false;
+        }
+        if (this.data.surePassword != '') {
+          this.isSureActive = false;
+        }
+      },
+
+      submit(){
+        let that = this
+        if(this.data.password == '' && this.data.newPassword == '' && this.data.surePassword == ''){
+          this.isOldActive = true;
+          this.isNewActive = true;
+          this.isSureActive = true;
+        }
+        if (this.data.password == '') {
+          this.isOldActive = true;
+        }
+        if (this.data.newPassword == '') {
+          this.isNewActive = true;
+        }
+        if (this.data.surePassword == '') {
+          this.isSureActive = true;
+        }
+        if (this.data.newPassword != this.data.surePassword) {
+          this.isNewActive = true;
+          this.isSureActive = true;
+        }
+        if (this.data.password != '' && this.data.newPassword != '' && this.data.surePassword != '' && this.data.newPassword == this.data.surePassword) {
+          post(xhrUrls.EDIT_PWD, this.data)
+            .then(res => {
+              if (res.data.code == 200) {
+                layer.msg('Password update success!', {
+                  time: 2000,
+                  skin: 'fontColor'
+                }, function(index) {
+                  layer.close(index);
+                  that.$router.push({path: "/"});
+                  that.USERINFO = removeSessionItem('USERINFO')
+                  layer.close(this.layerId)
+                })
+              } else {
+                that.isOldActive=true
+                layer.msg('Please enter the correct old password ！', {
+                  time: 2000,
+                  skin: 'fontColor'
+                }, function(index) {
+                  layer.close(index);
+                })
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+      },
+
     },
     watch: {
       getMonth() {
-        console.log(this.getYearMonth)
         this.getTimeMonth()
       }
     }
@@ -246,7 +432,12 @@
         .user-icon
           font-size 23px
         .user-operation-hover
+          position relative
           display inline-block
+          &.noHover
+            &:hover
+              .user-operation
+                display none
           &:hover
             .user-operation
               display block
@@ -371,6 +562,7 @@
           border-color: #e78b70
     .submit-btn
       text-align center
+      padding-bottom 20px
       button
         height 40px
         background-color #2061AE

@@ -11,6 +11,7 @@
     "test": "node build/build.test.js"
   },
   "dependencies": {
+    "@xkeshi/vue-qrcode": "^0.3.0",
     "amfe-flexible": "^2.2.1",
     "animate.css": "^3.6.1",
     "cssnano": "^3.10.0",
@@ -27,6 +28,7 @@
     "postcss-write-svg": "^3.0.1",
     "stylus": "^0.54.5",
     "vue": "^2.5.2",
+    "vue-clipboard2": "^0.1.0",
     "vue-router": "^3.0.1",
     "vue-tree-halower": "^1.4.0",
     "vuex": "^3.0.1"

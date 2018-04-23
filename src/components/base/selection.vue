@@ -86,6 +86,7 @@
       color #fff
       line-height 40px
       z-index 10
+      white-space: nowrap;
       li
         padding 0 10px
         background-color #00B0F0 //修改的
