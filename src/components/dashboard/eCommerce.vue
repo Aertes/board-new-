@@ -9,6 +9,7 @@
             <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
             <div class="qrcode-warp" v-show="isQrShow">
               <qrcode :value="url" :options="{ size: 150 }"></qrcode>
+              <span>Please scan the QR code</span>
             </div>
           </span>
           <span @click="copyURL">

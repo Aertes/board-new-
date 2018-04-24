@@ -15,7 +15,7 @@ export default {
   EC_SEARCH: BASE_URL + 'ec/search',
 
   RV_UPLOAD: BASE_URL + 'review/upload',
-  RV_SEARCH: BASE_URL + 'review/search',
+  RV_SEARCH: BASE_URL + 'review/searchTable',
 
   OV_CMA_SEARCH: BASE_URL + 'overview/campaign/search',
   OV_COM_SEARCH: BASE_URL + 'overview/com/search',

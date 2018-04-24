@@ -4,12 +4,17 @@
     <div class="table-nav clearfix">
       <h3><i class="color-line color2"></i>Dotcom Performance Overview</h3>
       <div class="tool-box clearfix">
-        <div class="selection-box">
-          <selection :selections="test" class="select-colorOrange"></selection>
-        </div>
         <div class="icon-box">
-          <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
-          <svg-icon sign="icon-link" class="link-icon"></svg-icon>
+          <span class="qrcode" @mouseenter="qrcodeShow" @mouseleave="qrcodeHide">
+            <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
+            <div class="qrcode-warp" v-show="isQrShow">
+              <qrcode :value="url" :options="{ size: 150 }"></qrcode>
+              <span>Please scan the QR code</span>
+            </div>
+          </span>
+          <span @click="copyURL">
+            <svg-icon sign="icon-link" class="link-icon"></svg-icon>
+          </span>
         </div>
       </div>
     </div>
@@ -27,56 +32,62 @@
           <th>
             <div>YTD</div>
           </th>
-          <th :colspan="2">
+          <th>
             <div>Month Target</div>
           </th>
-          <th :colspan="2">
+          <th></th>
+          <th>
             <div>YTD Target</div>
           </th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="(item, index) in b2cTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
-            v-if="ecTableData.length >= 0">
-          <td>
-            <div>{{item.category}}</div>
+            v-if="b2cTableData.length >= 0" >
+          <td @click="tips(index, 'tipss'+index)" :id="'tipss'+index">
+            <div class="floatL">{{item.name}}</div>
+            <svg-icon v-if="index==0||index==3||index==4||index==5" sign="icon-gantanhao" class="gantanhao-icon  icon-tanhao"></svg-icon>
           </td>
           <td>
-            <div>{{item.period}}</div>
+            <div>{{item.month | formatThousands}}</div>
           </td>
           <td>
-            <div>{{item.traffic1 | formatThousands}}</div>
+            <div>{{item.ytd | formatThousands}}</div>
           </td>
           <td>
-            <div>{{item.conversionRate1 | percentile}}</div>
+            <div>{{item.target | formatThousands}}</div>
+          </td>
+          <td v-if="item.mT==1">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
+          </td>
+          <td v-else-if="item.mT==2">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
+          </td>
+          <td v-else-if="item.mT==3">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
+          </td>
+          <td v-else="item.mT==4">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
           </td>
           <td>
-            <div>{{item.traffic2 | formatThousands}}</div>
+            <div>{{item.ytdTarget | formatThousands}}</div>
           </td>
-          <td>
-            <div>{{item.conversionRate2 | percentile}}</div>
+          <td v-if="item.yT==1">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
           </td>
-          <td>
-            <div>{{item.traffic3 | formatThousands}}</div>
+          <td v-else-if="item.yT==2">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
           </td>
-          <td>
-            <div>{{item.conversionRate3 | percentile}}</div>
+          <td v-else-if="item.yT==3">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
           </td>
-          <td>
-            <div>{{item.traffic4 | formatThousands}}</div>
-          </td>
-          <td>
-            <div>{{item.conversionRate4 | percentile}}</div>
-          </td>
-          <td>
-            <div>{{item.traffic5 | formatThousands}}</div>
-          </td>
-          <td>
-            <div>{{item.conversionRate5 | percentile}}</div>
+          <td v-else="item.yT==4">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
           </td>
         </tr>
         <tr v-else>
-          <td class="noData" :colspan="12">
+          <td class="noData" :colspan="7">
             <div>Temporarily no data</div>
           </td>
         </tr>
@@ -87,7 +98,79 @@
     <!---------------->
     <div class="table-name">B2B</div>
     <div>
-      I am Table
+      <table id="b2bTable" class="data-table" style="width:100%">
+        <thead>
+        <tr>
+          <th>
+            <div>Marketing Metrics</div>
+          </th>
+          <th>
+            <div>Month</div>
+          </th>
+          <th>
+            <div>YTD</div>
+          </th>
+          <th>
+            <div>Month Target</div>
+          </th>
+          <th></th>
+          <th>
+            <div>YTD Target</div>
+          </th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item, index) in b2bTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
+            v-if="b2bTableData.length >= 0">
+          <td @click="tips(index, 'tip'+index)" :id="'tip'+index">
+            <div class="floatL">{{item.name}}</div>
+            <svg-icon v-if="index==0||index==3||index==4||index==5||index==6||index==7" sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+          </td>
+          <td>
+            <div>{{item.month | formatThousands}}</div>
+          </td>
+          <td>
+            <div>{{item.ytd | formatThousands}}</div>
+          </td>
+          <td>
+            <div>{{item.target | formatThousands}}</div>
+          </td>
+          <td v-if="item.mT==1" width="50">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
+          </td>
+          <td v-else-if="item.mT==2" width="50">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
+          </td>
+          <td v-else-if="item.mT==3" width="50">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
+          </td>
+          <td v-else="item.mT==4" width="50">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
+          </td>
+          <td>
+            <div>{{item.ytdTarget | formatThousands}}</div>
+          </td>
+          <td v-if="item.yT==1" width="50">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
+          </td>
+          <td v-else-if="item.yT==2" width="50">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
+          </td>
+          <td v-else-if="item.yT==3" width="50">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
+          </td>
+          <td v-else="item.yT==4" width="50">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
+          </td>
+        </tr>
+        <tr v-else>
+          <td class="noData" :colspan="7">
+            <div>Temporarily no data</div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
 
   </div>
@@ -106,50 +189,149 @@
       return {
         b2cTableData: [],
         b2bTableData: [],
-        searchData: {
+        selectListOne: ['All Categories'],
+        searchDataB2C: {
           isB2C: true,
-          month: "201803"
-        }
+          month: '',
+          title: ['Traffic', '-Free traffic', '-Paid traffic', 'Bounce Rate', 'Conversion Rate', 'UGCR']
+        },
+        searchDataB2B: {
+          isB2C: false,
+          month: '',
+          title: ['Traffic', '-Free traffic', '-Paid traffic', 'Bounce Rate', 'Conversion Rate', 'UGCR', 'MQL', 'SQl']
+        },
+        url:'',
+        isQrShow:false,
+        locationHash: false
       }
     },
-
-    mounted() {
-      this.getB2CtableData()
-
-      this.getB2BtableData()
+    computed: {
+      getYearMonth() {
+        return this.$store.getters.getYearMonth
+      }
     },
+    mounted() {
 
+      if (window.location.hash.indexOf("?") != -1) {
+        this.locationHash = true
+      } else {
+        this.locationHash = false
+      }
+
+      if (!this.locationHash) {
+        this.getB2CtableData()
+        this.getB2BtableData()
+      }
+
+    },
+    updated() {
+      this.locationHash = false
+    },
     methods: {
 
       getB2CtableData() {
-        this.searchData.isB2C = true
-        post(COM_SEARCH, this.searchData).then(res => {
+        let B2Ctitle = this.searchDataB2C.title
+        this.searchDataB2C.month = this.getYearMonth
+        post(COM_SEARCH, this.searchDataB2C).then(res => {
           let data = res.data
-          if(data.code == 200){
-            this.b2cTableData = data.data
-          }else{
+          if (data.code == 200) {
+            let _tableDataB2C = data.data
+            for (let i = 0; i < _tableDataB2C.length; i++) {
+              _tableDataB2C[i].name = B2Ctitle[i]
+            }
+            this.b2cTableData = _tableDataB2C
+          } else {
             console.log(data.errMsg)
           }
-          debugger
         }).catch(err => console.log(err))
       },
 
       getB2BtableData() {
-        this.searchData.isB2C = false
-        post(COM_SEARCH, this.searchData).then(res => {
+        let B2Btitle = this.searchDataB2B.title
+        this.searchDataB2B.month = this.getYearMonth
+        post(COM_SEARCH, this.searchDataB2B).then(res => {
           let data = res.data
-          if(data.code == 200){
-            this.b2bTableData = data.data
-          }else{
+          if (data.code == 200) {
+            let _tableDataB2B = data.data
+            for (let i = 0; i < _tableDataB2B.length; i++) {
+              _tableDataB2B[i].name = B2Btitle[i]
+            }
+            this.b2bTableData = _tableDataB2B
+          } else {
             console.log(data.errMsg)
           }
-          debugger
         }).catch(err => console.log(err))
-      }
+      },
 
+      copyURL() {
+        this.url = `${window.location}?yearMonth=${this.getYearMonth}`;
+        const input = document.createElement('input')
+        document.body.appendChild(input)
+        input.setAttribute('value', this.url)
+        input.select()
+        if (document.execCommand('copy')) {
+          document.execCommand('copy')
+          this.layerMsg("Copy success !")
+        }
+        document.body.removeChild(input)
+      },
+
+      layerMsg(err) {
+        layer.msg(err, {
+          time: 2000,
+          skin: 'fontColor'
+        })
+      },
+
+      qrcodeShow() {
+        this.url = `${window.location}?yearMonth=${this.getYearMonth}`;
+        this.isQrShow = true
+      },
+
+      qrcodeHide(){
+        this.isQrShow = false
+      },
+
+      tips(i, id) {
+        let tipsVal = ''
+        switch (i) {
+          case 0:
+            tipsVal = 'The process of clicking through an online advertisement to the advertiser’s destination.'
+            this.tipsContent(tipsVal, id)
+            break
+          case 3:
+            tipsVal = 'The bounce rate is the percentage of visits with only 1 page view.'
+            this.tipsContent(tipsVal, id)
+            break
+          case 4:
+            tipsVal = 'Buy lead conversion shows the value of the conversion points used on the Philips digital platform. For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are represented by leads generated for completed HS lead form.'
+            this.tipsContent(tipsVal, id)
+            break
+          case 5:
+            tipsVal = 'User goal complete rate. It is about consumer survey bounced upon Philips website when viewing it.'
+            this.tipsContent(tipsVal, id)
+            break
+          case 6:
+            tipsVal = 'MKT qualified lead.'
+            this.tipsContent(tipsVal, id)
+            break
+          case 7:
+            tipsVal = 'Sales qualified leads.'
+            this.tipsContent(tipsVal, id)
+            break
+          default:
+            break
+        }
+      },
+
+      tipsContent(tipsVal, id) {
+        layer.tips(tipsVal, '#' + id, {
+          tips: [2, '#FFF2CC'],
+          skin: 'fontColorBg',
+        });
+      },
 
     },
-
     filters: {
       formatThousands: (params) => {
         if (!params) return 0
@@ -165,6 +347,12 @@
         return params.toFixed(2)
       }
     },
+    watch:{
+      getYearMonth() {
+        this.getB2CtableData()
+        this.getB2BtableData()
+      }
+    }
   }
 </script>
 
@@ -185,18 +373,10 @@
         font-style italic
         white-space pre-wrap
         word-wrap break-word
-      .triangle
-        position relative
-        &:before
-          position absolute
-          content ' '
-          width 0
-          height 0
-          border-top 8px solid #FF0000
-          border-left 8px solid transparent
-          top 0
-          right 0
-
+        &:nth-child(1)
+          width 330px
+        &:nth-child(5),&:nth-child(7)
+          width 40px
   tbody > tr
     &.odd
       background-color #F2F2F2
@@ -208,10 +388,40 @@
       text-align center
       white-space pre-wrap
       word-wrap break-word
+      &:nth-child(1)
+        text-align left
+        padding 0 10px
+        cursor pointer
+        position relative
+        .floatL
+          float left
+        .icon-tanhao
+          position absolute
+          right 10px
+          top 50%
+          transform translateY(-50%)
+        .gantanhao-icon
+          color #C0D2E4
+          font-size 20px
       &.noData
         font-size 14px
         padding 10px 0
         text-align center
     .hidden
       display none
+  #b2bTable
+    thead>tr
+      background #E26B0A
+  @media screen and (max-width: 1235px)
+    .data-table
+        tr
+          td
+          th
+            &:nth-child(1)
+              width 200px!important
+            padding 0 !important
+            .icon-tanhao
+              font-size 12px!important
+            div
+              transform scale(.7)!important
 </style>

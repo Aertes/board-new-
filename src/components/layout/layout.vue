@@ -18,11 +18,13 @@
   import NavBar from '../navbar/navbar'
   import AppMain from '../appmain/appmain'
   import Bottom from '../bottom/bottom'
+  import {getQueryString,getHashString} from '../../assets/config/urlQuery';
 
   export default ({
     data() {
       return {
         isCoverPage: true,
+        locationHash: false
       }
     },
     components: {
@@ -36,9 +38,35 @@
       },
       typesOfName() {
         return this.$store.getters.typesOfName
+      },
+      getYearMonth() {
+        return this.$store.getters.getYearMonth
       }
     },
     mounted() {
+
+      if (window.location.hash.indexOf("?") != -1) {
+        this.locationHash = true
+      } else {
+        this.locationHash = false
+      }
+
+      if(this.locationHash){
+        let time = getHashString('yearMonth')
+
+        let year = time.slice(0, 4)
+
+        let month = time.slice(4, 6)
+
+        if(month<10){
+          month = (month.slice(-1))-1
+        }
+
+        this.$store.commit('yearVoluation',year)
+
+        this.$store.commit('monthVoluation',month)
+
+      }
 
       this.hideHighlight()
 

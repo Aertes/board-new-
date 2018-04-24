@@ -49,7 +49,8 @@
         isContext: false,
         isShow: false,
         isIndex: 0,
-        context: ''
+        context: '',
+        locationHash: false
       }
     },
     computed: {
@@ -61,7 +62,15 @@
       }
     },
     mounted() {
-      this.getHighLight(this.$route.name)
+
+      if (window.location.hash.indexOf("?") != -1) {
+        this.locationHash = true
+      } else {
+        this.locationHash = false
+      }
+
+      if(!this.locationHash) this.getHighLight(this.$route.name)
+
     },
     methods: {
 
@@ -167,10 +176,10 @@
     },
     watch:{
       getTypeOfName(){
-        this.getHighLight()
+        this.getHighLight(this.getTypeOfName)
       },
       getYearMonth(){
-        this.getHighLight(this.getYearMonth)
+        this.getHighLight(this.getTypeOfName)
       }
     }
   }

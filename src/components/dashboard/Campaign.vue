@@ -6,7 +6,8 @@
       <h3><i class="color-line color1"></i>Campaign Performance Overview</h3>
       <div class="tool-box clearfix">
         <div class="selection-box">
-          <selection :selections="selectList1" class="select-colorOrange" @selectShow="selectShowOneHandle"></selection>
+          <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowOneHandle"
+                     ref="selectOptionOne"></selection>
         </div>
         <div class="icon-box">
           <span>
@@ -16,9 +17,10 @@
             <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
             <div class="qrcode-warp" v-show="isQrShow1">
               <qrcode :value="url" :options="{ size: 150 }"></qrcode>
+              <span>Please scan the QR code</span>
             </div>
           </span>
-          <span @click="copyURL(1)">
+          <span @click="copyURL">
             <svg-icon sign="icon-link" class="link-icon"></svg-icon>
           </span>
         </div>
@@ -29,34 +31,74 @@
         <table id="camTableOv" class="data-table" style="width:100%">
           <thead>
           <tr>
-            <th><div>Period</div></th>
-            <th @click="tips('Spending', 'Spending')" class="triangle Spending"><div>Spending</div></th>
-            <th @click="tips('Impression', 'Impression')" class="triangle Impression"><div>Impression</div></th>
-            <th @click="tips('Traffic', 'Traffic')" class="triangle Traffic"><div>Traffic</div></th>
-            <th @click="tips('Traffic to EC', 'EC')" class="triangle EC"><div>Traffic to EC</div></th>
-            <th><div>Target</div></th>
+            <th>
+              <div>Period</div>
+            </th>
+            <th @click="tips('Spending', 'Spending')" class="triangle Spending">
+              <div>Spending</div>
+            </th>
+            <th @click="tips('Impression', 'Impression')" class="triangle Impression">
+              <div>Impression</div>
+            </th>
+            <th @click="tips('Traffic', 'Traffic')" class="triangle Traffic">
+              <div>Traffic</div>
+            </th>
+            <th @click="tips('Traffic to EC', 'EC')" class="triangle EC">
+              <div>Traffic to EC</div>
+            </th>
+            <th>
+              <div>Target</div>
+            </th>
             <th></th>
-            <th @click="tips('Traffic to .com', 'com')" class="triangle com"><div>Traffic to .com</div></th>
-            <th><div>Target</div></th>
+            <th @click="tips('Traffic to .com', 'com')" class="triangle com">
+              <div>Traffic to .com</div>
+            </th>
+            <th>
+              <div>Target</div>
+            </th>
             <th></th>
-            <th @click="tips('CTR', 'CTR')" class="triangle CTR"><div>CTR</div></th>
-            <th @click="tips('Leads', 'Leads')" class="triangle Leads"><div>Leads</div></th>
-            <th @click="tips('Cost per lead', 'Cost')" class="triangle Cost"><div>Cost per lead</div></th>
-            <th @click="tips('Baseline1', 'Baseline1')" class="triangle Baseline1"><div>Baseline</div></th>
+            <th @click="tips('CTR', 'CTR')" class="triangle CTR">
+              <div>CTR</div>
+            </th>
+            <th @click="tips('Leads', 'Leads')" class="triangle Leads">
+              <div>Leads</div>
+            </th>
+            <th @click="tips('Cost per lead', 'Cost')" class="triangle Cost">
+              <div>Cost per lead</div>
+            </th>
+            <th @click="tips('Baseline1', 'Baseline1')" class="triangle Baseline1">
+              <div>Baseline</div>
+            </th>
             <th></th>
-            <th @click="tips('Conversion%', 'Conversion')" class="triangle Conversion"><div>Conversion%</div></th>
-            <th @click="tips('Baseline2', 'Baseline2')" class="triangle Baseline2"><div>Baseline</div></th>
+            <th @click="tips('Conversion%', 'Conversion')" class="triangle Conversion">
+              <div>Conversion%</div>
+            </th>
+            <th @click="tips('Baseline2', 'Baseline2')" class="triangle Baseline2">
+              <div>Baseline</div>
+            </th>
             <th></th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(item, index) in camTableOvData" :class="{even: index%2 == 0, odd: index%2 != 0}">
-            <td><div>{{item.title}}</div></td>
-            <td><div>{{item.spending | formatThousands }}</div></td>
-            <td><div>{{item.impression | formatThousands }}</div></td>
-            <td><div>{{item.traffic | formatThousands }}</div></td>
-            <td><div>{{item.trafficEc | formatThousands }}</div></td>
-            <td><div>{{item.trafficEcTarget | formatThousands }}</div></td>
+            <td>
+              <div>{{item.title}}</div>
+            </td>
+            <td>
+              <div>{{item.spending | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.impression | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.traffic | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.trafficEc | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.trafficEcTarget | formatThousands }}</div>
+            </td>
             <td v-if="item.h==1">
               <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
             </td>
@@ -69,8 +111,12 @@
             <td v-else="item.h==4">
               <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
             </td>
-            <td><div>{{item.trafficCom | formatThousands }}</div></td>
-            <td><div>{{item.trafficComTarget | formatThousands }}</div></td>
+            <td>
+              <div>{{item.trafficCom | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.trafficComTarget | formatThousands }}</div>
+            </td>
             <td v-if="item.k==1">
               <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
             </td>
@@ -83,10 +129,18 @@
             <td v-else="item.k==4">
               <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
             </td>
-            <td><div>{{item.ctr | percentile }}</div></td>
-            <td><div>{{item.leads | formatThousands }}</div></td>
-            <td><div>{{item.costLead | round }}</div></td>
-            <td><div>{{item.baseLine | formatThousands }}</div></td>
+            <td>
+              <div>{{item.ctr | percentile }}</div>
+            </td>
+            <td>
+              <div>{{item.leads | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.costLead | round }}</div>
+            </td>
+            <td>
+              <div>{{item.baseLine | formatThousands }}</div>
+            </td>
             <td v-if="item.p==1">
               <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
             </td>
@@ -99,8 +153,12 @@
             <td v-else="item.p==4">
               <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
             </td>
-            <td><div>{{item.conversionRate | percentile }}</div></td>
-            <td><div>{{item.baseLineConversion | percentile }}</div></td>
+            <td>
+              <div>{{item.conversionRate | percentile }}</div>
+            </td>
+            <td>
+              <div>{{item.baseLineConversion | percentile }}</div>
+            </td>
             <td v-if="item.s==1">
               <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
             </td>
@@ -125,9 +183,10 @@
       <h3><i class="color-line color1"></i>Individual Campaign Performance Analysis</h3>
       <div class="tool-box clearfix">
         <div class="selection-box">
-          <selection :selections="selectList1" class="select-colorOrange" @selectShow="selectShowTwoHandle"></selection>
-          <selection :selections="selectList2" class="select-colorDarkseaGreen"
-                     @selectShow="selectShowThreeHandle" ref="selectOption"></selection>
+          <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowTwoHandle"
+                     ref="selectOptionTwo"></selection>
+          <selection :selections="selectListTwo" class="select-colorDarkseaGreen"
+                     @selectShow="selectShowThreeHandle" ref="selectOptionThree"></selection>
         </div>
         <div class="icon-box">
           <span>
@@ -137,9 +196,10 @@
             <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
             <div class="qrcode-warp" v-show="isQrShow2">
               <qrcode :value="url" :options="{ size: 150 }"></qrcode>
+              <span>Please scan the QR code</span>
             </div>
           </span>
-          <span @click="copyURL(2)">
+          <span @click="copyURL">
             <svg-icon sign="icon-link" class="link-icon"></svg-icon>
           </span>
         </div>
@@ -151,31 +211,73 @@
         <table id="camTableAn" class="data-table" style="width:100%">
           <thead>
           <tr>
-            <th><div>{{isMonth}}</div></th>
-            <th><div>Period</div></th>
-            <th><div>Channel</div></th>
-            <th><div>Spending</div></th>
-            <th><div>Impression</div></th>
-            <th><div>Click</div></th>
-            <th><div>CTR</div></th>
-            <th><div>Leads</div></th>
-            <th><div>Cost per lead</div></th>
-            <th><div>Conversion%</div></th>
+            <th>
+              <div>{{isMonth}}</div>
+            </th>
+            <th>
+              <div>Period</div>
+            </th>
+            <th>
+              <div>Channel</div>
+            </th>
+            <th>
+              <div>Spending</div>
+            </th>
+            <th>
+              <div>Impression</div>
+            </th>
+            <th>
+              <div>Click</div>
+            </th>
+            <th>
+              <div>CTR</div>
+            </th>
+            <th>
+              <div>Leads</div>
+            </th>
+            <th>
+              <div>Cost per lead</div>
+            </th>
+            <th>
+              <div>Conversion%</div>
+            </th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(item, index) in camTableAnData">
-            <td :rowspan="item.monthspan" :class="{hidden: item.monthdis}" v-if="item.type == 'month'"><div>{{item.month}}</div></td>
-            <td :rowspan="item.weekspan" :class="{hidden: item.weekdis}" v-else="item.type == 'week'"><div>{{item.week}}</div></td>
-            <td :rowspan="item.endDatespan" :class="{hidden: item.endDatedis}"><div>{{item.startDate}}-{{item.endDate}}</div></td>
-            <td><div>{{item.channel}}</div></td>
-            <td><div>{{item.spending | formatThousands }}</div></td>
-            <td><div>{{item.impression | formatThousands }}</div></td>
-            <td><div>{{item.click | formatThousands }}</div></td>
-            <td><div>{{item.ctr | percentile }}</div></td>
-            <td><div>{{item.leads | formatThousands }}</div></td>
-            <td><div>{{item.costLead | round }}</div></td>
-            <td><div>{{item.conversionRate | percentile }}</div></td>
+            <td :rowspan="item.monthspan" :class="{hidden: item.monthdis}" v-if="item.type == 'month'">
+              <div>{{item.month}}</div>
+            </td>
+            <td :rowspan="item.weekspan" :class="{hidden: item.weekdis}" v-else="item.type == 'week'">
+              <div>{{item.week}}</div>
+            </td>
+            <td :rowspan="item.endDatespan" :class="{hidden: item.endDatedis}">
+              <div>{{item.startDate}}-{{item.endDate}}</div>
+            </td>
+            <td>
+              <div>{{item.channel}}</div>
+            </td>
+            <td>
+              <div>{{item.spending | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.impression | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.click | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.ctr | percentile }}</div>
+            </td>
+            <td>
+              <div>{{item.leads | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.costLead | round }}</div>
+            </td>
+            <td>
+              <div>{{item.conversionRate | percentile }}</div>
+            </td>
           </tr>
           </tbody>
         </table>
@@ -187,6 +289,7 @@
 
 <script type="text/ecmascript-6">
   import xhrUrls from '../../assets/config/xhrUrls';
+  import {getQueryString, getHashString} from '../../assets/config/urlQuery';
   import {get, post} from '../../assets/config/http';
 
   const CMA_SEARCH = xhrUrls.CMA_SEARCH;
@@ -200,11 +303,14 @@
       return {
         camTableOvData: [],
         camTableAnData: [],
-        selectList1: ['All Categories'],
-        selectList2: ['All Categories'],
-        selectVal1: '',
-        selectVal2: '',
-        selectVal3: '',
+        selectListOne: ['All Categories'],
+        selectListTwo: [],
+        campaign: null,
+        campaignId: 0,
+        campaignTwo: null,
+        campaignTwoId: 0,
+        category: null,
+        categoryId: 0,
         OvTableSearch: {
           campaign: '',
           isTable: true,
@@ -218,8 +324,10 @@
         },
         isMonth: '',
         url: '',
-        isQrShow1:false,
-        isQrShow2:false
+        isQrShow1: false,
+        isQrShow2: false,
+        locationHash: false,
+        isSelectTwo: false
       }
     },
     computed: {
@@ -229,16 +337,27 @@
     },
     mounted() {
 
-      this.getOvTableData()
+      if (window.location.hash.indexOf("?") != -1) {
+        this.locationHash = true
+      } else {
+        this.locationHash = false
+      }
 
-      this.getAnTableData()
+      if (this.locationHash) {
+        this.getUrl()
+      } else {
+        this.getCategoryList()
+        this.getCampaignList()
+        this.getOvTableData()
+      }
 
-      this.getSelectList()
-
+    },
+    updated() {
+      this.locationHash = false
     },
     methods: {
       getOvTableData() {
-        this.OvTableSearch.campaign = this.selectVal1
+        this.OvTableSearch.campaign = this.campaign
         this.OvTableSearch.month = this.getYearMonth
         post(CMA_SEARCH, this.OvTableSearch).then(res => {
           let data = res.data;
@@ -251,8 +370,8 @@
       },
 
       getAnTableData() {
-        this.AnTableSearch.campaign = this.selectVal2
-        this.AnTableSearch.category = this.selectVal3
+        this.AnTableSearch.campaign = this.category
+        this.AnTableSearch.category = this.campaignTwo
         post(CMA_SEARCH, this.AnTableSearch).then(res => {
           let data = res.data;
           if (data.code == 200) {
@@ -350,36 +469,30 @@
         this.camTableAnData = data
       },
 
-      copyURL(id) {
-        let baseUrl;
-        baseUrl = `${window.location.origin}/dashboard/#/dashboard?istable=sdasdsd&type=cam&yearMonth=${this.OvTableSearch.month}`;
-        switch (id) {
-          case 1:
-            this.url = baseUrl;
-            let input1 = document.createElement('input')
-            document.body.appendChild(input1)
-            input1.setAttribute('value', this.url)
-            input1.select()
-            if (document.execCommand('copy')) {
-              document.execCommand('copy')
-              this.layerMsg("Copy success !")
-            }
-            document.body.removeChild(input)
-            break
-          case 2:
-            this.url = baseUrl
-            let input = document.createElement('input')
-            document.body.appendChild(input)
-            input.setAttribute('value', this.url)
-            input.select()
-            if (document.execCommand('copy')) {
-              document.execCommand('copy')
-              this.layerMsg("Copy success !")
-            }
-            document.body.removeChild(input)
-            break
+      copyURL() {
+
+        this.url = `${window.location}?yearMonth=${this.getYearMonth}&campaign=${this.campaign}&campaignId=${this.campaignId}&campaignTwo=${this.campaignTwo}&campaignTwoId=${this.campaignTwoId}&category=${this.category}&categoryId=${this.categoryId}`;
+
+        let input = document.createElement('input')
+
+        document.body.appendChild(input)
+
+        input.setAttribute('value', encodeURI(this.url))
+
+        input.select()
+
+        if (document.execCommand('copy')) {
+
+          document.execCommand('copy')
+
+          this.layerMsg("Copy success !")
+
         }
+
+        document.body.removeChild(input)
+
       },
+
       layerMsg(err) {
         layer.msg(err, {
           time: 2000,
@@ -388,21 +501,20 @@
       },
 
       qrcodeShow(id) {
-        let baseUrl;
-        baseUrl = `${window.location.origin}/dashboard/#/dashboard?istable=sdasdsd&type=cam&yearMonth=${this.OvTableSearch.month}`;
+        let baseUrl = `${window.location}?yearMonth=${this.getYearMonth}&campaign=${this.campaign}&campaignId=${this.campaignId}&campaignTwo=${this.campaignTwo}&campaignTwoId=${this.campaignTwoId}&category=${this.category}&categoryId=${this.categoryId}`;
         switch (id) {
           case 1:
             this.url = baseUrl;
             this.isQrShow1 = true
-            break
+            break;
           case 2:
-            this.url = baseUrl
+            this.url = baseUrl;
             this.isQrShow2 = true
-            break
+            break;
         }
       },
 
-      qrcodeHide(id){
+      qrcodeHide(id) {
         switch (id) {
           case 1:
             this.isQrShow1 = false
@@ -413,44 +525,130 @@
         }
       },
 
-      getSelectList() {
+      getCategoryList() {
+
         get(CAM_CATEGORY).then(res => {
           let data = res.data.data
           data.forEach(val => {
-            this.selectList1.push(val)
+            this.selectListOne.push(val)
           })
-
         })
+
+      },
+
+      getCampaignList() {
+
+        get(`${CAM_GETPARAMETER}?category=All%20Categories`).then(res => {
+          let data = res.data.data
+          this.selectListTwo = []
+          data.forEach(val => {
+            this.selectListTwo.push(val)
+          })
+        })
+
       },
 
       selectShowOneHandle(val) {
 
-        val.val == 'All Categories' ? this.selectVal1 = '' : this.selectVal1 = val.val
+        if (!this.locationHash) {
+
+          val.val == 'All Categories' ? this.campaign = null : this.campaign = val.val
+
+          this.campaignId = val.id
+
+        }
 
       },
 
       selectShowTwoHandle(val) {
 
-        let url = `${CAM_GETPARAMETER}?category=${val.val}`
-        get(url).then(res => {
-          let data = res.data.data
-          this.selectList2 = ['All Categories']
-          data.forEach(val => {
-            this.selectList2.push(val)
+        if (!this.locationHash) {
+
+          get(`${CAM_GETPARAMETER}?category=${val.val}`).then(res => {
+            let data = res.data.data
+            this.selectListTwo = []
+            data.forEach(val => {
+              this.selectListTwo.push(val)
+            })
           })
-        })
 
-        this.$refs.selectOption.nowIndex = 0
+          this.$refs.selectOptionThree.nowIndex = 0
 
-        val.val == 'All Categories' ? this.selectVal2 = '' : this.selectVal2 = val.val
+          val.val == 'All Categories' ? this.campaignTwo = null : this.campaignTwo = val.val
+
+          this.campaignTwoId = val.id
+
+        }
 
       },
 
       selectShowThreeHandle(val) {
 
-        val.val == 'All Categories' ? this.selectVal3 = '' : this.selectVal3 = val.val
+        if (!this.locationHash) {
+
+          this.isSelectTwo = false
+
+          val.val == 'All Categories' ? this.category = '' : this.category = val.val
+
+          this.categoryId = val.id
+
+        }
 
       },
+
+      getUrl() {
+
+        let CAM_GETPARAMETER_CATEGOTY = 'All Categories'
+
+        let campaign = getHashString('campaign')
+        let campaignId = getHashString('campaignId')
+
+        let campaignTwo = getHashString('campaignTwo')
+        let campaignTwoId = getHashString('campaignTwoId')
+
+        let category = getHashString('category')
+        let categoryId = getHashString('categoryId')
+
+        this.getCategoryList()
+
+        campaign == 'null' ? this.campaign = null : this.campaign = campaign
+
+        this.$refs.selectOptionOne.nowIndex = campaignId
+
+        this.getOvTableData()
+
+        this.isSelectTwo = true
+
+        get(`${CAM_GETPARAMETER}?category=${campaignTwoId == 0? CAM_GETPARAMETER_CATEGOTY : campaignTwo}`).then(res => {
+
+          let data = res.data.data
+
+          this.selectListTwo = []
+
+          data.forEach(val => {
+
+            this.selectListTwo.push(val)
+
+          })
+
+        })
+
+        this.$refs.selectOptionTwo.nowIndex = campaignTwoId
+
+        this.$refs.selectOptionThree.nowIndex = categoryId
+
+        campaignTwo == 'null' ? this.campaignTwo = null : this.campaignTwo = campaignTwo
+
+        this.campaignTwoId = campaignTwoId
+
+        this.category = category
+
+        this.categoryId = categoryId
+
+        this.getAnTableData()
+
+      }
+
     },
     filters: {
       formatThousands: (params) => {
@@ -468,16 +666,19 @@
       }
     },
     watch: {
-      selectVal1(){
-        this.getOvTableData()
+      selectListTwo() {
+        if (!this.locationHash && !this.isSelectTwo) this.category = this.selectListTwo[0]
       },
-      selectVal2(){
-        this.getAnTableData()
+      campaign() {
+        if (!this.locationHash) this.getOvTableData()
       },
-      selectVal3(){
-        this.getAnTableData()
+      campaignTwo() {
+        if (!this.locationHash) this.getAnTableData()
       },
-      getYearMonth(){
+      category() {
+        if (!this.locationHash && !this.isSelectTwo) this.getAnTableData()
+      },
+      getYearMonth() {
         this.getOvTableData()
       },
     }
@@ -526,15 +727,21 @@
         word-wrap break-word
       .hidden
         display none
+
   #url1, #url2
     display none
+
+  #camTableOv
+    th
+      &:nth-child(7), &:nth-child(10), &:nth-child(15), &:nth-child(18)
+        width 30px
+
   @media screen and (max-width: 1235px)
-    .campaign-table
-      .data-table
+    .data-table
         tr
           td
           th
-            padding 0!important
+            padding 0 !important
             div
               transform scale(.7)
 

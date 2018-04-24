@@ -5,25 +5,273 @@
       <h3><i class="color-line color3"></i>CRM Performance Overview</h3>
       <div class="tool-box clearfix">
         <div class="icon-box">
-          <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
-          <svg-icon sign="icon-link" class="link-icon"></svg-icon>
+          <span class="qrcode" @mouseenter="qrcodeShow" @mouseleave="qrcodeHide">
+            <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
+            <div class="qrcode-warp" v-show="isQrShow">
+              <qrcode :value="url" :options="{ size: 150 }"></qrcode>
+              <span>Please scan the QR code</span>
+            </div>
+          </span>
+          <span @click="copyURL">
+            <svg-icon sign="icon-link" class="link-icon"></svg-icon>
+          </span>
         </div>
       </div>
     </div>
-    <div class="table-name">Campaign name</div>
     <div class="table-box">
-      I am Table
+      <table id="CRMTable" class="data-table" style="width:100%">
+        <thead>
+        <tr>
+          <th>
+            <div>Marketing Metrics</div>
+          </th>
+          <th>
+            <div>Month</div>
+          </th>
+          <th>
+            <div>YTD</div>
+          </th>
+          <th>
+            <div>Month Target</div>
+          </th>
+          <th></th>
+          <th>
+            <div>YTD Target</div>
+          </th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item, index) in CRMTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
+            v-if="CRMTableData.length >= 0">
+          <td @click="tips(index, 'tipss'+index)" :id="'tipss'+index">
+            <div class="floatL">{{item.name}}</div>
+            <div class="icon-tanhao">
+              <svg-icon sign="icon-gantanhao" class="gantanhao-icon"></svg-icon>
+            </div>
+          </td>
+          <td>
+            <div>{{item.month | formatThousands}}</div>
+          </td>
+          <td>
+            <div>{{item.ytd | formatThousands}}</div>
+          </td>
+          <td>
+            <div>{{item.target | formatThousands}}</div>
+          </td>
+          <td v-if="item.mT==1">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
+          </td>
+          <td v-else-if="item.mT==2">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
+          </td>
+          <td v-else-if="item.mT==3">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
+          </td>
+          <td v-else="item.mT==4">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
+          </td>
+          <td>
+            <div>{{item.ytdTarget | formatThousands}}</div>
+          </td>
+          <td v-if="item.yT==1">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
+          </td>
+          <td v-else-if="item.yT==2">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
+          </td>
+          <td v-else-if="item.yT==3">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
+          </td>
+          <td v-else="item.yT==4">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
+          </td>
+        </tr>
+        <tr v-else>
+          <td class="noData" :colspan="7">
+            <div>Temporarily no data</div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
 
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-    export default {
-        name: "c-r-m"
-    }
+  import xhrUrls from '../../assets/config/xhrUrls';
+  import {get, post} from '../../assets/config/http';
+  const CRM_SEARCH = xhrUrls.CRM_SEARCH;
+  export default {
+    name: "c-r-m",
+    data() {
+      return {
+        CRMTableData: [],
+        searchDataCRM: {
+          month: "201803",
+          title: ['CRM Registrations', 'CRM Engagement Rate (rolling 6 months)', 'CRM Sales(M)(￥)']
+        },
+        url: '',
+        isQrShow: false
+      }
+    },
+    mounted() {
+      this.getCRMtableData()
+    },
+
+    methods:{
+      getCRMtableData() {
+        let CRMtitle = this.searchDataCRM.title
+        post(CRM_SEARCH, this.searchDataCRM).then(res => {
+          let data = res.data
+          if (data.code == 200) {
+            let _tableDataCRM = data.data
+            for (let i = 0; i < _tableDataCRM.length; i++) {
+              _tableDataCRM[i].name = CRMtitle[i]
+            }
+            this.CRMTableData = _tableDataCRM
+          } else {
+            console.log(data.errMsg)
+          }
+        }).catch(err => console.log(err))
+      },
+
+      copyURL() {
+        let baseUrl;
+        baseUrl = `${window.location.origin}/dashboard/#/dashboard?istable=1&type=cam&yearMonth=`;
+        this.url = baseUrl;
+        const input = document.createElement('input')
+        document.body.appendChild(input)
+        input.setAttribute('value', this.url)
+        input.select()
+        if (document.execCommand('copy')) {
+          document.execCommand('copy')
+          this.layerMsg("Copy success !")
+        }
+        document.body.removeChild(input)
+      },
+      layerMsg(err) {
+        layer.msg(err, {
+          time: 2000,
+          skin: 'fontColor'
+        })
+      },
+
+      qrcodeShow() {
+        let baseUrl;
+        baseUrl = `${window.location.origin}/dashboard/#/dashboard?istable=1&type=cam&yearMonth=`;
+        this.url = baseUrl;
+        this.isQrShow = true
+      },
+
+      qrcodeHide() {
+        this.isQrShow = false
+      },
+
+      tips(i, id) {
+        let tipsVal = ''
+        switch (i) {
+          case 0:
+            tipsVal = 'For Mobile registration, this figure indicates the number of members registered with mobile phone number mainly via CRM microsite, plus call center and ASC.'
+            this.tipsContent(tipsVal, id)
+            break
+          case 1:
+            tipsVal = 'For engagement rate, measure the how much users were actively interacting with us.'
+            this.tipsContent(tipsVal, id)
+            break
+          case 2:
+            tipsVal = 'The sales on FSS.'
+            this.tipsContent(tipsVal, id)
+            break
+          default:
+            break
+        }
+      },
+
+      tipsContent(tipsVal, id) {
+        layer.tips(tipsVal, '#' + id, {
+          tips: [2, '#FFF2CC'],
+          skin: 'fontColorBg',
+        });
+      },
+
+    },
+
+    filters: {
+      formatThousands: (params) => {
+        if (!params) return 0
+        let str = Math.round(params).toFixed(0)
+        return (str + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+      },
+      percentile: (params) => {
+        if (!params) return 0
+        return (Number(params) * 100).toFixed(2) + '%'
+      },
+      round: (params) => {
+        if (!params) return 0
+        return params.toFixed(2)
+      }
+    },
+  }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../appmain/appmain.styl"
+  .data-table
+    border-collapse collapse
+    border none
+    table-layout fixed
+    thead > tr
+      background #FF9933
+      th
+        padding 10px 0
+        border 1px solid #B3B3B3
+        cursor pointer
+        color #fff
+        font-weight normal
+        font-style italic
+        white-space pre-wrap
+        word-wrap break-word
+        &:nth-child(1)
+          width 330px
+        &:nth-child(5), &:nth-child(7)
+          width 40px
+
+  tbody > tr
+    &.odd
+      background-color #F2F2F2
+    &.even
+      background-color #FFFFFF
+    td
+      padding 10px 0
+      border 1px solid #B3B3B3
+      text-align center
+      white-space pre-wrap
+      word-wrap break-word
+      &:nth-child(1)
+        text-align left
+        padding 0 10px
+        cursor pointer
+        position relative
+        .floatL
+          float left
+        .icon-tanhao
+          position absolute
+          right 10px
+          top 50%
+          transform translateY(-50%)
+        .gantanhao-icon
+          color #C0D2E4
+          font-size 20px
+      &.noData
+        font-size 14px
+        padding 10px 0
+        text-align center
+    .hidden
+      display none
+
+  #CRMTable
+    thead > tr
+      background #B1A0C7
 </style>
