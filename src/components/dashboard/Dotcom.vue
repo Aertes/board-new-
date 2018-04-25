@@ -32,22 +32,23 @@
           <th>
             <div>YTD</div>
           </th>
-          <th>
+          <th colspan="2">
             <div>Month Target</div>
           </th>
-          <th></th>
-          <th>
+          <!--<th></th>-->
+          <th colspan="2">
             <div>YTD Target</div>
           </th>
-          <th></th>
+          <!--<th></th>-->
         </tr>
         </thead>
         <tbody>
         <tr v-for="(item, index) in b2cTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
-            v-if="b2cTableData.length >= 0" >
+            v-if="b2cTableData.length >= 0">
           <td @click="tips(index, 'tipss'+index)" :id="'tipss'+index">
             <div class="floatL">{{item.name}}</div>
-            <svg-icon v-if="index==0||index==3||index==4||index==5" sign="icon-gantanhao" class="gantanhao-icon  icon-tanhao"></svg-icon>
+            <svg-icon v-if="index==0||index==3||index==4||index==5" sign="icon-gantanhao"
+                      class="gantanhao-icon  icon-tanhao"></svg-icon>
           </td>
           <td>
             <div>{{item.month | formatThousands(item.name)}}</div>
@@ -58,31 +59,37 @@
           <td>
             <div>{{item.target | formatThousands(item.name)}}</div>
           </td>
-          <td v-if="item.mT==1">
+          <td v-if="item.mT==0" style="width: 50px">
+            <!--<div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>-->
+          </td>
+          <td v-else-if="item.mT==1" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
           </td>
-          <td v-else-if="item.mT==2">
+          <td v-else-if="item.mT==2" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
           </td>
-          <td v-else-if="item.mT==3">
+          <td v-else-if="item.mT==3" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
           </td>
-          <td v-else="item.mT==4">
+          <td v-else="item.mT==4" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
           </td>
           <td>
             <div>{{item.ytdTarget | formatThousands(item.name)}}</div>
           </td>
-          <td v-if="item.yT==1">
+          <td v-if="item.yT==0" style="width: 50px">
+            <!--<div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>-->
+          </td>
+          <td v-else-if="item.yT==1" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
           </td>
-          <td v-else-if="item.yT==2">
+          <td v-else-if="item.yT==2" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
           </td>
-          <td v-else-if="item.yT==3">
+          <td v-else-if="item.yT==3" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
           </td>
-          <td v-else="item.yT==4">
+          <td v-else="item.yT==4" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
           </td>
         </tr>
@@ -110,14 +117,14 @@
           <th>
             <div>YTD</div>
           </th>
-          <th>
+          <th colspan="2">
             <div>Month Target</div>
           </th>
-          <th></th>
-          <th>
+          <!--<th></th>-->
+          <th colspan="2">
             <div>YTD Target</div>
           </th>
-          <th></th>
+          <!--<th></th>-->
         </tr>
         </thead>
         <tbody>
@@ -125,7 +132,8 @@
             v-if="b2bTableData.length >= 0">
           <td @click="tips(index, 'tip'+index)" :id="'tip'+index">
             <div class="floatL">{{item.name}}</div>
-            <svg-icon v-if="index==0||index==3||index==4||index==5||index==6||index==7" sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <svg-icon v-if="index==0||index==3||index==4||index==5||index==6||index==7" sign="icon-gantanhao"
+                      class="gantanhao-icon icon-tanhao"></svg-icon>
           </td>
           <td>
             <div>{{item.month | formatThousands(item.name)}}</div>
@@ -136,31 +144,37 @@
           <td>
             <div>{{item.target | formatThousands(item.name)}}</div>
           </td>
-          <td v-if="item.mT==1" width="50">
+          <td v-if="item.mT==0" style="width: 50px">
+            <!--<div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>-->
+          </td>
+          <td v-else-if="item.mT==1" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
           </td>
-          <td v-else-if="item.mT==2" width="50">
+          <td v-else-if="item.mT==2" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
           </td>
-          <td v-else-if="item.mT==3" width="50">
+          <td v-else-if="item.mT==3" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
           </td>
-          <td v-else="item.mT==4" width="50">
+          <td v-else="item.mT==4" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
           </td>
           <td>
             <div>{{item.ytdTarget | formatThousands(item.name)}}</div>
           </td>
-          <td v-if="item.yT==1" width="50">
+          <td v-if="item.yT==0" style="width: 50px">
+            <!--<div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>-->
+          </td>
+          <td v-else-if="item.yT==1" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
           </td>
-          <td v-else-if="item.yT==2" width="50">
+          <td v-else-if="item.yT==2" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
           </td>
-          <td v-else-if="item.yT==3" width="50">
+          <td v-else-if="item.yT==3" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
           </td>
-          <td v-else="item.yT==4" width="50">
+          <td v-else="item.yT==4" style="width: 50px">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
           </td>
         </tr>
@@ -180,6 +194,7 @@
   import xhrUrls from '../../assets/config/xhrUrls';
   import {getQueryString, getHashString} from '../../assets/config/urlQuery';
   import {get, post} from '../../assets/config/http';
+
   const COM_SEARCH = xhrUrls.COM_SEARCH;
   export default {
     name: "dotcom",
@@ -198,8 +213,8 @@
           month: '',
           title: ['Traffic', '-Free traffic', '-Paid traffic', 'Bounce Rate', 'Conversion Rate', 'UGCR', 'MQL', 'SQl']
         },
-        url:'',
-        isQrShow:false,
+        url: '',
+        isQrShow: false,
         locationHash: false
       }
     },
@@ -219,7 +234,7 @@
       if (!this.locationHash) {
         this.getB2CtableData()
         this.getB2BtableData()
-      }else{
+      } else {
         this.getUrl()
       }
 
@@ -288,7 +303,7 @@
         this.isQrShow = true
       },
 
-      qrcodeHide(){
+      qrcodeHide() {
         this.isQrShow = false
       },
 
@@ -331,8 +346,8 @@
         });
       },
 
-      getUrl(){
-        if(getHashString('yearMonth')==this.getYearMonth){
+      getUrl() {
+        if (getHashString('yearMonth') == this.getYearMonth) {
           this.getB2CtableData()
           this.getB2BtableData()
         }
@@ -340,11 +355,11 @@
 
     },
     filters: {
-      formatThousands: (params,name) => {
+      formatThousands: (params, name) => {
         if (!params) return 0
-        if(name == 'Bounce Rate' || name == 'Conversion Rate' || name=='UGCR'){
+        if (name == 'Bounce Rate' || name == 'Conversion Rate' || name == 'UGCR') {
           return (Number(params) * 100).toFixed(0) + '%'
-        }else{
+        } else {
           let str = Math.round(params).toFixed(0)
           return (str + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
         }
@@ -358,7 +373,7 @@
         return params.toFixed(2)
       }
     },
-    watch:{
+    watch: {
       getYearMonth() {
         this.getB2CtableData()
         this.getB2BtableData()
@@ -386,8 +401,9 @@
         word-wrap break-word
         &:nth-child(1)
           width 330px
-        &:nth-child(5),&:nth-child(7)
-          width 40px
+
+  /*&:nth-child(5),&:nth-child(7)*/
+  /*width 40px*/
   tbody > tr
     &.odd
       background-color #F2F2F2
@@ -402,7 +418,6 @@
       &:nth-child(1)
         text-align left
         padding 0 10px
-        cursor pointer
         position relative
         .floatL
           float left
@@ -414,31 +429,35 @@
         .gantanhao-icon
           color #C0D2E4
           font-size 20px
+          cursor pointer
       &.noData
         font-size 14px
         padding 10px 0
         text-align center
     .hidden
       display none
+
   #b2bTable
-    thead>tr
+    thead > tr
       background #E26B0A
+
   @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .data-table
-        tr
-          td
-          th
-            &:nth-child(1)
-              width 200px!important
-            padding 0 !important
-            .icon-tanhao
-              font-size 12px!important
+      tr
+        td
+        th
+          &:nth-child(1)
+            width 200px !important
+          padding 0 !important
+          .icon-tanhao
+            font-size 12px !important
+          div
+            transform scale(.7) !important
+        td
+          &:nth-child(1)
             div
-              transform scale(.7)!important
-          td
-            &:nth-child(1)
-              div
-                transform-origin 25px
+              transform-origin 25px
+
     .tool-box
       display none
 </style>

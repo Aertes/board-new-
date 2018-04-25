@@ -138,7 +138,6 @@
       },
 
       highLightDel(id) {
-
         get(HIGHT_LIGHT_DELETE +'/'+id).then(res => {
           let data = res.data;
           if (data.code == 200) {

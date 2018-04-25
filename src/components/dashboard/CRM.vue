@@ -265,9 +265,9 @@
         white-space pre-wrap
         word-wrap break-word
         &:nth-child(1)
-          width 330px
+          width 400px
         &:nth-child(5), &:nth-child(7)
-          width 40px
+          width 60px
 
   tbody > tr
     &.odd
@@ -311,7 +311,9 @@
         td
         th
           &:nth-child(1)
-            width 230px!important
+            width 310px!important
+          &:nth-child(5), &:nth-child(7)
+            width 30px!important
           padding 0 !important
           .icon-tanhao
             font-size 12px!important

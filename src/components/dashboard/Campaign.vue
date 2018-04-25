@@ -244,14 +244,14 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(item, index) in camTableAnData">
-            <td :rowspan="item.monthspan" :class="{hidden: item.monthdis}" v-if="item.type == 'month'">
+          <tr v-for="(item, index) in camTableAnData" :class="{even: index%2 == 0, odd: index%2 != 0}">
+            <td :rowspan="item.monthspan" :class="{ hidden: item.monthdis}" v-if="item.type == 'month'">
               <div>{{item.month}}</div>
             </td>
-            <td :rowspan="item.weekspan" :class="{hidden: item.weekdis}" v-else="item.type == 'week'">
+            <td :rowspan="item.weekspan" :class="{ hidden: item.weekdis}" v-else="item.type == 'week'">
               <div>{{item.week}}</div>
             </td>
-            <td :rowspan="item.endDatespan" :class="{hidden: item.endDatedis}">
+            <td :rowspan="item.endDatespan" :class="{ hidden: item.endDatedis}">
               <div>{{item.startDate}}-{{item.endDate}}</div>
             </td>
             <td>
@@ -464,6 +464,7 @@
           rowIndex++;
         }
         this.camTableAnData = data
+        console.log(data)
       },
 
       copyURL() {
@@ -725,9 +726,10 @@
       .hidden
         display none
 
-  #url1, #url2
-    display none
-
+  #camTableAn
+    th
+      &:nth-child(2)
+        width 190px
   #camTableOv
     th
       &:nth-child(7), &:nth-child(10), &:nth-child(15), &:nth-child(18)
@@ -741,5 +743,9 @@
             padding 0 !important
             div
               transform scale(.7)
+    #camTableAn
+      th
+        &:nth-child(2)
+          width 100px
 
 </style>

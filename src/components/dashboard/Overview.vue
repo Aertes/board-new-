@@ -957,13 +957,13 @@
         white-space pre-wrap
         word-wrap break-word
         &:nth-child(1)
-          width 50px
+          width 60px
         &:nth-child(2)
-          width 120px
+          width 130px
         &:nth-child(3)
           width 300px
         &:nth-child(6),&:nth-child(9)
-          width 40px
+          width 60px
   tbody
     tr
       &:nth-child(1),&:nth-child(2),&:nth-child(3),&:nth-child(4)
@@ -1012,11 +1012,17 @@
       tr
         td
         th
+          &:nth-child(1)
+            width 40px!important
+          &:nth-child(2)
+            width 130px!important
           &:nth-child(3)
             width 280px!important
           padding 0 !important
           .icon-tanhao
             font-size 12px!important
+          &:nth-child(6),&:nth-child(9)
+            width 30px!important
           div
             transform scale(.7)!important
         &:nth-child(1),&:nth-child(5),&:nth-child(9),&:nth-child(13)
