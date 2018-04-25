@@ -69,8 +69,8 @@
 
 <script type="text/ecmascript-6">
   import xhrUrls from '../../assets/config/xhrUrls';
+  import {getQueryString, getHashString} from '../../assets/config/urlQuery';
   import {get, post} from '../../assets/config/http';
-
   const EC_SEARCH = xhrUrls.EC_SEARCH;
   export default {
     name: "e-commerce",
@@ -78,18 +78,38 @@
       return {
         ecTableData: [],
         dataSearch: {
-          category: 'MG',
-          month: '201803'
+          month: ''
         },
         url:'',
         isQrShow:false
       }
     },
+    computed: {
+      getYearMonth() {
+        return this.$store.getters.getYearMonth
+      }
+    },
     mounted() {
-      this.getEcTableData()
+
+      if (window.location.hash.indexOf("?") != -1) {
+        this.locationHash = true
+      } else {
+        this.locationHash = false
+      }
+
+      if (!this.locationHash) {
+        this.getEcTableData()
+      }else{
+        this.getUrl()
+      }
+
+    },
+    updated() {
+      this.locationHash = false
     },
     methods: {
       getEcTableData() {
+        this.dataSearch.month = this.getYearMonth
         post(EC_SEARCH, this.dataSearch).then(res => {
           let data = res.data;
           if (data.code == 200) {
@@ -122,9 +142,7 @@
       },
 
       copyURL() {
-        let baseUrl;
-        baseUrl = `${window.location.origin}/dashboard/#/dashboard?istable=1&type=cam&yearMonth=${this.dataSearch.month}`;
-        this.url = baseUrl;
+        this.url = `${window.location}?yearMonth=${this.getYearMonth}`;
         const input = document.createElement('input')
         document.body.appendChild(input)
         input.setAttribute('value', this.url)
@@ -135,6 +153,7 @@
         }
         document.body.removeChild(input)
       },
+
       layerMsg(err) {
         layer.msg(err, {
           time: 2000,
@@ -143,15 +162,19 @@
       },
 
       qrcodeShow() {
-        let baseUrl;
-        baseUrl = `${window.location.origin}/dashboard/#/dashboard?istable=1&type=cam&yearMonth=${this.dataSearch.month}`;
-        this.url = baseUrl;
+        this.url = `${window.location}?yearMonth=${this.getYearMonth}`;
         this.isQrShow = true
       },
 
       qrcodeHide(){
         this.isQrShow = false
       },
+
+      getUrl(){
+        if(getHashString('yearMonth')==this.getYearMonth){
+          this.getEcTableData()
+        }
+      }
 
     },
     filters: {
@@ -169,6 +192,11 @@
         return params.toFixed(2)
       }
     },
+    watch:{
+      getYearMonth() {
+        this.getEcTableData()
+      }
+    }
   }
 </script>
 
@@ -220,5 +248,17 @@
         padding 10px 0
         text-align center
     .hidden
+      display none
+  @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
+    .data-table
+      tr
+        td
+        th
+          padding 0 !important
+          .icon-tanhao
+            font-size 12px!important
+          div
+            transform scale(.7)!important
+    .tool-box
       display none
 </style>

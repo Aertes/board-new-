@@ -50,13 +50,13 @@
             <svg-icon v-if="index==0||index==3||index==4||index==5" sign="icon-gantanhao" class="gantanhao-icon  icon-tanhao"></svg-icon>
           </td>
           <td>
-            <div>{{item.month | formatThousands}}</div>
+            <div>{{item.month | formatThousands(item.name)}}</div>
           </td>
           <td>
-            <div>{{item.ytd | formatThousands}}</div>
+            <div>{{item.ytd | formatThousands(item.name)}}</div>
           </td>
           <td>
-            <div>{{item.target | formatThousands}}</div>
+            <div>{{item.target | formatThousands(item.name)}}</div>
           </td>
           <td v-if="item.mT==1">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
@@ -71,7 +71,7 @@
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
           </td>
           <td>
-            <div>{{item.ytdTarget | formatThousands}}</div>
+            <div>{{item.ytdTarget | formatThousands(item.name)}}</div>
           </td>
           <td v-if="item.yT==1">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
@@ -128,13 +128,13 @@
             <svg-icon v-if="index==0||index==3||index==4||index==5||index==6||index==7" sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
           </td>
           <td>
-            <div>{{item.month | formatThousands}}</div>
+            <div>{{item.month | formatThousands(item.name)}}</div>
           </td>
           <td>
-            <div>{{item.ytd | formatThousands}}</div>
+            <div>{{item.ytd | formatThousands(item.name)}}</div>
           </td>
           <td>
-            <div>{{item.target | formatThousands}}</div>
+            <div>{{item.target | formatThousands(item.name)}}</div>
           </td>
           <td v-if="item.mT==1" width="50">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
@@ -149,7 +149,7 @@
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
           </td>
           <td>
-            <div>{{item.ytdTarget | formatThousands}}</div>
+            <div>{{item.ytdTarget | formatThousands(item.name)}}</div>
           </td>
           <td v-if="item.yT==1" width="50">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
@@ -177,12 +177,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-
   import xhrUrls from '../../assets/config/xhrUrls';
+  import {getQueryString, getHashString} from '../../assets/config/urlQuery';
   import {get, post} from '../../assets/config/http';
-
   const COM_SEARCH = xhrUrls.COM_SEARCH;
-
   export default {
     name: "dotcom",
     data() {
@@ -221,6 +219,8 @@
       if (!this.locationHash) {
         this.getB2CtableData()
         this.getB2BtableData()
+      }else{
+        this.getUrl()
       }
 
     },
@@ -331,12 +331,23 @@
         });
       },
 
+      getUrl(){
+        if(getHashString('yearMonth')==this.getYearMonth){
+          this.getB2CtableData()
+          this.getB2BtableData()
+        }
+      }
+
     },
     filters: {
-      formatThousands: (params) => {
+      formatThousands: (params,name) => {
         if (!params) return 0
-        let str = Math.round(params).toFixed(0)
-        return (str + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+        if(name == 'Bounce Rate' || name == 'Conversion Rate' || name=='UGCR'){
+          return (Number(params) * 100).toFixed(0) + '%'
+        }else{
+          let str = Math.round(params).toFixed(0)
+          return (str + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+        }
       },
       percentile: (params) => {
         if (!params) return 0
@@ -412,7 +423,7 @@
   #b2bTable
     thead>tr
       background #E26B0A
-  @media screen and (max-width: 1235px)
+  @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .data-table
         tr
           td
@@ -424,4 +435,10 @@
               font-size 12px!important
             div
               transform scale(.7)!important
+          td
+            &:nth-child(1)
+              div
+                transform-origin 25px
+    .tool-box
+      display none
 </style>

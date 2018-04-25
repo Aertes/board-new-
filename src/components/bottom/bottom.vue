@@ -9,8 +9,7 @@
       <li v-for="(item, index) in HighLightData" >
         <input type="text" :id="item.id" :value="item.content" @blur="HighLightUpdata(item.id, item.month, item.type)">
         <p>
-          <span :id="item.id" @click="HighLightEdit()">{{item.content}}</span>
-          <span class="del" @click="highLightDel(item.id)"><svg-icon sign="icon-closed"></svg-icon></span>
+          <span :id="item.id" @click="HighLightEdit()">{{item.content}}<span class="del" @click="highLightDel(item.id)"><svg-icon sign="icon-closed"></svg-icon></span></span>
         </p>
       </li>
     </ul>
@@ -82,6 +81,8 @@
       },
 
       HighLightEdit() {
+        let dpr = window.devicePixelRatio || 1
+        if(dpr>1) return
         this.isEdit = true;
         $('#'+event.target.id).parents('li').addClass('edit').siblings().removeClass('edit')
       },
@@ -100,7 +101,7 @@
           if (data.code == 200) {
             this.isEdit = false
             this.layerMsg('Updata success!')
-            this.getHighLight()
+            this.getHighLight(this.getTypeOfName)
             $('#'+that).parents('li').removeClass('edit')
           } else {
             this.isEdit = false
@@ -127,7 +128,7 @@
             if (data.code == 200) {
               this.closeLayerButton()
               this.layerMsg('Create success!')
-              this.getHighLight()
+              this.getHighLight(this.getTypeOfName)
             } else {
               this.closeLayerButton()
               this.layerMsg('Create failure!')
@@ -137,11 +138,12 @@
       },
 
       highLightDel(id) {
+
         get(HIGHT_LIGHT_DELETE +'/'+id).then(res => {
           let data = res.data;
           if (data.code == 200) {
             this.layerMsg('Delete success!')
-            this.getHighLight()
+            this.getHighLight(this.getTypeOfName)
           } else {
             this.layerMsg('Delete failure!')
           }
@@ -151,6 +153,7 @@
       closeLayerButton() {
         layer.close(layerId)
         this.context = ''
+        this.isContext = false
       },
 
       layerOpen(id) {
@@ -227,14 +230,18 @@
           span
             line-height 30px
             display inline-block
-            &.del
+            -webkit-text-size-adjust: none
+            text-size-adjust: none
+            .del
               width: 18px
               height: 18px
-              display inline-block
-          .icon
-            font-size 18px
-            display none
+              display none
+            .icon
+              font-size 18px
+              display none
           &:hover
+            .del
+              display inline-block
             .icon
               display inline-block
         &.edit
@@ -279,7 +286,7 @@
           background #C9C5C5
           margin-left 5px
 
-  @media screen and (max-width: 1235px)
+  @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .bottom-wrap
       .icon
         display none
@@ -292,6 +299,8 @@
           span
             line-height 40px
           &:hover
+            .del
+              display none !important
             .icon
               display none !important
 </style>

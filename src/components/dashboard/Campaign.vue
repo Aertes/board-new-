@@ -205,7 +205,7 @@
         </div>
       </div>
     </div>
-    <div class="table-name color">Campaign name</div>
+    <div class="table-name color">{{category}}</div>
     <div>
       <div class="ind-cam-per">
         <table id="camTableAn" class="data-table" style="width:100%">
@@ -291,12 +291,9 @@
   import xhrUrls from '../../assets/config/xhrUrls';
   import {getQueryString, getHashString} from '../../assets/config/urlQuery';
   import {get, post} from '../../assets/config/http';
-
   const CMA_SEARCH = xhrUrls.CMA_SEARCH;
-
   let CAM_CATEGORY = xhrUrls.CAM_CATEGORY
   let CAM_GETPARAMETER = xhrUrls.CAM_GETPARAMETER
-
   export default {
     name: "campaign",
     data() {
@@ -312,7 +309,7 @@
         category: null,
         categoryId: 0,
         OvTableSearch: {
-          campaign: '',
+          category: '',
           isTable: true,
           month: '',
           isDetailTable: false
@@ -357,7 +354,7 @@
     },
     methods: {
       getOvTableData() {
-        this.OvTableSearch.campaign = this.campaign
+        this.OvTableSearch.category = this.campaign
         this.OvTableSearch.month = this.getYearMonth
         post(CMA_SEARCH, this.OvTableSearch).then(res => {
           let data = res.data;
@@ -680,7 +677,7 @@
       },
       getYearMonth() {
         this.getOvTableData()
-      },
+      }
     }
   }
 </script>
@@ -736,7 +733,7 @@
       &:nth-child(7), &:nth-child(10), &:nth-child(15), &:nth-child(18)
         width 30px
 
-  @media screen and (max-width: 1235px)
+  @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .data-table
         tr
           td

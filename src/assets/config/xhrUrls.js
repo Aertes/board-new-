@@ -16,6 +16,8 @@ export default {
 
   RV_UPLOAD: BASE_URL + 'review/upload',
   RV_SEARCH: BASE_URL + 'review/searchTable',
+  RV_CHANNEL: BASE_URL + 'review/channel',
+
 
   OV_CMA_SEARCH: BASE_URL + 'overview/campaign/search',
   OV_COM_SEARCH: BASE_URL + 'overview/com/search',
@@ -24,6 +26,8 @@ export default {
 
 
   OV_DATE: BASE_URL + 'overview/getDate',
+  OV_SEARCH: BASE_URL + 'overview/search',
+
 
   CAM_CATEGORY: BASE_URL + 'campaign/getCategory',
   CAM_GETPARAMETER: BASE_URL + 'campaign/getParameter',

@@ -108,7 +108,7 @@
       li
         background-color #92D050
 
-  @media screen and (max-width: 1235px)
+  @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .dropdown-wrap
       height 60px!important
       line-height 60px!important

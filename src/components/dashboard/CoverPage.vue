@@ -93,7 +93,7 @@
       .arrow-right
         font-size 55px
         margin-left 10px
-  @media screen and (max-width: 1235px)
+  @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .content
       top 216px!important
       bottom 0!important

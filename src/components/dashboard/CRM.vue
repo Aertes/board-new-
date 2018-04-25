@@ -46,18 +46,16 @@
             v-if="CRMTableData.length >= 0">
           <td @click="tips(index, 'tipss'+index)" :id="'tipss'+index">
             <div class="floatL">{{item.name}}</div>
-            <div class="icon-tanhao">
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon"></svg-icon>
-            </div>
+            <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
           </td>
           <td>
-            <div>{{item.month | formatThousands}}</div>
+            <div>{{item.month | formatThousands(item.name) }}</div>
           </td>
           <td>
-            <div>{{item.ytd | formatThousands}}</div>
+            <div>{{item.ytd | formatThousands(item.name) }}</div>
           </td>
           <td>
-            <div>{{item.target | formatThousands}}</div>
+            <div>{{item.target | formatThousands(item.name) }}</div>
           </td>
           <td v-if="item.mT==1">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
@@ -72,7 +70,7 @@
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
           </td>
           <td>
-            <div>{{item.ytdTarget | formatThousands}}</div>
+            <div>{{item.ytdTarget | formatThousands(item.name) }}</div>
           </td>
           <td v-if="item.yT==1">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
@@ -101,6 +99,7 @@
 
 <script type="text/ecmascript-6">
   import xhrUrls from '../../assets/config/xhrUrls';
+  import {getQueryString, getHashString} from '../../assets/config/urlQuery';
   import {get, post} from '../../assets/config/http';
   const CRM_SEARCH = xhrUrls.CRM_SEARCH;
   export default {
@@ -109,20 +108,42 @@
       return {
         CRMTableData: [],
         searchDataCRM: {
-          month: "201803",
+          month: '',
           title: ['CRM Registrations', 'CRM Engagement Rate (rolling 6 months)', 'CRM Sales(M)(￥)']
         },
         url: '',
-        isQrShow: false
+        isQrShow: false,
+        locationHash: false
+      }
+    },
+    computed: {
+      getYearMonth() {
+        return this.$store.getters.getYearMonth
       }
     },
     mounted() {
-      this.getCRMtableData()
-    },
 
+      if (window.location.hash.indexOf("?") != -1) {
+        this.locationHash = true
+      } else {
+        this.locationHash = false
+      }
+
+      if (!this.locationHash) {
+        this.getCRMtableData()
+      }else{
+        this.getUrl()
+      }
+
+    },
+    updated() {
+      this.locationHash = false
+    },
     methods:{
+
       getCRMtableData() {
         let CRMtitle = this.searchDataCRM.title
+        this.searchDataCRM.month = this.getYearMonth
         post(CRM_SEARCH, this.searchDataCRM).then(res => {
           let data = res.data
           if (data.code == 200) {
@@ -138,9 +159,7 @@
       },
 
       copyURL() {
-        let baseUrl;
-        baseUrl = `${window.location.origin}/dashboard/#/dashboard?istable=1&type=cam&yearMonth=`;
-        this.url = baseUrl;
+        this.url = `${window.location}?yearMonth=${this.getYearMonth}`;
         const input = document.createElement('input')
         document.body.appendChild(input)
         input.setAttribute('value', this.url)
@@ -151,6 +170,7 @@
         }
         document.body.removeChild(input)
       },
+
       layerMsg(err) {
         layer.msg(err, {
           time: 2000,
@@ -159,9 +179,7 @@
       },
 
       qrcodeShow() {
-        let baseUrl;
-        baseUrl = `${window.location.origin}/dashboard/#/dashboard?istable=1&type=cam&yearMonth=`;
-        this.url = baseUrl;
+        this.url = `${window.location}?yearMonth=${this.getYearMonth}`;
         this.isQrShow = true
       },
 
@@ -196,13 +214,21 @@
         });
       },
 
+      getUrl(){
+        if(getHashString('yearMonth')==this.getYearMonth){
+          this.getCRMtableData()
+        }
+      }
     },
-
     filters: {
-      formatThousands: (params) => {
+      formatThousands: (params, name) => {
         if (!params) return 0
-        let str = Math.round(params).toFixed(0)
-        return (str + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+        if(name == 'CRM Engagement Rate (rolling 6 months)'){
+          return (Number(params) * 100).toFixed(0) + '%'
+        }else{
+          let str = Math.round(params).toFixed(0)
+          return (str + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+        }
       },
       percentile: (params) => {
         if (!params) return 0
@@ -213,6 +239,11 @@
         return params.toFixed(2)
       }
     },
+    watch:{
+      getYearMonth() {
+        this.getCRMtableData()
+      }
+    }
   }
 </script>
 
@@ -274,4 +305,22 @@
   #CRMTable
     thead > tr
       background #B1A0C7
+  @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
+    .data-table
+      tr
+        td
+        th
+          &:nth-child(1)
+            width 230px!important
+          padding 0 !important
+          .icon-tanhao
+            font-size 12px!important
+          div
+            transform scale(.7)!important
+        td
+          &:nth-child(1)
+            div
+              transform-origin 25px
+    .tool-box
+      display none
 </style>

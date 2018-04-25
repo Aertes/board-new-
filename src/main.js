@@ -65,7 +65,7 @@ const store = new Vuex.Store({
   state: {
     type: 1,
     year: new Date().getFullYear(),
-    month: new Date().getMonth(),
+    month: new Date().getMonth()-1,
   },
   mutations: {
     increment: state => {
@@ -89,7 +89,7 @@ const store = new Vuex.Store({
   getters: {
     getYearMonth: state => {
 
-      let month = state.month+1
+      let month = parseInt(state.month)+1
 
       if (month < 10) {
 

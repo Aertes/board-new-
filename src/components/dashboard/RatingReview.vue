@@ -5,7 +5,8 @@
       <h3><i class="color-line color4"></i>Review & Rating Performance Overview</h3>
       <div class="tool-box clearfix">
         <div class="selection-box">
-          <selection :selections="test" class="select-colorOrange"></selection>
+          <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowOneHandle"
+                     ref="selectOptionOne"></selection>
         </div>
         <div class="icon-box">
           <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
@@ -236,38 +237,61 @@
 
 <script type="text/ecmascript-6">
   import xhrUrls from '../../assets/config/xhrUrls';
+  import {getQueryString, getHashString} from '../../assets/config/urlQuery';
   import {get, post} from '../../assets/config/http';
+
   const RV_SEARCH = xhrUrls.RV_SEARCH;
+  const RV_CHANNEL = xhrUrls.RV_CHANNEL;
   export default {
     name: "rating-review",
     data() {
       return {
         yearTableData: [],
         monthTableData: [],
+        selectListOne: ['All Channels'],
+        channel: null,
+        channelId: 0,
         searchDataYear: {
           isYTD: true,
-          month: "201803",
-          channel:'JD'
+          month: '',
+          channel: ''
         },
         searchDataMonth: {
           isYTD: false,
-          month: "201803",
-          channel:''
+          month: "",
+          channel: ''
         },
-        url:'',
-        isQrShow:false
+        url: '',
+        isQrShow: false
       }
     },
-
-    mounted() {
-      this.getYeartableData()
-
-      this.getMonthtableData()
+    computed: {
+      getYearMonth() {
+        return this.$store.getters.getYearMonth
+      }
     },
+    mounted() {
 
+      if (window.location.hash.indexOf("?") != -1) {
+        this.locationHash = true
+      } else {
+        this.locationHash = false
+      }
+
+      if (this.locationHash) {
+        this.getUrl()
+      } else {
+        this.getChannelList()
+        this.getYeartableData()
+        this.getMonthtableData()
+      }
+
+    },
     methods: {
 
       getYeartableData() {
+        this.searchDataYear.channel = this.channel
+        this.searchDataYear.month = this.getYearMonth
         post(RV_SEARCH, this.searchDataYear).then(res => {
           let data = res.data
           if (data.code == 200) {
@@ -279,6 +303,8 @@
       },
 
       getMonthtableData() {
+        this.searchDataMonth.channel = this.channel
+        this.searchDataMonth.month = this.getYearMonth
         post(RV_SEARCH, this.searchDataMonth).then(res => {
           let data = res.data
           if (data.code == 200) {
@@ -289,10 +315,17 @@
         }).catch(err => console.log(err))
       },
 
+      getChannelList() {
+        get(RV_CHANNEL).then(res => {
+          let data = res.data.data
+          data.forEach(val => {
+            this.selectListOne.push(val)
+          })
+        })
+      },
+
       copyURL() {
-        let baseUrl;
-        baseUrl = `${window.location.origin}/dashboard/#/dashboard?istable=1&type=cam&yearMonth=`;
-        this.url = baseUrl;
+        this.url = `${window.location}?yearMonth=${this.getYearMonth}&channel=${this.channel}&channelId=${this.channelId}`;
         const input = document.createElement('input')
         document.body.appendChild(input)
         input.setAttribute('value', this.url)
@@ -303,6 +336,7 @@
         }
         document.body.removeChild(input)
       },
+
       layerMsg(err) {
         layer.msg(err, {
           time: 2000,
@@ -311,13 +345,11 @@
       },
 
       qrcodeShow() {
-        let baseUrl;
-        baseUrl = `${window.location.origin}/dashboard/#/dashboard?istable=1&type=cam&yearMonth=`;
-        this.url = baseUrl;
+        this.url = `${window.location}?yearMonth=${this.getYearMonth}&channel=${this.channel}&channelId=${this.channelId}`;
         this.isQrShow = true
       },
 
-      qrcodeHide(){
+      qrcodeHide() {
         this.isQrShow = false
       },
 
@@ -360,8 +392,37 @@
         });
       },
 
-    },
+      selectShowOneHandle(val) {
 
+        if (!this.locationHash) {
+
+          val.val == 'All Channels' ? this.channel = null : this.channel = val.val
+
+          this.channelId = val.id
+
+        }
+
+      },
+
+      getUrl() {
+
+        let channel = getHashString('channel')
+
+        let channelId = getHashString('channelId')
+
+        this.getChannelList()
+
+        channel == 'null' ? this.channel = null : this.channel = channel
+
+        this.$refs.selectOptionOne.nowIndex = channelId
+
+        this.getYeartableData()
+
+        this.getMonthtableData()
+
+      }
+
+    },
     filters: {
       formatThousands: (params) => {
         if (!params) return 0
@@ -376,10 +437,22 @@
         if (!params) return 0
         return params.toFixed(2)
       },
-      strikethrough:(params)=>{
+      strikethrough: (params) => {
         if (!params) return '-'
       }
     },
+    watch: {
+      channel() {
+        if (!this.locationHash) {
+          this.getYeartableData()
+          this.getMonthtableData()
+        }
+      },
+      getYearMonth() {
+        this.getYeartableData()
+        this.getMonthtableData()
+      },
+    }
   }
 </script>
 
@@ -418,5 +491,14 @@
         text-align center
     .hidden
       display none
+
+  @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
+    .data-table
+      tr
+        td
+        th
+          padding 0 !important
+          div
+            transform scale(.7)
 
 </style>
