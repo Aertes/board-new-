@@ -12,7 +12,7 @@
               <span>Please scan the QR code</span>
             </div>
           </span>
-          <span @click="copyURL">
+          <span @click="copyURL" title="Copy URL">
             <svg-icon sign="icon-link" class="link-icon"></svg-icon>
           </span>
         </div>
@@ -136,7 +136,8 @@
 
       tipsContent(tipsVal, id) {
         layer.tips(tipsVal, '.' + id, {
-          tips: [2, '#FFF2CC'],
+          time:2000,
+          tips: [2, '#FFEDB2'],
           skin: 'fontColorBg',
         });
       },

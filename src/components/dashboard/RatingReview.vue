@@ -9,7 +9,9 @@
                      ref="selectOptionOne"></selection>
         </div>
         <div class="icon-box">
-          <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
+          <span title="Show Chartbar">
+            <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
+          </span>
           <span class="qrcode" @mouseenter="qrcodeShow" @mouseleave="qrcodeHide">
             <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
             <div class="qrcode-warp" v-show="isQrShow">
@@ -17,7 +19,7 @@
               <span>Please scan the QR code</span>
             </div>
           </span>
-          <span @click="copyURL">
+          <span @click="copyURL" title="Copy URL">
             <svg-icon sign="icon-link" class="link-icon"></svg-icon>
           </span>
         </div>
@@ -387,7 +389,7 @@
 
       tipsContent(tipsVal, id) {
         layer.tips(tipsVal, '#' + id, {
-          tips: [2, '#FFF2CC'],
+          tips: [2, '#FFEDB2'],
           skin: 'fontColorBg',
         });
       },

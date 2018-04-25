@@ -13,8 +13,8 @@
       </div>
       <div class="user-info">
         <div class="after-login">
-          <svg-icon sign="icon-upload" class="upload-icon" :class="{none:isUser}"></svg-icon>
-          <svg-icon sign="icon-setting" class="setting-icon" :class="{none:isUser}"></svg-icon>
+          <span  title="Upload"><svg-icon sign="icon-upload" class="upload-icon" :class="{none:isUser}"></svg-icon></span>
+          <span  title="Setting"><svg-icon sign="icon-setting" class="setting-icon" :class="{none:isUser}" title="Setting"></svg-icon></span>
           <div class="user-operation-hover" :class="{noHover:isUser}">
             <span @click="goToLogin"><svg-icon sign="icon-user" class="user-icon"></svg-icon></span>
             <div class="user-operation box-shadow">
@@ -27,7 +27,7 @@
               </div>
             </div>
           </div>
-          <span @click="outLogin"><svg-icon sign="icon-turn-off" class="turn-off-icon" :class="{none:isUser}"></svg-icon></span>
+          <span @click="outLogin" title="Out Login"><svg-icon sign="icon-turn-off" class="turn-off-icon" :class="{none:isUser}"></svg-icon></span>
           <div class="user-operation-hover">
             <svg-icon sign="icon-more" class="more-icon"></svg-icon>
             <div class="user-operation box-shadow">
@@ -521,29 +521,29 @@
                   color #00B0F0
 
   #editPassword
-    width 700px
+    width 500px
     .tables-title
       position: relative
-      padding-left: 45px
-      font-size: 30px
-      line-height: 80px
-      height 60px
+      padding-left: 20px
+      font-size: 24px
+      line-height: 45px
+      height 45px
       color: #a0a0a1
       .icon
         e-pos(top:50%, y:-50%)
-        right: 25px
-        font-size: 30px
+        right: 20px
+        font-size: 24px
         color: #A0A0A1
         cursor: pointer
     .resg
-      padding 0 60px 0 50px
+      padding 0 20px
       div
-        height 50px
-        line-height 50px
+        height 40px
+        line-height 40px
         width 100%
-        margin 20px 0
+        margin 10px 0
         label
-          font-size 22px
+          font-size 20px
           display inline-block
           width 40%
           float left
@@ -562,17 +562,17 @@
           border-color: #e78b70
     .submit-btn
       text-align center
-      padding-bottom 20px
+      padding 20px 0
       button
-        height 40px
+        height 35px
         background-color #2061AE
         border-radius 10px
         color #fff
         border medium
         outline none
         cursor pointer
-        padding 0 20px
-        font-size 24px
+        padding 0 15px
+        font-size 18px
       .confirm
         margin-right 10px
       .cancel

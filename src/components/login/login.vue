@@ -1,26 +1,28 @@
 <template>
   <div class="bigbox">
     <div class="nav-bar-wrap clearfix">
-      <div class="logo box-shadow"><img src="../../assets/img/logo.png" alt="philips" width="198" height="100"></div>
-      <h1>ONE CHINA DIGITAL PERFORMANCE DASHBOARD</h1>
+      <div class="logo box-shadow"><img src="../../assets/img/logo.png" alt="philips" width="158" height="80"></div>
+      <h1>One China Digital Performance Dashboard</h1>
     </div>
     <div class="bg">
       <div class="form-wrapper">
         <!-- <h2>WELCOME!</h2> -->
         <form class="submit box-shadow" action="" autocomplete="off">
-          <div class="err input">
-            <p>{{isError}}</p>
-          </div>
+          <div class="err input">{{isError}}</div>
           <div class="input username">
-            <input type="text" @keyup.enter="submit" name='username' @change="onInput" :class="[isUserActive? 'active' : '']" v-model="loginDate.username" placeholder="USER NAME" autocomplete="off">
+            <input type="text" @keyup.enter="submit" name='username' @change="onInput"
+                   :class="[isUserActive? 'active' : '']" v-model="loginDate.username" placeholder="USER NAME"
+                   autocomplete="off">
             <svg-icon sign="icon-user"></svg-icon>
           </div>
           <div class="input password">
-            <input type="password" @keyup.enter="submit" name='password' @change="onInput" :class="[isPassActive? 'active' : '']" v-model="loginDate.password" placeholder="PASSWORD">
+            <input type="password" @keyup.enter="submit" name='password' @change="onInput"
+                   :class="[isPassActive? 'active' : '']" v-model="loginDate.password" placeholder="PASSWORD">
             <svg-icon sign="icon-Cord"></svg-icon>
           </div>
           <div class="input code">
-            <input type="text" @keyup.enter="submit" name='code' maxlength="4" @change="onInput" :class="[isCodeActive? 'active' : '']" v-model="loginDate.code" placeholder="VERIFICATION CODE">
+            <input type="text" @keyup.enter="submit" name='code' maxlength="4" @change="onInput"
+                   :class="[isCodeActive? 'active' : '']" v-model="loginDate.code" placeholder="VERIFICATION CODE">
             <img class="code-img" :src="codeUrl" alt="">
             <span @click="getCode">
   							<svg-icon class="code" sign="icon-refresh"></svg-icon>
@@ -43,7 +45,7 @@
 
 <script type="text/ecmascript-6">
   import xhrUrls from "../../assets/config/xhrUrls";
-  import {getQueryString,getHashString} from "../../assets/config/urlQuery";
+  import {getQueryString, getHashString} from "../../assets/config/urlQuery";
   import {
     post
   } from "../../assets/config/http"
@@ -59,7 +61,7 @@
         isUserActive: false,
         isPassActive: false,
         isCodeActive: false,
-        isError:'',
+        isError: '',
         userInfo: {},
         codeUrl: "",
         baseUrl: "",
@@ -70,7 +72,7 @@
           withCredentials: true
         },
         USERINFO: {},
-        typeOfName:''
+        typeOfName: ''
       };
     },
     computed: {},
@@ -108,11 +110,11 @@
               if (res.data.code == 200) {
                 setTimeout(() => {
                   this.isShow = false
-                  if(this.typeOfName==undefined){
+                  if (this.typeOfName == undefined) {
                     this.$router.push({
                       name: "coverpage"
                     });
-                  }else{
+                  } else {
                     this.$router.push({
                       name: `${this.typeOfName}`
                     });
@@ -172,12 +174,12 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import '../../assets/style/mixin.styl';
-.app-wrapper {
-	position: relative;
-	height: 100%
-}
+  .app-wrapper {
+    position: relative;
+    height: 100%
+  }
 
-.mark {
+  .mark {
     position: fixed;
     z-index: 1000;
     width: 100%;
@@ -188,33 +190,33 @@
     overflow: hidden;
     background-color: #f9f9f9;
   }
-.loading{
-  e-pos(top: 40%, y: -50%, left: 50%, x:-50%);
-  z-index : 10001;
-}
 
+  .loading {
+    e-pos(top:40%, y:-50%, left:50%, x:-50%);
+    z-index: 10001;
+  }
 
-.nav-bar-wrap
+  .nav-bar-wrap
     margin: 0 39px;
-    line-height 100px
+    line-height 80px
     position absolute
+    left 0
+    right 0
     z-index 1
-    width 100%
     .logo
       float left
-      width 198px
-      height 100px
-      margin-left 20px
+      width 158px
+      height 80px
       img
         width 100%
         height 100%
     h1
       float left
-      margin-left 60px
-      font-size 37px
+      margin-left 30px
+      font-size 35px
       color #a0a0a1
       font-weight normal
-      text-shadow: 5px 5px 5px #bbbbbb;
+      text-shadow 1px 1px 2px rgba(173, 160, 161, 0.6)
     .user-info
       float right
       color #2061AE
@@ -230,19 +232,20 @@
         .user-icon
           font-size 29px
 
-  .bg{
-    background:url('../../assets/img/bg.jpg') no-repeat center;
+  .bg {
+    background: url('../../assets/img/bg.jpg') no-repeat center;
     background-size: cover;
     margin 0
     position: absolute;
     width: 100%;
-    bottom: 80px;
+    bottom: 0;
     top: 0;
     overflow: hidden;
   }
+
   .form-wrapper {
-	  e-pos(left:50%, x:-50%, top:50%, y:-50%);
-    width: 550px;
+    e-pos(left:50%, x:-50%, top:50%, y:-50%);
+    width: 500px;
 
     h2 {
       margin: 0 0 30px;
@@ -257,7 +260,7 @@
       border-radius: 10px;
       padding: 35px 0 55px;
       .input {
-        padding: 20px 60px;
+        padding: 15px 60px;
         position: relative;
 
         .code {
@@ -266,7 +269,7 @@
         }
         span {
           e-pos(top:50%, y:-50%);
-          right: 80px;
+          right: 70px;
           width: 50px;
           height: 50px;
           cursor: pointer;
@@ -278,17 +281,16 @@
 
         .icon {
           e-pos(top:50%, y:-50%);
-          right: 80px;
+          right: 70px;
           color: #1f61ae;
-          font-size: 26px;
+          font-size: 22px;
         }
 
         .code-img {
           e-pos(top:50%, y:-50%);
-          right: 120px;
-          height: 40px;
+          right: 100px;
+          height: 35px;
           width: 100px;
-          text-align: center;
         }
 
         .active {
@@ -297,49 +299,50 @@
 
         input {
           width: 100%;
-          height: 55px;
+          height: 45px;
           border: 1px solid #6c6b6b;
           border-radius: 10px;
-          padding: 3px 15px 0;
-          font-size: 24px;
+          padding: 0 15px;
+          font-size: 20px;
           outline: none;
         }
 
       }
-      .err{
+      .err {
         color: #f00;
-        font-size: 22px;
+        font-size: 20px;
         text-align: left;
         padding: 0 60px;
         height: 30px;
       }
       button {
         width: 270px;
-        height: 50px;
+        height: 40px;
         background-color: #1f61ae;
         color: #ffffff;
         border: 0;
         border-radius: 10px;
         cursor: pointer;
         margin-top: 30px;
-        font-size: 26px;
+        font-size: 20px;
         outline: none;
         padding-top 1px
       }
     }
   }
-.footer-wrapper
-  height 80px
-  text-align center
-  color #ebeff6
-  background-color:#1f61ad
-  position absolute
-  bottom 0
-  width 100%
-  font-size 16px
-  .one
-    padding 20px 0 10px
-    margin-bottom 0
+
+  .footer-wrapper
+    height 80px
+    text-align center
+    color #ebeff6
+    background-color: #1f61ad
+    position absolute
+    bottom 0
+    width 100%
+    font-size 16px
+    .one
+      padding 20px 0 10px
+      margin-bottom 0
 
 </style>
 

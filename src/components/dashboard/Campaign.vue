@@ -10,7 +10,7 @@
                      ref="selectOptionOne"></selection>
         </div>
         <div class="icon-box">
-          <span>
+          <span title="Show Chartbar">
             <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
           </span>
           <span class="qrcode" @mouseenter="qrcodeShow(1)" @mouseleave="qrcodeHide(1)">
@@ -20,7 +20,7 @@
               <span>Please scan the QR code</span>
             </div>
           </span>
-          <span @click="copyURL">
+          <span @click="copyURL" title="Copy URL">
             <svg-icon sign="icon-link" class="link-icon"></svg-icon>
           </span>
         </div>
@@ -189,7 +189,7 @@
                      @selectShow="selectShowThreeHandle" ref="selectOptionThree"></selection>
         </div>
         <div class="icon-box">
-          <span>
+          <span title="Show Chartbar">
             <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
           </span>
           <span class="qrcode" @mouseenter="qrcodeShow(2)" @mouseleave="qrcodeHide(2)">
@@ -199,7 +199,7 @@
               <span>Please scan the QR code</span>
             </div>
           </span>
-          <span @click="copyURL">
+          <span @click="copyURL" title="Copy URL">
             <svg-icon sign="icon-link" class="link-icon"></svg-icon>
           </span>
         </div>
@@ -432,7 +432,7 @@
 
       tipsContent(tipsVal, id) {
         layer.tips(tipsVal, '.' + id, {
-          tips: [2, '#FFF2CC'],
+          tips: [2, '#FFEDB2'],
           skin: 'fontColorBg',
         });
       },
@@ -464,7 +464,6 @@
           rowIndex++;
         }
         this.camTableAnData = data
-        console.log(data)
       },
 
       copyURL() {
@@ -734,15 +733,14 @@
     th
       &:nth-child(7), &:nth-child(10), &:nth-child(15), &:nth-child(18)
         width 30px
-
   @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .data-table
-        tr
-          td
-          th
-            padding 0 !important
-            div
-              transform scale(.7)
+      tr
+        td
+        th
+          padding 0 !important
+          div
+            transform scale(.7)
     #camTableAn
       th
         &:nth-child(2)

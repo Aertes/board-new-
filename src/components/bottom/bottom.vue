@@ -1,7 +1,7 @@
 <template>
   <div class="bottom-wrap">
     <h5>Highlight
-      <span @click="showHight">
+      <span @click="showHight" title="Add Highlight">
         <svg-icon sign="icon-tianjia"></svg-icon>
       </span>
     </h5>

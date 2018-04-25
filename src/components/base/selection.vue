@@ -63,7 +63,7 @@
     line-height 40px
     outline none
     color #fff
-    background-color #00B0F0/*修改的*/
+    background-color #00B0F0
     border-radius 5px
     vertical-align top
     .dropdown-show
@@ -89,24 +89,28 @@
       white-space: nowrap;
       li
         padding 0 10px
-        background-color #00B0F0 //修改的
+        background-color #00B0F0
         border-bottom 1px solid #eaeaea
         border-radius 5px
         cursor: pointer
         &:last-of-type
           border-bottom medium
         &:hover
-          opacity .8
+          background-color #12BCFF
   .select-colorOrange
     background-color #FFC000
     .dropdown-menu
       li
         background-color #FFC000
+        &:hover
+          background-color #FFD34B
   .select-colorDarkseaGreen
     background-color #92D050
     .dropdown-menu
       li
         background-color #92D050
+        &:hover
+          background-color #A5E85A
 
   @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .dropdown-wrap
