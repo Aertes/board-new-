@@ -49,9 +49,11 @@
             <td rowspan="4" style="background-color: #DAEEF3; font-weight: bold">
               <div>Campaign</div>
             </td>
-            <td @click="tips('B2Ccam1')" class="B2Ccam1">
-              <div class="floatL">Traffic to e-commerce</div>
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <td class="B2Ccam1"><!--@click="tips('B2Ccam1')"-->
+              <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits JD/Tmall and other EC website receives.">
+                <div class="floatL">Traffic to e-commerce</div>
+                <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+              </a>
             </td>
             <td>
               <div>{{OVTableData[0].month | formatThousands}}</div>
@@ -92,9 +94,11 @@
             </td>
           </tr>
           <tr>
-            <td @click="tips('B2Ccam2')" class="B2Ccam2">
-              <div class="floatL">Traffic to .com.cn</div>
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <td class="B2Ccam2"><!-- @click="tips('B2Ccam2')"-->
+              <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits .com.cn site receives.">
+                <div class="floatL">Traffic to .com.cn</div>
+                <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+              </a>
             </td>
             <td>
               <div>{{OVTableData[1].month | formatThousands}}</div>
@@ -135,9 +139,11 @@
             </td>
           </tr>
           <tr>
-            <td @click="tips('B2Ccam3')" class="B2Ccam3">
-              <div class="floatL">Conversion rate </div>
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <td class="B2Ccam3"><!-- @click="tips('B2Ccam3')" -->
+              <a class="hint--right hint--success hint--medium" aria-label="The value of the conversion points used on the Philips digital platform.">
+                <div class="floatL">Conversion rate </div>
+                <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+              </a>
             </td>
             <td>
               <div>{{OVTableData[2].month | percentile}}</div>
@@ -178,9 +184,11 @@
             </td>
           </tr>
           <tr>
-            <td @click="tips('B2Ccam4')" class="B2Ccam4">
-              <div class="floatL">Cost per lead(¥)</div>
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <td class="B2Ccam4"><!--@click="tips('B2Ccam4')" -->
+              <a class="hint--right hint--success hint--medium" aria-label="Online advertising payment model in which payment is based on the number of qualifying leads generated.">
+                <div class="floatL">Cost per lead(¥)</div>
+                <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+              </a>
             </td>
             <td>
               <div>{{OVTableData[3].month | round}}</div>
@@ -309,9 +317,11 @@
             </td>
           </tr>
           <tr>
-            <td @click="tips('B2Ccom1')" class="B2Ccom1">
-              <div class="floatL">UGCR</div>
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <td class="B2Ccom1"><!--@click="tips('B2Ccom1')" -->
+              <a class="hint--right hint--success hint--medium" aria-label="User goal complete rate. It is about Consumer survey bounced upon Philips website when viewing it.">
+                <div class="floatL">UGCR</div>
+                <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+              </a>
             </td>
             <td>
               <div>{{OVTableData[6].month | percentile}}</div>
@@ -352,9 +362,11 @@
             </td>
           </tr>
           <tr>
-            <td @click="tips('B2Ccom2')" class="B2Ccom2">
-              <div class="floatL">Bounce rate</div>
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <td class="B2Ccom2"><!--@click="tips('B2Ccom2')" -->
+              <a class="hint--right hint--success hint--medium" aria-label="The bounce rate is the percentage of visits with only 1 page view.">
+                <div class="floatL">Bounce rate</div>
+                <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+              </a>
             </td>
             <td>
               <div>{{OVTableData[7].month | percentile}}</div>
@@ -399,9 +411,11 @@
             <td style="background-color: #D8E4BC; font-weight: bold">
               <div>Review & rating</div>
             </td>
-            <td @click="tips('B2CRR')" class="B2CRR">
-              <div class="floatL">Rating</div>
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <td class="B2CRR"><!--@click="tips('B2CRR')" -->
+              <a class="hint--right hint--success hint--medium" aria-label="The product rating provided from EC website by consumers.">
+                <div class="floatL">Rating</div>
+                <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+              </a>
             </td>
             <td>
               <div>{{OVTableData[8].month | roundTow}}</div>
@@ -446,9 +460,11 @@
             <td rowspan="3" style="background-color: #E4DFEC; font-weight: bold">
               <div>CRM</div>
             </td>
-            <td @click="tips('B2Ccrm1')" class="B2Ccrm1">
-              <div class="floatL">New registration(k)</div>
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <td class="B2Ccrm1"><!--@click="tips('B2Ccrm1')" -->
+              <a class="hint--right hint--success hint--large" aria-label="For Mobile registration, this figure indicates the number of members registered with mobile phone number mainly via CRM microsite, plus call center and ASC; For WeChat followers, this figure indicates the number of members following Philips WeChat account.">
+                <div class="floatL">New registration(k)</div>
+                <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+              </a>
             </td>
             <td>
               <div>{{OVTableData[9].month | formatThousands}}</div>
@@ -489,9 +505,11 @@
             </td>
           </tr>
           <tr>
-            <td @click="tips('B2Ccrm2')" class="B2Ccrm2">
-              <div class="floatL">Engagement%</div>
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <td class="B2Ccrm2"><!-- @click="tips('B2Ccrm2')"-->
+              <a class="hint--right hint--success hint--medium" aria-label="For engagement rate, measure the how much users were actively interacting with us.">
+                <div class="floatL">Engagement%</div>
+                <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+              </a>
             </td>
             <td>
               <div>{{OVTableData[10].month | percentile}}</div>
@@ -532,9 +550,11 @@
             </td>
           </tr>
           <tr>
-            <td @click="tips('B2Ccrm3')" class="B2Ccrm3">
-              <div class="floatL">CRM sales(M)(¥)</div>
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <td class="B2Ccrm3"><!--@click="tips('B2Ccrm3')" -->
+              <a class="hint--right hint--success hint--medium" aria-label="The sales on FSS.">
+                <div class="floatL">CRM sales(M)(¥)</div>
+                <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+              </a>
             </td>
             <td>
               <div>{{OVTableData[11].month | formatThousands}}</div>
@@ -582,9 +602,11 @@
             <td rowspan="4" style="background-color: #FFFFCC; font-weight: bold">
               <div>Philips.com.cn</div>
             </td>
-            <td @click="tips('B2Bcom1')" class="B2Bcom1">
-              <div class="floatL">Total SQL</div>
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <td class="B2Bcom1"><!--@click="tips('B2Bcom1')" -->
+              <a class="hint--right hint--success hint--medium" aria-label="Sales qualified leads.">
+                <div class="floatL">Total SQL</div>
+                <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+              </a>
             </td>
             <td>
               <div>{{OVTableData[12].month | formatThousands}}</div>
@@ -625,9 +647,11 @@
             </td>
           </tr>
           <tr>
-            <td @click="tips('B2Bcom2')" class="B2Bcom2">
-              <div class="floatL">Total MQL</div>
-              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <td class="B2Bcom2"><!--@click="tips('B2Bcom2')" -->
+              <a class="hint--right hint--success hint--medium" aria-label="MKT qualified leads.">
+                <div class="floatL">Total MQL</div>
+                <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+              </a>
             </td>
             <td>
               <div>{{OVTableData[13].month | formatThousands}}</div>
@@ -854,7 +878,7 @@
             this.tipsContent(tipsVal, id)
             break
           case 'B2Ccam3':
-            tipsVal = 'the value of the conversion points used on the Philips digital platform.'
+            tipsVal = 'The value of the conversion points used on the Philips digital platform.'
             this.tipsContent(tipsVal, id)
             break
           case 'B2Ccam4':
@@ -945,6 +969,8 @@
     border-collapse collapse
     border none
     table-layout fixed
+    a
+      display block
     thead > tr
       background #B4B4B4
       th

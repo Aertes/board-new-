@@ -360,7 +360,9 @@
 .hint--large:after {
   white-space: normal;
   line-height: 1.4em;
-  word-wrap: break-word; }
+  word-wrap: break-word;
+  text-align: left;
+}
 
 .hint--small:after {
   width: 80px; }
@@ -494,32 +496,33 @@
  * Success
  */
 .hint--success:after {
-  background-color: #458746;
-  text-shadow: 0 -1px 0px #1a321a; }
+  background-color: #FFF2CC;
+  color: #7F7F7F;
+  text-shadow:none; }
 
 .hint--success.hint--top-left:before {
-  border-top-color: #458746; }
+  border-top-color: #FFF2CC; }
 
 .hint--success.hint--top-right:before {
-  border-top-color: #458746; }
+  border-top-color: #FFF2CC; }
 
 .hint--success.hint--top:before {
-  border-top-color: #458746; }
+  border-top-color: #FFF2CC; }
 
 .hint--success.hint--bottom-left:before {
-  border-bottom-color: #458746; }
+  border-bottom-color: #FFF2CC; }
 
 .hint--success.hint--bottom-right:before {
-  border-bottom-color: #458746; }
+  border-bottom-color: #FFF2CC; }
 
 .hint--success.hint--bottom:before {
-  border-bottom-color: #458746; }
+  border-bottom-color: #FFF2CC; }
 
 .hint--success.hint--left:before {
-  border-left-color: #458746; }
+  border-left-color: #FFF2CC; }
 
 .hint--success.hint--right:before {
-  border-right-color: #458746; }
+  border-right-color: #FFF2CC; }
 
 /**
  * source: hint-always.scss

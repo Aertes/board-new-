@@ -289,6 +289,9 @@
       }
 
     },
+    updated() {
+      this.locationHash = false
+    },
     methods: {
 
       getYeartableData() {

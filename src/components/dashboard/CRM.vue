@@ -45,8 +45,10 @@
         <tr v-for="(item, index) in CRMTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
             v-if="CRMTableData.length >= 0">
           <td @click="tips(index, 'tipss'+index)" :id="'tipss'+index">
-            <div class="floatL">{{item.name}}</div>
-            <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            <a class="hint--right hint--success hint--medium" :class="{'hint--large':index==0}" :aria-label="getTipsCont(index)">
+              <div class="floatL">{{item.name}}</div>
+              <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            </a>
           </td>
           <td>
             <div>{{item.month | formatThousands(item.name) }}</div>
@@ -187,6 +189,21 @@
         this.isQrShow = false
       },
 
+      getTipsCont(i) {
+        let tipsVal = ''
+        switch (i) {
+          case 0:
+           return 'For Mobile registration, this figure indicates the number of members registered with mobile phone number mainly via CRM microsite, plus call center and ASC.'
+            break;
+          case 1:
+            return 'For engagement rate, measure the how much users were actively interacting with us.'
+            break;
+          case 2:
+            return 'The sales on FSS.'
+            break;
+        }
+      },
+
       tips(i, id) {
         let tipsVal = ''
         switch (i) {
@@ -253,6 +270,8 @@
     border-collapse collapse
     border none
     table-layout fixed
+    a
+      display block
     thead > tr
       background #FF9933
       th

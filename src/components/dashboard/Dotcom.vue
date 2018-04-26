@@ -45,10 +45,11 @@
         <tbody>
         <tr v-for="(item, index) in b2cTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
             v-if="b2cTableData.length >= 0">
-          <td @click="tips(index, 'tipss'+index)" :id="'tipss'+index">
-            <div class="floatL">{{item.name}}</div>
-            <svg-icon v-if="index==0||index==3||index==4||index==5" sign="icon-gantanhao"
-                      class="gantanhao-icon  icon-tanhao"></svg-icon>
+          <td :id="'tipss'+index"><!-- @click="tips(index, 'tipss'+index)"-->
+            <a class="hint--right hint--success hint--medium" :class="{'hint--large':index==4}" :aria-label="getTipsCont(index)">
+              <div class="floatL">{{item.name}}</div>
+              <svg-icon v-if="index==0||index==3||index==4||index==5" sign="icon-gantanhao" class="gantanhao-icon  icon-tanhao"></svg-icon>
+            </a>
           </td>
           <td>
             <div>{{item.month | formatThousands(item.name)}}</div>
@@ -128,12 +129,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(item, index) in b2bTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
-            v-if="b2bTableData.length >= 0">
-          <td @click="tips(index, 'tip'+index)" :id="'tip'+index">
-            <div class="floatL">{{item.name}}</div>
-            <svg-icon v-if="index==0||index==3||index==4||index==5||index==6||index==7" sign="icon-gantanhao"
-                      class="gantanhao-icon icon-tanhao"></svg-icon>
+        <tr v-for="(item, index) in b2bTableData" :class="{odd: index%2 == 0, even: index%2 != 0}" v-if="b2bTableData.length >= 0">
+          <td :id="'tip'+index"><!-- @click="tips(index, 'tip'+index)"-->
+            <a class="hint--right hint--success hint--medium" :class="{'hint--large':index==4}" :aria-label="getTipsCont(index)">
+              <div class="floatL">{{item.name}}</div>
+              <svg-icon v-if="index==0||index==3||index==4||index==5||index==6||index==7" sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
+            </a>
           </td>
           <td>
             <div>{{item.month | formatThousands(item.name)}}</div>
@@ -307,6 +308,29 @@
         this.isQrShow = false
       },
 
+      getTipsCont(i){
+        switch (i) {
+          case 0:
+            return 'The process of clicking through an online advertisement to the advertiser’s destination.'
+            break;
+          case 3:
+            return  'The bounce rate is the percentage of visits with only 1 page view.'
+            break;
+          case 4:
+            return  'Buy lead conversion shows the value of the conversion points used on the Philips digital platform. For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are represented by leads generated for completed HS lead form.'
+            break;
+          case 5:
+            return  'User goal complete rate. It is about consumer survey bounced upon Philips website when viewing it.'
+            break;
+          case 6:
+            return  'MKT qualified lead.'
+            break;
+          case 7:
+            return  'Sales qualified leads.'
+            break;
+        }
+      },
+
       tips(i, id) {
         let tipsVal = ''
         switch (i) {
@@ -388,6 +412,8 @@
     border-collapse collapse
     border none
     table-layout fixed
+    a
+      display block
     thead > tr
       background #FF9933
       th

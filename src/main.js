@@ -21,6 +21,9 @@ import './assets/font/iconfont'
 //网站基础样式
 import './assets/style/base.styl'
 
+//hint-tips
+import './assets/style/hint.css'
+
 //fastClick
 import './assets/js/fastclick'
 

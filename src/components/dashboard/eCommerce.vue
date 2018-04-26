@@ -1,6 +1,5 @@
 <template>
   <div class="e-commerce-wrap">
-
     <div class="table-nav clearfix">
       <h3><i class="color-line color7"></i>eCommerce Performance Overview</h3>
       <div class="tool-box clearfix">
@@ -32,8 +31,8 @@
             <th colspan="2"><div>其他</div></th>
           </tr>
           <tr>
-            <th @click="tips('Traffic', 'Traffic')" class="triangle Traffic"><div>Traffic</div></th>
-            <th @click="tips('Conversion', 'Conversion')" class="triangle Conversion"><div>Conversion%</div></th>
+            <th class="triangle Traffic"><a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic</div></a></th> <!--@click="tips('Traffic', 'Traffic')"-->
+            <th class="triangle Conversion"><a class="hint--right hint--success hint--medium" aria-label="'Buy lead conversion shows the value of the conversion points used on the Philips digital platform.For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are."><div>Conversion%</div></a></th><!--@click="tips('Conversion', 'Conversion')"-->
             <th><div>Traffic</div></th>
             <th><div>Conversion%</div></th>
             <th><div>Traffic</div></th>
@@ -64,6 +63,7 @@
         </table>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -136,11 +136,22 @@
 
       tipsContent(tipsVal, id) {
 
-        layer.tips(tipsVal, '.' + id, {
-           time:2000,
-           tips: [2, '#FFEDB2'],
-           skin: 'fontColorBg',
-        });
+        /*let tipsWarp = 'width:210px;position:absolute;top:0;right:-230px;z-index:10;'
+        let tipsContent = 'position: relative;padding: 5px 10px;background-color: #FFF2CC;border: 1px solid #F4B183;color: #7F7F7F;text-align: left;'
+        let Triangle = 'content: "";position: absolute;top: 15px;left: -20px;width: 0;height: 0;border-top: 10px solid transparent;border-right: 20px solid #F4B183;border-bottom: 5px solid transparent;'
+        let TriangleB = 'content: "";position: absolute;top: 15px;left: -18px;width: 0;height: 0;border-top: 10px solid transparent;border-right: 20px solid #FFF2CC;border-bottom: 5px solid transparent;'
+        let warp = document.createElement('div')
+        let content = document.createElement('div')
+        let TriangleSpan = document.createElement('span')
+        let TriangleBSpan = document.createElement('span')
+        warp.style.cssText = tipsWarp
+        $('.'+id).append(warp)*/
+
+        // layer.tips(tipsVal, '.' + id, {
+        //   time:2000,
+        //   tips: [2, '#FFEDB2'],
+        //   skin: 'fontColorBg',
+        // });
 
       },
 
@@ -284,6 +295,8 @@
     border-collapse collapse
     border none
     table-layout fixed
+    a
+      display block
     thead > tr
       background #DA9694
       th

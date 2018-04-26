@@ -34,47 +34,47 @@
             <th>
               <div>Period</div>
             </th>
-            <th @click="tips('Spending', 'Spending')" class="triangle Spending">
-              <div>Spending</div>
+            <th class="triangle Spending"><!-- @click="tips('Spending', 'Spending')"-->
+              <a class="hint--right hint--success hint--medium" aria-label="All cost on digital campaign."><div>Spending</div></a>
             </th>
-            <th @click="tips('Impression', 'Impression')" class="triangle Impression">
-              <div>Impression</div>
+            <th class="triangle Impression"><!-- @click="tips('Impression', 'Impression')"-->
+              <a class="hint--right hint--success hint--medium" aria-label="A single instance of an online advertisement being displayed."><div>Impression</div></a>
             </th>
-            <th @click="tips('Traffic', 'Traffic')" class="triangle Traffic">
-              <div>Traffic</div>
+            <th class="triangle Traffic"><!-- @click="tips('Traffic', 'Traffic')"-->
+              <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic</div></a>
             </th>
-            <th @click="tips('Traffic to EC', 'EC')" class="triangle EC">
-              <div>Traffic to EC</div>
-            </th>
-            <th>
-              <div>Target</div>
-            </th>
-            <th></th>
-            <th @click="tips('Traffic to .com', 'com')" class="triangle com">
-              <div>Traffic to .com</div>
+            <th class="triangle EC"><!-- @click="tips('Traffic to EC', 'EC')"-->
+              <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic to EC</div></a>
             </th>
             <th>
               <div>Target</div>
             </th>
             <th></th>
-            <th @click="tips('CTR', 'CTR')" class="triangle CTR">
-              <div>CTR</div>
+            <th class="triangle com"><!-- @click="tips('Traffic to .com', 'com')"-->
+              <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic to .com</div></a>
             </th>
-            <th @click="tips('Leads', 'Leads')" class="triangle Leads">
-              <div>Leads</div>
-            </th>
-            <th @click="tips('Cost per lead', 'Cost')" class="triangle Cost">
-              <div>Cost per lead</div>
-            </th>
-            <th @click="tips('Baseline1', 'Baseline1')" class="triangle Baseline1">
-              <div>Baseline</div>
+            <th>
+              <div>Target</div>
             </th>
             <th></th>
-            <th @click="tips('Conversion%', 'Conversion')" class="triangle Conversion">
-              <div>Conversion%</div>
+            <th class="triangle CTR"><!-- @click="tips('CTR', 'CTR')"-->
+              <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>CTR</div></a>
             </th>
-            <th @click="tips('Baseline2', 'Baseline2')" class="triangle Baseline2">
-              <div>Baseline</div>
+            <th class="triangle Leads"><!-- @click="tips('Leads', 'Leads')"-->
+              <a class="hint--right hint--success hint--medium" aria-label="Number of B2C visits that resulted in a click on the buy button."><div>Leads</div></a>
+            </th>
+            <th class="triangle Cost"><!-- @click="tips('Cost per lead', 'Cost')"-->
+              <a class="hint--right hint--success hint--medium" aria-label="Cost per lead (CPL) is one form of performance-based adverting.Online advertising payment model in which payment is based on the number of qualifying leads generated."><div>Cost per lead</div></a>
+            </th>
+            <th class="triangle Baseline1"><!-- @click="tips('Baseline1', 'Baseline1')"-->
+              <a class="hint--right hint--success hint--medium" aria-label="Baseline is the performance in the last rolling 12M."><div>Baseline</div></a>
+            </th>
+            <th></th>
+            <th class="triangle Conversion"><!-- @click="tips('Conversion%', 'Conversion')"-->
+              <a class="hint--left hint--success hint--large" aria-label="Buy lead conversion shows the value of the conversion points used on the Philips digital platform.For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are represented by leads generated for completed HS lead form."><div>Conversion%</div></a>
+            </th>
+            <th class="triangle Baseline2"><!-- @click="tips('Baseline2', 'Baseline2')"-->
+              <a class="hint--left hint--success hint--medium" aria-label="Baseline is the performance in the last 12M."><div>Baseline</div></a>
             </th>
             <th></th>
           </tr>
@@ -784,6 +784,8 @@
       border-collapse collapse
       border none
       table-layout fixed
+      a
+        display block
       thead > tr
         background #538DD5
         th
