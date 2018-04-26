@@ -16,7 +16,7 @@
           <span class="qrcode" @mouseenter="qrcodeShow(1)" @mouseleave="qrcodeHide(1)">
             <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
             <div class="qrcode-warp" v-show="isQrShow1">
-              <qrcode :value="url" :options="{ size: 150 }"></qrcode>
+              <div class="qrcodeCanvas"></div>
               <span>Please scan the QR code</span>
             </div>
           </span>
@@ -195,7 +195,7 @@
           <span class="qrcode" @mouseenter="qrcodeShow(2)" @mouseleave="qrcodeHide(2)">
             <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
             <div class="qrcode-warp" v-show="isQrShow2">
-              <qrcode :value="url" :options="{ size: 150 }"></qrcode>
+              <div class="qrcodeCanvas"></div>
               <span>Please scan the QR code</span>
             </div>
           </span>
@@ -585,13 +585,13 @@
 
       qrcodeShow(id) {
         let baseUrl = `${window.location}?yearMonth=${this.getYearMonth}&campaign=${this.campaign}&campaignId=${this.campaignId}&campaignTwo=${this.campaignTwo}&campaignTwoId=${this.campaignTwoId}&category=${this.category}&categoryId=${this.categoryId}`;
+        $('.qrcodeCanvas').html('')
+        $('.qrcodeCanvas').qrcode({width: 150,height: 150,text: baseUrl});
         switch (id) {
           case 1:
-            this.url = baseUrl;
             this.isQrShow1 = true
             break;
           case 2:
-            this.url = baseUrl;
             this.isQrShow2 = true
             break;
         }

@@ -53,8 +53,9 @@ import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard)
 
 //qrcode
-import VueQrcode from '@xkeshi/vue-qrcode'
-Vue.component('qrcode', VueQrcode);
+import './assets/js/qrcode'
+/*import VueQrcode from '@xkeshi/vue-qrcode'
+Vue.component('qrcode', VueQrcode);*/
 
 Vue.prototype.$echarts = Echarts
 

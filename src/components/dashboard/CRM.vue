@@ -8,7 +8,7 @@
           <span class="qrcode" @mouseenter="qrcodeShow" @mouseleave="qrcodeHide">
             <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
             <div class="qrcode-warp" v-show="isQrShow">
-              <qrcode :value="url" :options="{ size: 150 }"></qrcode>
+              <div class="qrcodeCanvas"></div>
               <span>Please scan the QR code</span>
             </div>
           </span>
@@ -44,7 +44,7 @@
         <tbody>
         <tr v-for="(item, index) in CRMTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
             v-if="CRMTableData.length >= 0">
-          <td @click="tips(index, 'tipss'+index)" :id="'tipss'+index">
+          <td :id="'tipss'+index"><!-- @click="tips(index, 'tipss'+index)"-->
             <a class="hint--right hint--success hint--medium" :class="{'hint--large':index==0}" :aria-label="getTipsCont(index)">
               <div class="floatL">{{item.name}}</div>
               <svg-icon sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
@@ -181,7 +181,9 @@
       },
 
       qrcodeShow() {
-        this.url = `${window.location}?yearMonth=${this.getYearMonth}`;
+        let baseUrl = `${window.location}?yearMonth=${this.getYearMonth}`;
+        $('.qrcodeCanvas').html('')
+        $('.qrcodeCanvas').qrcode({width: 150,height: 150,text: baseUrl});
         this.isQrShow = true
       },
 

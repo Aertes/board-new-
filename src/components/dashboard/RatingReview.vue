@@ -15,7 +15,7 @@
           <span class="qrcode" @mouseenter="qrcodeShow" @mouseleave="qrcodeHide">
             <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
             <div class="qrcode-warp" v-show="isQrShow">
-              <qrcode :value="url" :options="{ size: 150 }"></qrcode>
+              <div class="qrcodeCanvas"></div>
               <span>Please scan the QR code</span>
             </div>
           </span>
@@ -350,7 +350,9 @@
       },
 
       qrcodeShow() {
-        this.url = `${window.location}?yearMonth=${this.getYearMonth}&channel=${this.channel}&channelId=${this.channelId}`;
+        let baseUrl = `${window.location}?yearMonth=${this.getYearMonth}&channel=${this.channel}&channelId=${this.channelId}`;
+        $('.qrcodeCanvas').html('')
+        $('.qrcodeCanvas').qrcode({width: 150,height: 150,text: baseUrl});
         this.isQrShow = true
       },
 

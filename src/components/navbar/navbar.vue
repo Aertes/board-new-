@@ -78,7 +78,7 @@
             <span @click="sideSlideShow"><svg-icon sign="icon-more" class="more-icon"></svg-icon></span>
             <div class="user-operation user-operation-mobile" :class="{active:sideSlide}">
               <p class="title">
-                <svg-icon sign="icon-addr"></svg-icon>
+                <svg-icon sign="icon-addr" class="addr-icon"></svg-icon>
                 <span>REPORT NAVIGATION</span>
               </p>
               <div class="a-wrap">
@@ -439,7 +439,7 @@
         position relative
         cursor pointer
         .icon
-          font-size 23px
+          font-size 26px
           margin-left 15px
         .upload-icon
           font-size 27px
