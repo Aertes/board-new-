@@ -257,7 +257,7 @@
       background #FF9933
       th
         padding 10px 0
-        border 1px solid #B3B3B3
+        border 1px solid #ddd
         cursor pointer
         color #fff
         font-weight normal
@@ -276,7 +276,7 @@
       background-color #FFFFFF
     td
       padding 10px 0
-      border 1px solid #B3B3B3
+      border 1px solid #ddd
       text-align center
       white-space pre-wrap
       word-wrap break-word
@@ -311,7 +311,7 @@
         td
         th
           &:nth-child(1)
-            width 310px!important
+            width 320px!important
           &:nth-child(5), &:nth-child(7)
             width 30px!important
           padding 0 !important

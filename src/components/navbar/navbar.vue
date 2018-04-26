@@ -73,11 +73,12 @@
         <div class="logo box-shadow"><img src="../../assets/img/logo.png" alt="philips" width="198" height="100"></div>
         <h1>One China Digital Performance Dashboard</h1>
         <div class="user-info">
-          <div class="after-login">
+          <div class="after-login user-operation-mobile-wrap" :class="{active:sideSlide}">
+            <i class="shadow-cover" @click="sideSlideShow"></i>
             <span @click="sideSlideShow"><svg-icon sign="icon-more" class="more-icon"></svg-icon></span>
-            <div class="user-operation user-operation-mobile box-shadow" :class="{active:sideSlide}">
+            <div class="user-operation user-operation-mobile" :class="{active:sideSlide}">
               <p class="title">
-                <svg-icon sign="icon-date"></svg-icon>
+                <svg-icon sign="icon-addr"></svg-icon>
                 <span>REPORT NAVIGATION</span>
               </p>
               <div class="a-wrap">
@@ -392,7 +393,6 @@
       font-size 25px
       color #a0a0a1
       font-weight normal
-      text-shadow 1px 1px 2px rgba(173, 160, 161, 0.6)
     .selection-box
       float left
       .dropdown-wrap
@@ -421,6 +421,20 @@
     .user-info
       float right
       color #2061AE
+      .user-operation-mobile-wrap
+        .shadow-cover
+          position fixed
+          top 0
+          bottom 0
+          left 0
+          right 0
+          z-index 10
+          background-color rgba(0,0,0,.5)
+          transition all .5s linear
+          display none
+        &.active
+          .shadow-cover
+            display block
       .after-login
         position relative
         cursor pointer
@@ -500,7 +514,7 @@
           right auto
           display block
           width 50%
-          transform translateX(-110%)
+          transform translateX(-100%)
           transition transform .2s linear
           line-height 70px
           border-radius 0
@@ -564,14 +578,13 @@
       text-align center
       padding 20px 0
       button
-        height 35px
-        background-color #2061AE
-        border-radius 10px
+        background-color #00b0f0
+        border-radius 5px
         color #fff
         border medium
         outline none
         cursor pointer
-        padding 0 15px
+        padding 5px 15px
         font-size 18px
       .confirm
         margin-right 10px
@@ -582,7 +595,6 @@
   @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .pc-nav-bar
       display none
-
     .mobile-nav-bar
       display block !important
 </style>

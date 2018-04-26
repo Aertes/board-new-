@@ -949,7 +949,7 @@
       background #B4B4B4
       th
         padding 10px 0
-        border 1px solid #B3B3B3
+        border 1px solid #ddd
         cursor pointer
         color #fff
         font-weight normal
@@ -987,7 +987,7 @@
         background-color #FFFFFF
       td
         padding 10px 0
-        border 1px solid #B3B3B3
+        border 1px solid #ddd
         text-align center
         white-space pre-wrap
         word-wrap break-word
@@ -1017,7 +1017,7 @@
           &:nth-child(2)
             width 130px!important
           &:nth-child(3)
-            width 280px!important
+            width 300px!important
           padding 0 !important
           .icon-tanhao
             font-size 12px!important
@@ -1025,7 +1025,7 @@
             width 30px!important
           div
             transform scale(.7)!important
-        &:nth-child(1),&:nth-child(5),&:nth-child(9),&:nth-child(13)
+        &:nth-child(1),&:nth-child(13)
           td
             &:nth-child(3)
               div

@@ -273,7 +273,8 @@
       text-align center
       button
         font-size 18px
-        border 0
+        border medium
+        outline none
         color #ffffff
         border-radius 5px
         padding 5px 15px

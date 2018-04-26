@@ -468,14 +468,17 @@
       background #92D050
       th
         padding 10px 0
-        border 1px solid #B3B3B3
+        border 1px solid #ddd
         cursor pointer
         color #fff
         font-weight normal
         font-style italic
         white-space pre-wrap
         word-wrap break-word
-
+        &:nth-child(1)
+          width 70px
+        &:nth-child(2)
+          width 50px
   tbody > tr
     &.odd
       background-color #F2F2F2
@@ -483,7 +486,7 @@
       background-color #FFFFFF
     td
       padding 10px 0
-      border 1px solid #B3B3B3
+      border 1px solid #ddd
       text-align center
       white-space pre-wrap
       word-wrap break-word
@@ -499,6 +502,10 @@
       tr
         td
         th
+          &:nth-child(13)
+            width 135px!important
+          &:nth-child(14)
+            width 150px!important
           padding 0 !important
           div
             transform scale(.7)

@@ -1,7 +1,7 @@
 <template>
   <div class="bigbox">
     <div class="nav-bar-wrap clearfix">
-      <div class="logo box-shadow"><img src="../../assets/img/logo.png" alt="philips" width="158" height="80"></div>
+      <div class="logo box-shadow"><img src="../../assets/img/logo.png" alt="philips" width="198" height="100"></div>
       <h1>One China Digital Performance Dashboard</h1>
     </div>
     <div class="bg">
@@ -198,25 +198,24 @@
 
   .nav-bar-wrap
     margin: 0 39px;
-    line-height 80px
+    line-height 56px
     position absolute
     left 0
     right 0
     z-index 1
     .logo
       float left
-      width 158px
-      height 80px
+      width 110px
+      height 56px
       img
         width 100%
         height 100%
     h1
-      float left
-      margin-left 30px
-      font-size 35px
-      color #a0a0a1
-      font-weight normal
-      text-shadow 1px 1px 2px rgba(173, 160, 161, 0.6)
+      float: left;
+      margin: 0 35px 0 25px;
+      font-size: 25px;
+      color: #a0a0a1;
+      font-weight: 400;
     .user-info
       float right
       color #2061AE
@@ -246,6 +245,8 @@
   .form-wrapper {
     e-pos(left:50%, x:-50%, top:50%, y:-50%);
     width: 500px;
+    transform scale(.8)
+    transform-origin -200% -200%
 
     h2 {
       margin: 0 0 30px;
@@ -332,17 +333,19 @@
   }
 
   .footer-wrapper
-    height 80px
+    height 56px
     text-align center
     color #ebeff6
     background-color: #1f61ad
     position absolute
     bottom 0
     width 100%
-    font-size 16px
-    .one
+    font-size 14px
+    line-height 20px
+    padding-top 8px
+    /*.one
       padding 20px 0 10px
-      margin-bottom 0
+      margin-bottom 0*/
 
 </style>
 

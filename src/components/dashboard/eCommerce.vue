@@ -32,7 +32,11 @@
             <th colspan="2"><div>其他</div></th>
           </tr>
           <tr>
-            <th @click="tips('Traffic', 'Traffic')" class="triangle Traffic"><div>Traffic</div></th>
+            <th @click="tips('Traffic', 'Traffic')" class="triangle Traffic"><div>Traffic</div>
+              <div class="tips-warp">
+                <div class="tips-content">Buy lead conversion shows the value of the conversion points used on the Philips digital platform.For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are.</div>
+              </div>
+            </th>
             <th @click="tips('Conversion', 'Conversion')" class="triangle Conversion"><div>Conversion%</div></th>
             <th><div>Traffic</div></th>
             <th><div>Conversion%</div></th>
@@ -47,7 +51,7 @@
           <tbody>
           <tr v-for="(item, index) in ecTableData" :class="{odd: index%2 == 0, even: index%2 != 0}" v-if="ecTableData.length >= 0">
             <td><div>{{item.category}}</div></td>
-            <td><div>{{item.period}}</div></td>
+            <td><div>{{getYearMonth | periodMonth}}</div></td>
             <td><div>{{item.traffic1 | formatThousands}}</div></td>
             <td><div>{{item.conversionRate1 | percentile}}</div></td>
             <td><div>{{item.traffic2 | formatThousands}}</div></td>
@@ -135,11 +139,19 @@
       },
 
       tipsContent(tipsVal, id) {
-        layer.tips(tipsVal, '.' + id, {
-          time:2000,
-          tips: [2, '#FFEDB2'],
-          skin: 'fontColorBg',
-        });
+        let div = document.createElement('div')
+        let html = ''
+        debugger
+
+        $('.'+id).append(div)
+        div.innerHTML = tipsVal
+
+        // layer.tips(tipsVal, '.' + id, {
+        //   time:2000,
+        //   tips: [2, '#FFEDB2'],
+        //   skin: 'fontColorBg',
+        // });
+
       },
 
       copyURL() {
@@ -176,7 +188,6 @@
           this.getEcTableData()
         }
       }
-
     },
     filters: {
       formatThousands: (params) => {
@@ -191,6 +202,47 @@
       round: (params) => {
         if (!params) return 0
         return params.toFixed(2)
+      },
+      periodMonth: (parmas)=>{
+        let  month = parmas.substr(4, 2)
+        switch (month){
+          case "01":
+            return 'Jan'
+            break
+          case "02":
+            return 'Feb'
+            break
+          case "03":
+            return 'Mar'
+            break
+          case "04":
+            return 'Apr'
+            break
+          case "05":
+            return 'May'
+            break
+          case "06":
+            return 'Jun'
+            break
+          case "07":
+            return 'Jul'
+            break
+          case "08":
+            return 'Aug'
+            break
+          case "09":
+            return 'Sep'
+            break
+          case "10":
+            return 'Oct'
+            break
+          case "11":
+            return 'Nov'
+            break
+          case "12":
+            return 'Dec'
+            break
+        }
       }
     },
     watch:{
@@ -205,7 +257,39 @@
   @import "../appmain/appmain.styl"
   .color7
     background-color #ff89b9
-
+  .tips-warp
+    width 210px
+    position absolute
+    top 0
+    right -230px
+    z-index 10
+    .tips-content
+      position relative
+      padding 5px 10px
+      background-color #FFF2CC
+      border 1px solid #F4B183
+      color #7F7F7F
+      text-align left
+      &:before
+        content ''
+        position absolute
+        top 15px
+        left -20px
+        width: 0
+        height: 0
+        border-top 10px solid transparent
+        border-right 20px solid #F4B183
+        border-bottom 5px solid transparent
+      &:after
+        content ''
+        position absolute
+        top 15px
+        left -18px
+        width: 0
+        height: 0
+        border-top 10px solid transparent
+        border-right 20px solid #FFF2CC
+        border-bottom 5px solid transparent
   .data-table
     border-collapse collapse
     border none
@@ -214,7 +298,7 @@
       background #DA9694
       th
         padding 10px 0
-        border 1px solid #B3B3B3
+        border 1px solid #ddd
         cursor pointer
         color #fff
         font-weight normal
@@ -240,7 +324,7 @@
       background-color #FFFFFF
     td
       padding 10px 0
-      border 1px solid #B3B3B3
+      border 1px solid #ddd
       text-align center
       white-space pre-wrap
       word-wrap break-word

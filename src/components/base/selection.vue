@@ -33,6 +33,8 @@
         default: ()=> false
       }
     },
+    mounted(){
+    },
     methods: {
       toggleDrop() {
         if(this.perm) return

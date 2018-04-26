@@ -244,14 +244,75 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(item, index) in camTableAnData" :class="{even: index%2 == 0, odd: index%2 != 0}">
-            <td :rowspan="item.monthspan" :class="{ hidden: item.monthdis}" v-if="item.type == 'month'">
-              <div>{{item.month}}</div>
-            </td>
-            <td :rowspan="item.weekspan" :class="{ hidden: item.weekdis}" v-else="item.type == 'week'">
+          <tr v-for="item in camOverAllTable" class="even">
+            <td :rowspan="item.weekspan" :class="{hidden: item.weekdis}">
               <div>{{item.week}}</div>
             </td>
-            <td :rowspan="item.endDatespan" :class="{ hidden: item.endDatedis}">
+            <td :rowspan="item.endDatespan" :class="{hidden: item.week == 'Overall'&&item.endDatedis}">
+              <div>{{item.startDate}}-{{item.endDate}}</div>
+            </td>
+            <td>
+              <div>{{item.channel}}</div>
+            </td>
+            <td>
+              <div>{{item.spending | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.impression | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.click | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.ctr | percentile }}</div>
+            </td>
+            <td>
+              <div>{{item.leads | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.costLead | round }}</div>
+            </td>
+            <td>
+              <div>{{item.conversionRate | percentile }}</div>
+            </td>
+          </tr>
+          <tr v-for="(item, index) in camWeekTable" :class="{odd: weekStr(item.week), even: weekStr(item.week)}">
+            <td :rowspan="item.weekspan" :class="{hidden: item.weekdis}">
+              <div>{{item.week}}</div>
+            </td>
+            <td :rowspan="item.endDatespan" :class="{hidden: item.endDatedis}">
+              <div>{{item.startDate}}-{{item.endDate}}</div>
+            </td>
+            <td>
+              <div>{{item.channel}}</div>
+            </td>
+            <td>
+              <div>{{item.spending | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.impression | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.click | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.ctr | percentile }}</div>
+            </td>
+            <td>
+              <div>{{item.leads | formatThousands }}</div>
+            </td>
+            <td>
+              <div>{{item.costLead | round }}</div>
+            </td>
+            <td>
+              <div>{{item.conversionRate | percentile }}</div>
+            </td>
+          </tr>
+          <tr v-for="(item, index) in camMonthTable">
+            <td :rowspan="item.monthspan" :class="{hidden: item.monthdis}">
+              <div>{{item.month}}</div>
+            </td>
+            <td :rowspan="item.endDatespan" :class="{hidden: item.endDatedis}">
               <div>{{item.startDate}}-{{item.endDate}}</div>
             </td>
             <td>
@@ -291,6 +352,7 @@
   import xhrUrls from '../../assets/config/xhrUrls';
   import {getQueryString, getHashString} from '../../assets/config/urlQuery';
   import {get, post} from '../../assets/config/http';
+
   const CMA_SEARCH = xhrUrls.CMA_SEARCH;
   let CAM_CATEGORY = xhrUrls.CAM_CATEGORY
   let CAM_GETPARAMETER = xhrUrls.CAM_GETPARAMETER
@@ -300,6 +362,9 @@
       return {
         camTableOvData: [],
         camTableAnData: [],
+        camWeekTable: [],
+        camOverAllTable: [],
+        camMonthTable: [],
         selectListOne: ['All Categories'],
         selectListTwo: [],
         campaign: null,
@@ -369,14 +434,28 @@
       getAnTableData() {
         this.AnTableSearch.campaign = this.category
         this.AnTableSearch.category = this.campaignTwo
+        this.camWeekTable = []
+        this.camMonthTable = []
+        this.camOverAllTable = []
         post(CMA_SEARCH, this.AnTableSearch).then(res => {
           let data = res.data;
           if (data.code == 200) {
-            this.camTableAnData = data.data;
-            this.columnIndex(this.camTableAnData)
+            data.data.forEach((v, i) => {
+              if (v.type == 'week' && v.week != 'Overall') {
+                this.camWeekTable.push(v)
+              } else if (v.type == 'month') {
+                this.camMonthTable.push(v)
+              } else {
+                this.camOverAllTable.push(v)
+              }
+            })
+            this.columnIndex(this.camWeekTable)
+            this.columnIndex(this.camMonthTable)
+            this.columnIndex(this.camOverAllTable)
           } else {
             console.log(data.errMsg)
           }
+
         }).catch(err => console.log(err))
       },
 
@@ -455,15 +534,22 @@
                 data[k][row + 'dis'] = false;
                 data[i][row + 'span'] = 1;
                 data[i][row + 'dis'] = true;
+                data[i][row + 'odd'] = true;
               } else {
                 break;
               }
+              // if (data[k].week != 'Overall') {
+              //
+              // } else {
+              //   break
+              // }
             }
             k = i;
           }
           rowIndex++;
         }
         this.camTableAnData = data
+        // console.log(data)
       },
 
       copyURL() {
@@ -616,7 +702,7 @@
 
         this.isSelectTwo = true
 
-        get(`${CAM_GETPARAMETER}?category=${campaignTwoId == 0? CAM_GETPARAMETER_CATEGOTY : campaignTwo}`).then(res => {
+        get(`${CAM_GETPARAMETER}?category=${campaignTwoId == 0 ? CAM_GETPARAMETER_CATEGOTY : campaignTwo}`).then(res => {
 
           let data = res.data.data
 
@@ -644,8 +730,16 @@
 
         this.getAnTableData()
 
-      }
+      },
 
+      weekStr: (params) => {
+        let num = params.substr(4);
+        if (num % 2 == 0) {
+          return true
+        } else {
+          return false
+        }
+      }
     },
     filters: {
       formatThousands: (params) => {
@@ -660,7 +754,8 @@
       round: (params) => {
         if (!params) return 0
         return params.toFixed(2)
-      }
+      },
+
     },
     watch: {
       selectListTwo() {
@@ -693,7 +788,7 @@
         background #538DD5
         th
           padding 10px 0
-          border 1px solid #B3B3B3
+          border 1px solid #ddd
           cursor pointer
           color #fff
           font-weight normal
@@ -718,7 +813,7 @@
         background-color #FFFFFF
       td
         padding 10px 0
-        border 1px solid #B3B3B3
+        border 1px solid #ddd
         text-align center
         white-space pre-wrap
         word-wrap break-word
@@ -729,10 +824,12 @@
     th
       &:nth-child(2)
         width 190px
+
   #camTableOv
     th
       &:nth-child(7), &:nth-child(10), &:nth-child(15), &:nth-child(18)
         width 30px
+
   @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .data-table
       tr
@@ -741,6 +838,7 @@
           padding 0 !important
           div
             transform scale(.7)
+
     #camTableAn
       th
         &:nth-child(2)
