@@ -74,7 +74,10 @@
     methods: {
 
       getHighLight(val) {
-        post(HIGHT_LIGHT_SEARCH, {month: this.getYearMonth,type: val}).then(res => {
+        if(val == 'overview'){
+          val = ''
+        }
+        post(HIGHT_LIGHT_SEARCH, {month: this.getYearMonth, type: val}).then(res => {
           let data = res.data;
           data.code == 200 ? this.HighLightData = data.data : console.log(data.errMsg)
         }).catch(err => console.log(err))

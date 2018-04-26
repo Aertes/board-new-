@@ -7,7 +7,7 @@
         <div class="wrap">
           <p class="one">Philips One China Digital Dashboard</p>
           <p class="two"><span>{{time}}</span> Performance Review</p>
-          <p class="three">Start here <span @click="incrementType"><svg-icon sign="icon-right" class="arrow-right"></svg-icon></span></p>
+          <p class="three"><span @click="incrementType">Start here <svg-icon sign="icon-right" class="arrow-right"></svg-icon></span></p>
           <p class="four">BC&D China</p>
         </div>
       </div>

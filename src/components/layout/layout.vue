@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper">
-    <span @click="decrementType" v-if="type!=1"><svg-icon sign="icon-arrow-left" class="arrow-left"></svg-icon></span>
-    <span @click="incrementType" v-if="this.type!=1 && this.type!=7"><svg-icon sign="icon-arrow-right" class="arrow-right"></svg-icon></span>
+    <span @click="decrementType" v-if="type!=1"><svg-icon sign="icon-arrow-left-c" class="arrow-left"></svg-icon></span>
+    <span @click="incrementType" v-if="this.type!=1 && this.type!=7"><svg-icon sign="icon-arrow-right-c" class="arrow-right"></svg-icon></span>
     <nav-bar></nav-bar>
     <div class="clear">
       <app-main></app-main>

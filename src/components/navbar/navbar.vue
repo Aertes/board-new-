@@ -2,7 +2,7 @@
   <div class="nav-bar-wrap clearfix">
 
     <div class="pc-nav-bar clearfix">
-      <div class="logo box-shadow"><img src="../../assets/img/logo.png" alt="philips" width="198" height="100"></div>
+      <a href="javascript:;"  class="logo box-shadow"  @click="linkTo('coverpage',1)"><img src="../../assets/img/logo.png" alt="philips" width="198" height="100"></a>
       <h1>One China Digital Performance Dashboard</h1>
       <div class="selection-box">
         <selection :selections="yearList" ref="yearBox"></selection>
@@ -70,7 +70,7 @@
 
     <div class="mobile-nav-bar">
       <div class="clearfix">
-        <div class="logo box-shadow"><img src="../../assets/img/logo.png" alt="philips" width="198" height="100"></div>
+        <a href="javascript:;"  class="logo box-shadow"  @click="linkTo('coverpage',1)"><img src="../../assets/img/logo.png" alt="philips" width="198" height="100"></a>
         <h1>One China Digital Performance Dashboard</h1>
         <div class="user-info">
           <div class="after-login user-operation-mobile-wrap" :class="{active:sideSlide}">

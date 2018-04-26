@@ -244,7 +244,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="item in camOverAllTable" class="even">
+          <tr v-for="item in camOverAllTable" v-if="item.type == 'week'" class="even">
             <td :rowspan="item.weekspan" :class="{hidden: item.weekdis}">
               <div>{{item.week}}</div>
             </td>
@@ -276,67 +276,67 @@
               <div>{{item.conversionRate | percentile }}</div>
             </td>
           </tr>
-          <tr v-for="(item, index) in camWeekTable" :class="{odd: weekStr(item.week), even: weekStr(item.week)}">
-            <td :rowspan="item.weekspan" :class="{hidden: item.weekdis}">
+          <tr v-for="(item, index) in camWeekTable">
+            <td :rowspan="item.weekspan" :class="{odd: item.isColor, even: !item.isColor, hidden: item.weekdis}">
               <div>{{item.week}}</div>
             </td>
-            <td :rowspan="item.endDatespan" :class="{hidden: item.endDatedis}">
+            <td :rowspan="item.endDatespan" :class="{odd: item.isColor, even: !item.isColor, hidden: item.endDatedis}">
               <div>{{item.startDate}}-{{item.endDate}}</div>
             </td>
-            <td>
+            <td :class="{odd: item.isColor, even: !item.isColor}">
               <div>{{item.channel}}</div>
             </td>
-            <td>
+            <td :class="{odd: item.isColor, even: !item.isColor}">
               <div>{{item.spending | formatThousands }}</div>
             </td>
-            <td>
+            <td :class="{odd: item.isColor, even: !item.isColor}">
               <div>{{item.impression | formatThousands }}</div>
             </td>
-            <td>
+            <td :class="{odd: item.isColor, even: !item.isColor}">
               <div>{{item.click | formatThousands }}</div>
             </td>
-            <td>
+            <td :class="{odd: item.isColor, even: !item.isColor}">
               <div>{{item.ctr | percentile }}</div>
             </td>
-            <td>
+            <td :class="{odd: item.isColor, even: !item.isColor}">
               <div>{{item.leads | formatThousands }}</div>
             </td>
-            <td>
+            <td :class="{odd: item.isColor, even: !item.isColor}">
               <div>{{item.costLead | round }}</div>
             </td>
-            <td>
+            <td :class="{odd: item.isColor, even: !item.isColor}">
               <div>{{item.conversionRate | percentile }}</div>
             </td>
           </tr>
-          <tr v-for="(item, index) in camMonthTable">
-            <td :rowspan="item.monthspan" :class="{hidden: item.monthdis}">
+          <tr v-for="(item, index) in camMonthTable" v-if="item.type == 'month'" >
+            <td :rowspan="item.monthspan" :class="{odd: !item.isColor, even: item.isColor,  hidden: item.monthdis}">
               <div>{{item.month}}</div>
             </td>
-            <td :rowspan="item.endDatespan" :class="{hidden: item.endDatedis}">
+            <td :rowspan="item.endDatespan" :class="{odd: !item.isColor,  even: item.isColor, hidden: item.endDatedis}">
               <div>{{item.startDate}}-{{item.endDate}}</div>
             </td>
-            <td>
+            <td :class="{odd: !item.isColor, even: item.isColor}">
               <div>{{item.channel}}</div>
             </td>
-            <td>
+            <td :class="{odd: !item.isColor, even: item.isColor}">
               <div>{{item.spending | formatThousands }}</div>
             </td>
-            <td>
+            <td :class="{odd: !item.isColor, even: item.isColor}">
               <div>{{item.impression | formatThousands }}</div>
             </td>
-            <td>
+            <td :class="{odd: !item.isColor, even: item.isColor}">
               <div>{{item.click | formatThousands }}</div>
             </td>
-            <td>
+            <td :class="{odd: !item.isColor, even: item.isColor}">
               <div>{{item.ctr | percentile }}</div>
             </td>
-            <td>
+            <td :class="{odd: !item.isColor, even: item.isColor}">
               <div>{{item.leads | formatThousands }}</div>
             </td>
-            <td>
+            <td :class="{odd: !item.isColor, even: item.isColor}">
               <div>{{item.costLead | round }}</div>
             </td>
-            <td>
+            <td :class="{odd: !item.isColor, even: item.isColor}">
               <div>{{item.conversionRate | percentile }}</div>
             </td>
           </tr>
@@ -389,7 +389,7 @@
         isQrShow1: false,
         isQrShow2: false,
         locationHash: false,
-        isSelectTwo: false
+        isSelectTwo: false,
       }
     },
     computed: {
@@ -434,24 +434,24 @@
       getAnTableData() {
         this.AnTableSearch.campaign = this.category
         this.AnTableSearch.category = this.campaignTwo
-        this.camWeekTable = []
-        this.camMonthTable = []
-        this.camOverAllTable = []
         post(CMA_SEARCH, this.AnTableSearch).then(res => {
           let data = res.data;
+          this.camWeekTable = []
+          this.camMonthTable = []
+          this.camOverAllTable = []
           if (data.code == 200) {
             data.data.forEach((v, i) => {
               if (v.type == 'week' && v.week != 'Overall') {
                 this.camWeekTable.push(v)
+                this.columnIndex(this.camWeekTable)
               } else if (v.type == 'month') {
                 this.camMonthTable.push(v)
+                this.columnIndex(this.camMonthTable)
               } else {
                 this.camOverAllTable.push(v)
+                this.columnIndex(this.camOverAllTable)
               }
             })
-            this.columnIndex(this.camWeekTable)
-            this.columnIndex(this.camMonthTable)
-            this.columnIndex(this.camOverAllTable)
           } else {
             console.log(data.errMsg)
           }
@@ -817,6 +817,10 @@
         text-align center
         white-space pre-wrap
         word-wrap break-word
+        &.odd
+          background-color #F2F2F2
+        &.even
+          background-color #FFFFFF
       .hidden
         display none
 

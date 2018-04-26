@@ -32,11 +32,7 @@
             <th colspan="2"><div>其他</div></th>
           </tr>
           <tr>
-            <th @click="tips('Traffic', 'Traffic')" class="triangle Traffic"><div>Traffic</div>
-              <div class="tips-warp">
-                <div class="tips-content">Buy lead conversion shows the value of the conversion points used on the Philips digital platform.For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are.</div>
-              </div>
-            </th>
+            <th @click="tips('Traffic', 'Traffic')" class="triangle Traffic"><div>Traffic</div></th>
             <th @click="tips('Conversion', 'Conversion')" class="triangle Conversion"><div>Conversion%</div></th>
             <th><div>Traffic</div></th>
             <th><div>Conversion%</div></th>
@@ -130,27 +126,21 @@
           case 'Traffic':
             tipsVal = 'The amount of visitors and visits a Web site receives.'
             this.tipsContent(tipsVal, id)
-            break
+            break;
           case 'Conversion':
             tipsVal = 'Buy lead conversion shows the value of the conversion points used on the Philips digital platform.For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are.'
             this.tipsContent(tipsVal, id)
-            break
+            break;
         }
       },
 
       tipsContent(tipsVal, id) {
-        let div = document.createElement('div')
-        let html = ''
-        debugger
 
-        $('.'+id).append(div)
-        div.innerHTML = tipsVal
-
-        // layer.tips(tipsVal, '.' + id, {
-        //   time:2000,
-        //   tips: [2, '#FFEDB2'],
-        //   skin: 'fontColorBg',
-        // });
+        layer.tips(tipsVal, '.' + id, {
+           time:2000,
+           tips: [2, '#FFEDB2'],
+           skin: 'fontColorBg',
+        });
 
       },
 
