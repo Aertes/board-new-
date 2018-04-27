@@ -85,6 +85,41 @@
   .table-box
     margin-bottom 20px
 
+
+/*chartStyle*/
+.chart-wrap
+  position fixed
+  left 60px
+  right 60px
+  bottom 0
+  top 76px
+  background-color #f2f2f2
+  transition transform .5s linear
+  transform translateY(100%)
+  &.active
+    transform translateY(0)
+  .chart-icon-box
+    float right
+    line-height 40px
+    height 40px
+    cursor pointer
+  .arrow-icon
+    color #D2D1D1!important
+    vertical-align -5px
+  .back-botton
+    color #9DC3EA
+    font-size 30px
+  .chart-cont-wrap
+    position absolute
+    left 25px
+    right 25px
+    top 100px
+    bottom 20px
+    overflow auto
+    .chart-cont
+      height 600px
+      border 1px solid #BFBFBF
+      background-color #fff
 @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
   .app-main-wrap
     .table-nav
@@ -96,7 +131,18 @@
       .selection-box
       .icon
         font-size 50px
-        vertical-align: -32px;
+        vertical-align -32px
       .erweima-icon
       .link-icon
         display none
+  .chart-wrap
+    left 10px
+    right 10px
+    top 156px
+    .arrow-icon
+      font-size 30px!important
+      vertical-align -7px!important
+    .chart-cont-wrap
+      left 0
+      right 0
+      top 160px

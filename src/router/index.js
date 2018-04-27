@@ -51,6 +51,11 @@ export default new Router({
           path: 'ecommerce',
           name: 'ecommerce',
           component: () => import('@/components/dashboard/eCommerce')
+        },
+        {
+          path: 'setting',
+          name: 'setting',
+          component: () => import('@/components/setting/setting')
         }
       ]
     }

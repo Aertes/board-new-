@@ -31,6 +31,7 @@ let indicator = [
     "max": 600
   }
 ]
+
 // 千分位格式化
 function formatThousands(params) {
   return (params + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
@@ -180,7 +181,6 @@ function chartTypeFour(xAxisData, seriesData1, seriesData2) {
 }
 
 function chartTypeFive(legendDate, yAxisData, seriesData1, seriesData2, seriesData3, seriesData4, seriesData5) {
-
   return {
     tooltip: {
       trigger: "axis",
@@ -240,7 +240,6 @@ function chartTypeFive(legendDate, yAxisData, seriesData1, seriesData2, seriesDa
 
 //compaign1 bar
 function chartTypeSix(legendDate, xAxisData, seriesData) {
-
   return {
     tooltip: {
       trigger: "axis",
@@ -277,7 +276,6 @@ function chartTypeSix(legendDate, xAxisData, seriesData) {
 
 //compaign2 line
 function chartTypeSeven(legendDate, xAxisData, cpl, conversionRate) {
-
   return {
     tooltip: {
       trigger: 'axis',
@@ -336,7 +334,6 @@ function chartTypeSeven(legendDate, xAxisData, cpl, conversionRate) {
 
 //compaign3 funnl
 function chartTypeThree(legendDate, seriesData) {
-
   return {
     tooltip: {
       trigger: "item",

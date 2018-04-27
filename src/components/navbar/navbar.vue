@@ -25,7 +25,7 @@
               </div>
             </div>
           </div>
-          <span  title="Setting"><svg-icon sign="icon-setting" class="setting-icon" :class="{none:isUser}" title="Setting"></svg-icon></span>
+          <span  title="Setting" @click="toSetting"><svg-icon sign="icon-setting" class="setting-icon" :class="{none:isUser}" title="Setting"></svg-icon></span>
           <div class="user-operation-hover" :class="{noHover:isUser}">
             <span @click="goToLogin"><svg-icon sign="icon-user" class="user-icon"></svg-icon></span>
             <div class="user-operation box-shadow">
@@ -452,6 +452,10 @@
         this.uploadProps.uplaodType = type
         this.uploadProps.uploadName = name
         this.$refs.upload.getHistoryData(type, name)
+      },
+
+      toSetting(){
+        this.$router.push({name:'setting'})
       }
 
     },

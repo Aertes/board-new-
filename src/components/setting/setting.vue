@@ -8,7 +8,7 @@
           </li>
         </ul>
       </div>
-      <div class="cards box-shadow clearfix">
+      <div class="cards clearfix">
         <div class="tab-card" style="display: block;">
           <div class="content">
             <form action="" class="clearfix">
@@ -22,7 +22,7 @@
               </div>
               <div class="search">
                 <label for="">Status</label>
-                <selection :selections="selectStatusOptions" @selectStatus="selectStatus"></selection>
+                <selection :selections="selectStatusOptions" class="setting" @selectStatus="selectStatus"></selection>
               </div>
               <div @click="searchUser">
                 <svg-icon sign="icon-search" class="searchIcon"></svg-icon>
@@ -264,10 +264,10 @@
       this.userEnable();
       this.userDisable();
       this._initZtree();
+      this.getTaleData()
     },
     activated(){
       try{
-        this.getTaleData()
         this.viewUserClick();
         this.editUserClick();
         this.removeStyleNode()
@@ -314,8 +314,8 @@
           bDestroy: true,
           ordering: false,
           pagingType: "simple_numbers",
-          pageLength: 6,
-          "paging": this.tableData.length > 6 ? true : false,
+          pageLength: 10,
+          "paging": this.tableData.length > 10 ? true : false,
           data: this.tableData,
           columns: [{
             data: "name",
@@ -981,19 +981,16 @@
           transition: all .3s linear
         .tab-link
           color #fff;
-          width 200px
-          height 60px
+          width 140px
+          height 40px
           display block
           text-align center
-          line-height 60px
-          font-size 22px
+          line-height 40px
+          font-size 18px
     .cards
-      background #fff
+      /*background #fff*/
       width 100%
-      padding 40px
-      border-top-right-radius 10px
-      border-bottom-left-radius 10px
-      border-bottom-right-radius 10px
+      padding 40px 0
       .tab-card
         float left
         display none
@@ -1007,16 +1004,16 @@
             .dropdown-wrap
               display inline-block
               width 200px
-              height 40px
-              line-height 40px
+              height 35px
+              line-height 35px
               .dropdown-show
-                height 40px
-                line-height 40px
+                height 35px
+                line-height 35px
             label
               color #717071
-              font-size 22px
+              font-size 18px
               margin-right 15px
-              line-height 40px
+              line-height 35px
               display inline-block
             input, select
               margin-right 30px
@@ -1024,12 +1021,12 @@
               border 1px solid #E2DFDE
               border-radius 5px
               width 200px
-              height 40px
-              line-height 40px
+              height 35px
+              line-height 35px
               padding 0 10px
           .searchIcon
             color #717071
-            font-size 30px
+            font-size 20px
             margin-left 30px
             height 40px
             line-height 40px
@@ -1041,19 +1038,19 @@
               width 20%
               height 450px
               float left
-              border 1px solid #eaeaea
+              border 1px solid #d6e3f0
               border-radius 5px
               padding 0
               .ztreeDome
                 max-height 380px
                 overflow auto
               h4
-                height 55px
-                line-height 55px
+                height 40px
+                line-height 40px
                 text-align center
                 color #fff
                 border-bottom 1px solid #1f61ae
-                font-size 20px
+                font-size 18px
                 font-weight 400
                 background #1f61ae
                 border-radius 5px 5px 0 0
@@ -1062,69 +1059,70 @@
               padding-top 1px
               .user-create
                 color #fff
-                font-size 22px
+                font-size 18px
                 e-pos(top:50%, y:-50%)
               .create
                 border 1px solid #1f61ae
                 border-radius 5px 5px 0 0
-                height 55px
+                height 40px
                 cursor pointer
                 padding-left 20px
                 background #1f61ae
-                line-height 55px
+                line-height 40px
                 position relative
                 .newUser
-                  margin-left 35px
+                  margin-left 30px
                   color #fff
-                  line-height 55px
+                  line-height 40px
                   display inline-block
                   position absolute;
                   margin-top -3px
                 span
                   color #fff
-                  font-size 20px
+                  font-size 18px
               .user-table
                 // margin-top 20px
                 position relative
                 width 100%
 
   #user
-    width 700px
+    width 600px
     .tables-title
       position: relative
-      padding-left: 45px
-      font-size: 30px
-      line-height: 100px
-      height 100px
+      padding-left: 20px
+      font-size: 20px
+      line-height: 40px
+      height 40px
       color: #a0a0a1
       .icon
         e-pos(top:50%, y:-50%)
-        right: 25px
-        font-size: 30px
+        right: 20px
+        font-size: 20px
         color: #A0A0A1
         cursor: pointer
     .resg
-      padding 0 60px 0 50px
+      padding 0 20px
       div
         height 40px
         line-height 40px
         width 100%
-        margin 20px 0
+        margin 10px 0
         .dropdown-wrap
           position relative
           display inline-block
           width 60%
-          height 50px
+          height 35px
           outline none
           .dropdown-show
             position relative
             width 100%
-            height 50px
+            height 35px
+            line-height 35px
             cursor pointer
             .arrow-down
               e-pos(top:50%, y:-50%)
               right 10px
-              font-size 20px
+              font-size 18px
               color #A0A0A1
             input
               width 100%
@@ -1135,11 +1133,11 @@
               border 1px solid #E2DFDE
               border-radius 5px
               color #A0A0A1
-              font-size 21px
+              font-size 18px
               &:disabled
                 background-color #fff
         label
-          font-size 22px
+          font-size 18px
           display inline-block
           width 40%
           float left
@@ -1151,13 +1149,14 @@
             width 20%
         .input
           width 60%
-          height 100%
+          height 35px
+          line-height 35px
           padding-left 10px
           padding-right 35px
           appearance none
           border 1px solid #E2DFDE
           border-radius 5px
-          font-size 21px
+          font-size 18px
           float right
           &:disabled
             border 0
@@ -1166,17 +1165,17 @@
           border-color: #e78b70
     .submit-btn
       text-align center
-      margin 50px 80px
+      margin 30px 0
       button
-        height 40px
+        height 35px
         background-color #74A5D4
-        border-radius 10px
+        border-radius 5px
         color #fff
         border medium
         outline none
         cursor pointer
         padding 0 20px
-        font-size 24px
+        font-size 18px
       .confirm
         margin-right 10px
       .cancel
@@ -1191,4 +1190,15 @@
     .dropdown-menu
       max-height 100px
       overflow auto
+      top 36px
+      line-height 35px
+      font-size 18px
+    .dropdown-show
+      height 35px
+      line-height 35px
+  .setting
+    .dropdown-menu
+      top 36px
+      line-height 35px
+      font-size 18px
 </style>

@@ -1,237 +1,257 @@
 <template>
   <div class="rating-review-wrap">
 
-    <div class="table-nav clearfix">
-      <h3><i class="color-line color4"></i>Review & Rating Performance Overview</h3>
-      <div class="tool-box clearfix">
-        <div class="selection-box">
-          <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowOneHandle"
-                     ref="selectOptionOne"></selection>
-        </div>
-        <div class="icon-box">
-          <span title="Show Chartbar">
+    <div v-show="!isChart">
+      <div class="table-nav clearfix">
+        <h3><i class="color-line color4"></i>Review & Rating Performance Overview</h3>
+        <div class="tool-box clearfix">
+          <div class="selection-box">
+            <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowOneHandle"
+                       ref="selectOptionOne"></selection>
+          </div>
+          <div class="icon-box">
+          <span title="Show Chartbar" @click="isChart=true">
             <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
           </span>
-          <span class="qrcode" @mouseenter="qrcodeShow" @mouseleave="qrcodeHide">
+            <span class="qrcode" @mouseenter="qrcodeShow" @mouseleave="qrcodeHide">
             <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
             <div class="qrcode-warp" v-show="isQrShow">
               <div class="qrcodeCanvas"></div>
               <span>Please scan the QR code</span>
             </div>
           </span>
-          <span @click="copyURL" title="Copy URL">
+            <span @click="copyURL" title="Copy URL">
             <svg-icon sign="icon-link" class="link-icon"></svg-icon>
           </span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="table-name">Year-to-date</div>
-    <div class="table-box">
-      <table id="yearTable" class="data-table" style="width:100%">
-        <thead>
-        <tr>
-          <th>
-            <div>Category</div>
-          </th>
-          <th>
-            <div>Rate</div>
-          </th>
-          <th>
-            <div>Over 4.3%</div>
-          </th>
-          <th>
-            <div>Below 4.5%</div>
-          </th>
-          <th>
-            <div>Over 4.8%</div>
-          </th>
-          <th>
-            <div>Sellout volume</div>
-          </th>
-          <th>
-            <div>%of review</div>
-          </th>
-          <th>
-            <div>Total review</div>
-          </th>
-          <th>
-            <div>Positive</div>
-          </th>
-          <th>
-            <div>Neutral</div>
-          </th>
-          <th>
-            <div>Negative</div>
-          </th>
-          <th>
-            <div>%of negative</div>
-          </th>
-          <th>
-            <div>Timely Response</div>
-          </th>
-          <th>
-            <div>Timely Response%</div>
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(item, index) in yearTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
-            v-if="yearTableData.length >= 0">
-          <td>
-            <div class="floatL">{{item.category}}</div>
-          </td>
-          <td>
-            <div>{{item.avgRating | round}}</div>
-          </td>
-          <td>
-            <div>{{item.smallVolume | percentile}}</div>
-          </td>
-          <td>
-            <div>{{item.midVolume | percentile}}</div>
-          </td>
-          <td>
-            <div>{{item.bigVolume | percentile}}</div>
-          </td>
-          <td>
-            <div>{{item.selloutVolume | formatThousands}}</div>
-          </td>
-          <td>
-            <div>{{item.percentReview | percentile}}</div>
-          </td>
-          <td>
-            <div>{{item.totalReview | formatThousands}}</div>
-          </td>
-          <td>
-            <div>{{item.positive | formatThousands}}</div>
-          </td>
-          <td>
-            <div>{{item.neutral | formatThousands}}</div>
-          </td>
-          <td>
-            <div>{{item.negative | formatThousands}}</div>
-          </td>
-          <td>
-            <div>{{item.percentNegative | percentile}}</div>
-          </td>
-          <td>
-            <div>{{item.timelyResponse | strikethrough}}</div>
-          </td>
-          <td>
-            <div>{{item.timelyResponseRate | strikethrough}}</div>
-          </td>
-        </tr>
-        <tr v-else>
-          <td class="noData" :colspan="14">
-            <div>Temporarily no data</div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="table-name">Year-to-date</div>
+      <div class="table-box">
+        <table id="yearTable" class="data-table" style="width:100%">
+          <thead>
+          <tr>
+            <th>
+              <div>Category</div>
+            </th>
+            <th>
+              <div>Rate</div>
+            </th>
+            <th>
+              <div>Over 4.3%</div>
+            </th>
+            <th>
+              <div>Below 4.5%</div>
+            </th>
+            <th>
+              <div>Over 4.8%</div>
+            </th>
+            <th>
+              <div>Sellout volume</div>
+            </th>
+            <th>
+              <div>%of review</div>
+            </th>
+            <th>
+              <div>Total review</div>
+            </th>
+            <th>
+              <div>Positive</div>
+            </th>
+            <th>
+              <div>Neutral</div>
+            </th>
+            <th>
+              <div>Negative</div>
+            </th>
+            <th>
+              <div>%of negative</div>
+            </th>
+            <th>
+              <div>Timely Response</div>
+            </th>
+            <th>
+              <div>Timely Response%</div>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(item, index) in yearTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
+              v-if="yearTableData.length >= 0">
+            <td>
+              <div class="floatL">{{item.category}}</div>
+            </td>
+            <td>
+              <div>{{item.avgRating | round}}</div>
+            </td>
+            <td>
+              <div>{{item.smallVolume | percentile}}</div>
+            </td>
+            <td>
+              <div>{{item.midVolume | percentile}}</div>
+            </td>
+            <td>
+              <div>{{item.bigVolume | percentile}}</div>
+            </td>
+            <td>
+              <div>{{item.selloutVolume | formatThousands}}</div>
+            </td>
+            <td>
+              <div>{{item.percentReview | percentile}}</div>
+            </td>
+            <td>
+              <div>{{item.totalReview | formatThousands}}</div>
+            </td>
+            <td>
+              <div>{{item.positive | formatThousands}}</div>
+            </td>
+            <td>
+              <div>{{item.neutral | formatThousands}}</div>
+            </td>
+            <td>
+              <div>{{item.negative | formatThousands}}</div>
+            </td>
+            <td>
+              <div>{{item.percentNegative | percentile}}</div>
+            </td>
+            <td>
+              <div>{{item.timelyResponse | strikethrough}}</div>
+            </td>
+            <td>
+              <div>{{item.timelyResponseRate | strikethrough}}</div>
+            </td>
+          </tr>
+          <tr v-else>
+            <td class="noData" :colspan="14">
+              <div>Temporarily no data</div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!---------------->
+      <div class="table-name">By month</div>
+      <div>
+        <table id="monthTable" class="data-table" style="width:100%">
+          <thead>
+          <tr>
+            <th>
+              <div>Category</div>
+            </th>
+            <th>
+              <div>Rate</div>
+            </th>
+            <th>
+              <div>Over 4.3%</div>
+            </th>
+            <th>
+              <div>Below 4.5%</div>
+            </th>
+            <th>
+              <div>Over 4.8%</div>
+            </th>
+            <th>
+              <div>Sellout volume</div>
+            </th>
+            <th>
+              <div>%of review</div>
+            </th>
+            <th>
+              <div>Total review</div>
+            </th>
+            <th>
+              <div>Positive</div>
+            </th>
+            <th>
+              <div>Neutral</div>
+            </th>
+            <th>
+              <div>Negative</div>
+            </th>
+            <th>
+              <div>%of negative</div>
+            </th>
+            <th>
+              <div>Timely Response</div>
+            </th>
+            <th>
+              <div>Timely Response%</div>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(item, index) in monthTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
+              v-if="monthTableData.length >= 0">
+            <td>
+              <div class="floatL">{{item.category}}</div>
+            </td>
+            <td>
+              <div>{{item.avgRating | round}}</div>
+            </td>
+            <td>
+              <div>{{item.smallVolume | percentile}}</div>
+            </td>
+            <td>
+              <div>{{item.midVolume | percentile}}</div>
+            </td>
+            <td>
+              <div>{{item.bigVolume | percentile}}</div>
+            </td>
+            <td>
+              <div>{{item.selloutVolume | formatThousands}}</div>
+            </td>
+            <td>
+              <div>{{item.percentReview | percentile}}</div>
+            </td>
+            <td>
+              <div>{{item.totalReview | formatThousands}}</div>
+            </td>
+            <td>
+              <div>{{item.positive | formatThousands}}</div>
+            </td>
+            <td>
+              <div>{{item.neutral | formatThousands}}</div>
+            </td>
+            <td>
+              <div>{{item.negative | formatThousands}}</div>
+            </td>
+            <td>
+              <div>{{item.percentNegative | percentile}}</div>
+            </td>
+            <td>
+              <div>{{item.timelyResponse | strikethrough}}</div>
+            </td>
+            <td>
+              <div>{{item.timelyResponseRate | strikethrough}}</div>
+            </td>
+          </tr>
+          <tr v-else>
+            <td class="noData" :colspan="14">
+              <div>Temporarily no data</div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <!---------------->
-    <div class="table-name">By month</div>
-    <div>
-      <table id="monthTable" class="data-table" style="width:100%">
-        <thead>
-        <tr>
-          <th>
-            <div>Category</div>
-          </th>
-          <th>
-            <div>Rate</div>
-          </th>
-          <th>
-            <div>Over 4.3%</div>
-          </th>
-          <th>
-            <div>Below 4.5%</div>
-          </th>
-          <th>
-            <div>Over 4.8%</div>
-          </th>
-          <th>
-            <div>Sellout volume</div>
-          </th>
-          <th>
-            <div>%of review</div>
-          </th>
-          <th>
-            <div>Total review</div>
-          </th>
-          <th>
-            <div>Positive</div>
-          </th>
-          <th>
-            <div>Neutral</div>
-          </th>
-          <th>
-            <div>Negative</div>
-          </th>
-          <th>
-            <div>%of negative</div>
-          </th>
-          <th>
-            <div>Timely Response</div>
-          </th>
-          <th>
-            <div>Timely Response%</div>
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(item, index) in monthTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
-            v-if="monthTableData.length >= 0">
-          <td>
-            <div class="floatL">{{item.category}}</div>
-          </td>
-          <td>
-            <div>{{item.avgRating | round}}</div>
-          </td>
-          <td>
-            <div>{{item.smallVolume | percentile}}</div>
-          </td>
-          <td>
-            <div>{{item.midVolume | percentile}}</div>
-          </td>
-          <td>
-            <div>{{item.bigVolume | percentile}}</div>
-          </td>
-          <td>
-            <div>{{item.selloutVolume | formatThousands}}</div>
-          </td>
-          <td>
-            <div>{{item.percentReview | percentile}}</div>
-          </td>
-          <td>
-            <div>{{item.totalReview | formatThousands}}</div>
-          </td>
-          <td>
-            <div>{{item.positive | formatThousands}}</div>
-          </td>
-          <td>
-            <div>{{item.neutral | formatThousands}}</div>
-          </td>
-          <td>
-            <div>{{item.negative | formatThousands}}</div>
-          </td>
-          <td>
-            <div>{{item.percentNegative | percentile}}</div>
-          </td>
-          <td>
-            <div>{{item.timelyResponse | strikethrough}}</div>
-          </td>
-          <td>
-            <div>{{item.timelyResponseRate | strikethrough}}</div>
-          </td>
-        </tr>
-        <tr v-else>
-          <td class="noData" :colspan="14">
-            <div>Temporarily no data</div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+    <!---------------------------------------------------------------------------------------------------------------->
+
+    <div class="chart-wrap" :class="{active:isChart}">
+      <div class="table-nav clearfix">
+        <h3><i class="color-line color4"></i>Review & Rating Performance Overview</h3>
+        <div class="tool-box clearfix">
+          <div class="selection-box">
+            <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowOneHandle" ref="selectOptionTwo"></selection>
+          </div>
+          <div class="chart-icon-box" @click="isChart=false">
+            <svg-icon sign="icon-arrow-left-c" class="arrow-icon"></svg-icon><span class="back-botton">Back</span>
+          </div>
+        </div>
+      </div>
+      <div class="chart-cont-wrap">
+        <div class="chart-cont" ref="myEchart"></div>
+      </div>
     </div>
 
   </div>
@@ -244,6 +264,7 @@
 
   const RV_SEARCH = xhrUrls.RV_SEARCH;
   const RV_CHANNEL = xhrUrls.RV_CHANNEL;
+  const RV_SEARCHCHART = xhrUrls.RV_SEARCHCHART;
   export default {
     name: "rating-review",
     data() {
@@ -263,13 +284,165 @@
           month: "",
           channel: ''
         },
+        chartData: {
+          month: "",
+          channel: ''
+        },
         url: '',
-        isQrShow: false
+        isQrShow: false,
+        isChart:false,
+        lineOption:{
+          silent:true,
+          data : [
+            {
+              yAxis: '4.3',
+              lineStyle:{
+                normal: {
+                  type: 'dashed',
+                  color:'#00B0F0'
+                }
+              },
+              label:{
+                formatter: "4.3%"
+              }
+            },
+            {
+              yAxis: 4.5,
+              lineStyle:{
+                normal: {
+                  type: 'dashed',
+                  color:'#FF7A35'
+                }
+              },
+              label:{
+                formatter: "4.5%"
+              }
+            },
+            {
+              yAxis: 4.8,
+              lineStyle:{
+                normal: {
+                  type: 'dashed',
+                  color:'#68A490'
+                }
+              },
+              label:{
+                formatter: "4.8%"
+              }
+            }
+          ]
+        },
+        chartOption:{
+          barWidth: 20,
+          grid: {
+            left: "3%",
+            right: "6%",
+            bottom: "3%",
+            top: "3%",
+            containLabel: true
+          },
+          legend: {
+            data: 'Rate',
+            show:false
+          },
+          xAxis: [{
+            type: 'category',
+            data: [
+              "AC",
+              "OHC",
+              "MG",
+              "FC",
+              "GC",
+              "KA",
+              "Beauty",
+              "MCC",
+              "Coffee"
+            ],
+            axisPointer: {
+              type: 'shadow'
+            }
+          }],
+          yAxis: [
+            {
+              type: 'value',
+              name: '',
+              min: 0,
+              axisLabel: {
+                formatter: "{value}%"
+              }
+            }
+          ],
+          series: [
+            {
+              "data": [
+                4.2,
+                4.4,
+                4.8,
+                4.7,
+                4.5,
+                4.6,
+                4.1,
+                4.2,
+                4.7
+              ],
+              "itemStyle": "",
+              "name": "Rate",
+              "smooth": "",
+              "stack": "Rate",
+              "type": "bar",
+              "yAxisIndex": 0,
+              "markLine" : {
+                silent:true,
+                data : [
+                  {
+                    yAxis: '4.3',
+                    lineStyle:{
+                      normal: {
+                        type: 'dashed',
+                        color:'#00B0F0'
+                      }
+                    },
+                    label:{
+                      formatter: "4.3%"
+                    }
+                  },
+                  {
+                    yAxis: 4.5,
+                    lineStyle:{
+                      normal: {
+                        type: 'dashed',
+                        color:'#FF7A35'
+                      }
+                    },
+                    label:{
+                      formatter: "4.5%"
+                    }
+                  },
+                  {
+                    yAxis: 4.8,
+                    lineStyle:{
+                      normal: {
+                        type: 'dashed',
+                        color:'#68A490'
+                      }
+                    },
+                    label:{
+                      formatter: "4.8%"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
       }
     },
     computed: {
       getYearMonth() {
         return this.$store.getters.getYearMonth
+      },
+      EchartsInit() {
+        return this.$echarts.init(this.$refs.myEchart)
       }
     },
     mounted() {
@@ -291,8 +464,10 @@
         this.getChannelList()
         this.getYeartableData()
         this.getMonthtableData()
+        this.getChartData()
+        this.Echarts()
       }
-
+      window.onresize = this.EchartsInit.resize
     },
     updated() {
       this.locationHash = false
@@ -322,6 +497,19 @@
           } else {
             console.log(data.errMsg)
           }
+        }).catch(err => console.log(err))
+      },
+
+      getChartData(){
+        this.chartData.channel = this.channel
+        this.chartData.month = this.getYearMonth
+        post(RV_SEARCHCHART,this.chartData).then(res => {
+          let data = res.data.data
+          data.series[0].markLine = this.lineOption
+          this.chartOption.legend.data = data.legend
+          this.chartOption.xAxis.data = data.xAxis
+          this.chartOption.series = data.series
+          this.Echarts()
         }).catch(err => console.log(err))
       },
 
@@ -412,6 +600,10 @@
 
           this.channelId = val.id
 
+          this.$refs.selectOptionOne.nowIndex = val.id
+
+          this.$refs.selectOptionTwo.nowIndex = val.id
+
         }
 
       },
@@ -428,11 +620,21 @@
 
         this.$refs.selectOptionOne.nowIndex = channelId
 
+        this.$refs.selectOptionTwo.nowIndex = channelId
+
         this.getYeartableData()
 
         this.getMonthtableData()
 
-      }
+        this.Echarts()
+
+      },
+
+      Echarts() {
+        this.EchartsInit.setOption(this.chartOption, {
+          notMerge: true
+        });
+      },
 
     },
     filters: {
@@ -458,12 +660,14 @@
         if (!this.locationHash) {
           this.getYeartableData()
           this.getMonthtableData()
+          this.getChartData()
         }
       },
       getYearMonth() {
         this.getYeartableData()
         this.getMonthtableData()
-      },
+        this.getChartData()
+      }
     }
   }
 </script>

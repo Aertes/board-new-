@@ -17,6 +17,7 @@ export default {
   RV_UPLOAD: BASE_URL + 'review/upload',
   RV_SEARCH: BASE_URL + 'review/searchTable',
   RV_CHANNEL: BASE_URL + 'review/channel',
+  RV_SEARCHCHART: BASE_URL + 'review/searchChart',
 
 
   OV_CMA_SEARCH: BASE_URL + 'overview/campaign/search',
