@@ -6,7 +6,7 @@
 		</div>
 		<div class="upload-file-box">
 			<div class="upload-file">
-				<a href="javascript:;" title="Unselected File" style="background-color: #2061ae">
+				<a href="javascript:;" title="Unselected File" style="background-color: #00b0f0">
 					Select File
 					<input type="file" id="picker" name="file" @change="upload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
 				</a>
@@ -35,7 +35,7 @@
 				<span id="progressBar" class="percentage" style="width: 0%" role="progressbar" aria-valuemin="0" aria-valuemax="100"></span>
 			</div>
 			<div id="errMsg" class="errMsg">
-	
+
 			</div>
 		</div>
 		<span id="operate" hidden>
@@ -73,18 +73,18 @@
 		mounted() {
 			// 进度条
 			this.init();
-			
+
 			this.onRemoveRecord();
 		},
 		methods: {
 			upload(e) {
+        console.log(this.uploadLink)
 				$('#progress').show()
 				$('#errMsg').hide()
 				$('.upload-file-box').addClass('none').next().removeClass('none');
 				this.fileName = e.target.files[0].name
 				this.uploader.option('server', this.uploadLink)
 				this.uploader.addFiles(e.target.files[0]);
-				
 			},
 			//进度条
 			init() {
@@ -106,7 +106,7 @@
 					duplicate :true,
 					timeout:0
 				});
-	
+
 				// 文件上传过程中创建进度条实时显示。
 				this.uploader.on("uploadProgress", function(file, percentage) {
 					var percent = Math.round(percentage * 100);
@@ -117,7 +117,7 @@
 					}
 					$("#progressBar").css("width", "" + percent + "%");
 				});
-	
+
 				// 上传成功
 				this.uploader.on("uploadSuccess", (file, res) => {
 					if (res.code == 200) {
@@ -132,7 +132,7 @@
 							$("#progressBar").css("width", "0%");
 							$("#text").html("DATA UPLOADING, PLEASE WAIT...");
 							that.getHistoryData(this.types, this.title)
-							this.refreshData()
+							this.refreshData(this.types)
 						}, 1000);
 					} else {
 						let errMsg = res.errMsg.replace(/\,/g, '<br>')
@@ -167,7 +167,7 @@
             this.tableData = data
           })
 			},
-			
+
 			// 历史记录
 			dataTable(type, name) {
 				var that = this;
@@ -215,14 +215,32 @@
 							}
 						}
 					]
-	
+
 				});
 			},
 			//刷新图表
-			refreshData() {
-				this.$Hub.$emit('refreshData');
+			refreshData(type) {
+        alert(type)
+        switch (type){
+          case 'Campaign':
+            this.$Hub.$emit('CampaignUploadData');
+            break
+          case 'Com':
+            this.$Hub.$emit('ComUploadData');
+            break
+          case 'Crm':
+            this.$Hub.$emit('CrmUploadData');
+            break
+          case 'ReviewRating':
+            this.$Hub.$emit('ReviewRatingUploadData');
+            break
+          case 'Ec':
+            this.$Hub.$emit('EcUploadData');
+            break
+        }
+        this.$Hub.$emit('OverViewUploadData');
 			},
-	
+
 			//删除
 			onRemoveRecord() {
 				let that = this;
@@ -255,7 +273,7 @@
 							layer.close(index);
 						})
 					})
-	
+
 				});
 			},
 
@@ -281,58 +299,58 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import '../../assets/style/mixin.styl';
 
-  .tables-wrap .upload-file-box .tables-container table td, 
+  .tables-wrap .upload-file-box .tables-container table td,
   .tables-wrap .upload-file-box .tables-container table th
-    height: 25px
+    height: 20px
     font-weight: 400
     color: #717071
-  table.dataTable thead th, 
-	table.dataTable thead td 
+  table.dataTable thead th,
+	table.dataTable thead td
     padding: 10px 20px
-  table.dataTable.no-footer 
+  table.dataTable.no-footer
     border-bottom: 0
-  .dataTables_wrapper 
-		.dataTables_paginate 
-			.paginate_button.disabled 
+  .dataTables_wrapper
+		.dataTables_paginate
+			.paginate_button.disabled
 				border: 1px solid transparent
-  .tables-wrap 
-    width: 900px
+  .tables-wrap
+    width: 700px
     max-height: 90%
     background-color: #fff
-    border-radius: 15px
+    border-radius: 10px
     z-index: 99999
     overflow: hidden
     min-height: 340px
     display none
-    .none 
+    .none
       display: none
-    .tables-title 
+    .tables-title
       position: relative
-      padding-left: 45px
-      font-size: 30px
-      line-height: 100px
+      padding-left: 20px
+      font-size: 24px
+      line-height: 60px
       color: #a0a0a1
-      .icon 
-        e-pos(top:35%, y:-50%)
-        right: 25px
-        font-size: 30px
+      .icon
+        e-pos(top:50%, y:-50%)
+        right: 20px
+        font-size: 24px
         color: #A0A0A1
         cursor: pointer
-    .upload-file-box 
-      .upload-file 
+    .upload-file-box
+      .upload-file
         position: relative
-        margin-bottom: 30px
-        margin-left: 50px
-        a 
+        margin-bottom: 20px
+        margin-left: 20px
+        a
           display: inline-block
-          border: 1px solid #2061ae
-          border-radius: 10px
+          border: 1px solid #00b0f0
+          border-radius: 5px
           position: relative
-          padding: 8px 20px
+          padding: 5px 15px
           color: #fff
           cursor: pointer
           font-size: 20px
-        span 
+        span
           position: absolute
           top: 50%
           transform: translateY(-50%)
@@ -343,7 +361,7 @@
           white-space: nowrap
           display: inline-block
           font-size: 18px
-        input 
+        input
           border: 0
           width: 120px
           position: absolute
@@ -351,37 +369,37 @@
           left: 0
           cursor: pointer
           opacity: 0
-    .tables-container 
-      padding: 0 50px 100px 50px
-      font-size: 18px
-      .dataTables_info 
+    .tables-container
+      padding: 0 20px 40px
+      font-size: 16px
+      .dataTables_info
         display: none !important
-      .icon-trash 
+      .icon-trash
         cursor: pointer
-      h3 
+      h3
         font-weight: 400
         color: #aeadae
-        margin-bottom: 15px
-        font-size: 26px
-      table 
+        margin-bottom: 20px
+        font-size: 24px
+      table
         border-top: 1px solid #EBEBEB
         border-left: 1px solid #EBEBEB
         border-radius: 10px
-        th, td 
+        th, td
           height: 50px
           border-bottom: 1px solid #EBEBEB
           border-right: 1px solid #EBEBEB
           text-align: center
           vertical-align: center
-	.progress-ba 
+	.progress-ba
 			padding: 0 80px
 			text-align: center
-			.text 
+			.text
 				font-size: 28px
 				color: #a0a0a1
 				margin-bottom: 30px
 				margin-top: 50px
-			.progress 
+			.progress
 				position: relative
 				border-radius: 30px
 				width: 100%
@@ -392,7 +410,7 @@
 				text-align: center
 				line-height: 30px
 				color: #a0a0a1
-				.percentage 
+				.percentage
 					position: absolute
 					border-radius: 30px
 					width: 80%
@@ -400,9 +418,9 @@
 					left: 0
 					top: 0
 					background: #1f61ae
-				.progressbarNum 
+				.progressbarNum
 					e-pos(left:50%, x:-50%)
 					z-index: 1
 
-	
+
 </style>

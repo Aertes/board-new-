@@ -13,7 +13,18 @@
       </div>
       <div class="user-info">
         <div class="after-login">
-          <span  title="Upload"><svg-icon sign="icon-upload" class="upload-icon" :class="{none:isUser}"></svg-icon></span>
+          <div class="user-operation-hover">
+            <span  title="Upload"><svg-icon sign="icon-upload" class="upload-icon" :class="{none:isUser}"></svg-icon></span>
+            <div class="upload-warp user-operation">
+              <img src="../../assets/img/triangle.png" alt="triangle" class="triangle">
+              <div class="a-wrap box-shadow">
+                <a href="javascript:;" v-for="(item, index) in uploadList"  @click="openUpload(item.name, item.link, item.type)">
+                  <svg-icon sign="icon-upload" class="upload-icon" :class="{none:isUser}"></svg-icon>
+                  <span>{{item.name}}</span>
+                </a>
+              </div>
+            </div>
+          </div>
           <span  title="Setting"><svg-icon sign="icon-setting" class="setting-icon" :class="{none:isUser}" title="Setting"></svg-icon></span>
           <div class="user-operation-hover" :class="{noHover:isUser}">
             <span @click="goToLogin"><svg-icon sign="icon-user" class="user-icon"></svg-icon></span>
@@ -159,6 +170,8 @@
       </form>
     </div>
 
+    <upload-file ref='upload'   :uploadLink="uploadProps.uploadLink" :types="uploadProps.uplaodType" :title="uploadProps.uploadName"  @closeLayer="layerHandle"></upload-file>
+
   </div>
 </template>
 
@@ -167,7 +180,7 @@
   import {removeSessionItem} from "../../assets/config/storage.js"
   import {get, post} from "../../assets/config/http"
   import xhrUrls from '../../assets/config/xhrUrls'
-
+  import UploadFile from '../../components/upload/upload'
   export default {
     name: "NavBar",
     data() {
@@ -181,6 +194,8 @@
         isShow: false,
         isErr: false,
         USERINFO: null,
+        system: false,
+        all: false,
         isOldActive:false,
         isNewActive:false,
         isSureActive:false,
@@ -190,6 +205,43 @@
           surePassword: '',
           id: '',
           username: ''
+        },
+        uploadList:[
+          {
+            name: 'CAMPAIGN',
+            link: xhrUrls.CMA_UPLOAD,
+            type: 'Campaign',
+            status: false,
+          },
+          {
+            name: 'COM.CN',
+            link: xhrUrls.COM_UPLOAD,
+            type: 'Com',
+            status: false,
+          },
+          {
+            name: 'CRM',
+            link: xhrUrls.CRM_UPLOAD,
+            type: 'Crm',
+            status: false,
+          },
+          {
+            name: 'RATING & REVIEW',
+            link: xhrUrls.RV_UPLOAD,
+            type: 'ReviewRating',
+            status: false,
+          },
+          {
+            name: 'EC REPORT',
+            link: xhrUrls.EC_UPLOAD,
+            type: 'Ec',
+            status: false,
+          }
+        ],
+        uploadProps:{
+          uploadLink:'',
+          uplaodType:'',
+          uploadName:''
         }
       }
     },
@@ -220,8 +272,33 @@
 
       try{
         this.data.id = USERINFO.id;
-
         this.data.username = USERINFO.username;
+        let per = USERINFO.permissions;
+        per.forEach((v, i) => {
+          if (v == 'compaign:upload') {
+            this.uploadList[0].status = true;
+          }
+          if (v == 'com:upload') {
+            this.uploadList[1].status = true;
+          }
+          if (v == 'crm:upload') {
+            this.uploadList[2].status = true;
+          }
+          if (v == 'rr:upload') {
+            this.uploadList[3].status = true;
+          }
+          if (v == 'ec:upload') {
+            this.uploadList[4].status = true;
+          }
+          if (v == 'sys:setup') {
+            this.system = true;
+          }
+          if (v.indexOf(':upload') != -1 && v.indexOf(':setup') != -1) {
+            this.all = false;
+          } else {
+            this.all = true;
+          }
+        });
       }catch(e){}
 
       this.getTimeMonth()
@@ -366,11 +443,25 @@
         }
       },
 
+      layerHandle() {
+        layer.close(this.layerId)
+      },
+      openUpload(name, link, type){
+        this.layerOpen('upLoadBox')
+        this.uploadProps.uploadLink = link
+        this.uploadProps.uplaodType = type
+        this.uploadProps.uploadName = name
+        this.$refs.upload.getHistoryData(type, name)
+      }
+
     },
     watch: {
       getMonth() {
         this.getTimeMonth()
       }
+    },
+    components:{
+      UploadFile
     }
   }
 </script>
@@ -432,6 +523,7 @@
           background-color rgba(0,0,0,.5)
           transition all .5s linear
           display none
+          z-index 10000000
         &.active
           .shadow-cover
             display block
@@ -443,6 +535,7 @@
           margin-left 15px
         .upload-icon
           font-size 27px
+          color #2061ae
         .user-icon
           font-size 23px
         .user-operation-hover
@@ -518,6 +611,7 @@
           transition transform .2s linear
           line-height 70px
           border-radius 0
+          z-index 10000000
           span
             font-size 26px
           &.active

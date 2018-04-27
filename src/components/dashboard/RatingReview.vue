@@ -274,6 +274,11 @@
     },
     mounted() {
 
+      this.$Hub.$on('ReviewRatingUploadData', ()=>{
+        this.getYeartableData()
+        this.getMonthtableData()
+      })
+
       if (window.location.hash.indexOf("?") != -1) {
         this.locationHash = true
       } else {

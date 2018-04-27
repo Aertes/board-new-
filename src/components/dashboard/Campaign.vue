@@ -395,9 +395,14 @@
     computed: {
       getYearMonth() {
         return this.$store.getters.getYearMonth
-      }
+      },
     },
     mounted() {
+
+      this.$Hub.$on('CampaignUploadData', ()=>{
+        this.getOvTableData()
+        this.getOvTableData()
+      })
 
       if (window.location.hash.indexOf("?") != -1) {
         this.locationHash = true
@@ -538,18 +543,12 @@
               } else {
                 break;
               }
-              // if (data[k].week != 'Overall') {
-              //
-              // } else {
-              //   break
-              // }
             }
             k = i;
           }
           rowIndex++;
         }
         this.camTableAnData = data
-        // console.log(data)
       },
 
       copyURL() {

@@ -226,6 +226,11 @@
     },
     mounted() {
 
+      this.$Hub.$on('ComUploadData', ()=>{
+        this.getB2CtableData()
+        this.getB2BtableData()
+      })
+
       if (window.location.hash.indexOf("?") != -1) {
         this.locationHash = true
       } else {

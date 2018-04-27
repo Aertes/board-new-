@@ -180,7 +180,7 @@ table.dataTable thead td {
 .dataTables_wrapper .dataTables_paginate .paginate_button {
   box-sizing: border-box;
   display: inline-block;
-  min-width: 2.5em;
+  min-width: 40px;
   padding: 0.5em 1em;
   margin-left: 2px;
   text-align: center;
@@ -236,11 +236,6 @@ table.dataTable thead tr th:first-of-type {
   height: 100%;
 }
 
-.tables-container .dataTables_paginate {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
 
 .dataTables_empty{
   text-align: center;

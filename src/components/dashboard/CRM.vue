@@ -125,6 +125,10 @@
     },
     mounted() {
 
+      this.$Hub.$on('CrmUploadData', ()=>{
+        this.getCRMtableData()
+      })
+
       if (window.location.hash.indexOf("?") != -1) {
         this.locationHash = true
       } else {

@@ -91,6 +91,10 @@
     },
     mounted() {
 
+      this.$Hub.$on('EcUploadData', ()=>{
+        this.getEcTableData()
+      })
+
       if (window.location.hash.indexOf("?") != -1) {
         this.locationHash = true
       } else {

@@ -807,6 +807,10 @@
     },
     mounted() {
 
+      this.$Hub.$on('OverViewUploadData', ()=>{
+        this.getOverViewtableData()
+      })
+
       if (window.location.hash.indexOf("?") != -1) {
         this.locationHash = true
       } else {
