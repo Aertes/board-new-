@@ -89,30 +89,35 @@
       line-height 40px
       z-index 10
       white-space: nowrap;
+      border 1px solid #D9D9D9
+      text-align center
       li
         padding 0 10px
-        background-color #00B0F0
-        border-bottom 1px solid #eaeaea
-        border-radius 5px
+        background-color #fff
+        color #808080
+        border-bottom 1px solid #D9D9D9
         cursor: pointer
         &:last-of-type
           border-bottom medium
         &:hover
           background-color #12BCFF
+          color #fff
   .select-colorOrange
     background-color #FFC000
     .dropdown-menu
       li
-        background-color #FFC000
+        background-color #fff
         &:hover
-          background-color #FFD34B
+          background-color #FFC000
+          color #fff
   .select-colorDarkseaGreen
     background-color #92D050
     .dropdown-menu
       li
-        background-color #92D050
+        background-color #fff
         &:hover
-          background-color #A5E85A
+          background-color #92D050
+          color #fff
 
   @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .dropdown-wrap

@@ -20,7 +20,7 @@
               <span>Please scan the QR code</span>
             </div>
           </span>
-            <span @click="copyURL" title="Copy URL">
+            <span @click="copyURL" title="Click to copy this page link">
             <svg-icon sign="icon-link" class="link-icon"></svg-icon>
           </span>
           </div>
@@ -342,22 +342,12 @@
             containLabel: true
           },
           legend: {
-            data: 'Rate',
+            data: '',
             show:false
           },
           xAxis: [{
             type: 'category',
-            data: [
-              "AC",
-              "OHC",
-              "MG",
-              "FC",
-              "GC",
-              "KA",
-              "Beauty",
-              "MCC",
-              "Coffee"
-            ],
+            data: '',
             axisPointer: {
               type: 'shadow'
             }
@@ -372,68 +362,7 @@
               }
             }
           ],
-          series: [
-            {
-              "data": [
-                4.2,
-                4.4,
-                4.8,
-                4.7,
-                4.5,
-                4.6,
-                4.1,
-                4.2,
-                4.7
-              ],
-              "itemStyle": "",
-              "name": "Rate",
-              "smooth": "",
-              "stack": "Rate",
-              "type": "bar",
-              "yAxisIndex": 0,
-              "markLine" : {
-                silent:true,
-                data : [
-                  {
-                    yAxis: '4.3',
-                    lineStyle:{
-                      normal: {
-                        type: 'dashed',
-                        color:'#00B0F0'
-                      }
-                    },
-                    label:{
-                      formatter: "4.3%"
-                    }
-                  },
-                  {
-                    yAxis: 4.5,
-                    lineStyle:{
-                      normal: {
-                        type: 'dashed',
-                        color:'#FF7A35'
-                      }
-                    },
-                    label:{
-                      formatter: "4.5%"
-                    }
-                  },
-                  {
-                    yAxis: 4.8,
-                    lineStyle:{
-                      normal: {
-                        type: 'dashed',
-                        color:'#68A490'
-                      }
-                    },
-                    label:{
-                      formatter: "4.8%"
-                    }
-                  }
-                ]
-              }
-            }
-          ]
+          series: ''
         }
       }
     },
@@ -465,7 +394,6 @@
         this.getYeartableData()
         this.getMonthtableData()
         this.getChartData()
-        this.Echarts()
       }
       window.onresize = this.EchartsInit.resize
     },
@@ -507,7 +435,7 @@
           let data = res.data.data
           data.series[0].markLine = this.lineOption
           this.chartOption.legend.data = data.legend
-          this.chartOption.xAxis.data = data.xAxis
+          this.chartOption.xAxis[0].data = data.xAxis
           this.chartOption.series = data.series
           this.Echarts()
         }).catch(err => console.log(err))
@@ -626,7 +554,7 @@
 
         this.getMonthtableData()
 
-        this.Echarts()
+        this.getChartData()
 
       },
 

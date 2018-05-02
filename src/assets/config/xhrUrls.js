@@ -4,6 +4,7 @@ export default {
 
   CMA_UPLOAD: BASE_URL + 'campaign/upload',
   CMA_SEARCH: BASE_URL + 'campaign/searchTable',
+  CMA_SEARCHCHART: BASE_URL + 'campaign/searchChart',
 
   COM_UPLOAD: BASE_URL + 'com/upload',
   COM_SEARCH: BASE_URL + 'com/search',

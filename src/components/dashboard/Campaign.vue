@@ -2,346 +2,441 @@
 <template>
   <div class="campaign-wrap campaign-table">
 
-    <div class="table-nav clearfix">
-      <h3><i class="color-line color1"></i>Campaign Performance Overview</h3>
-      <div class="tool-box clearfix">
-        <div class="selection-box">
-          <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowOneHandle"
-                     ref="selectOptionOne"></selection>
-        </div>
-        <div class="icon-box">
-          <span title="Show Chartbar">
-            <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
-          </span>
-          <span class="qrcode" @mouseenter="qrcodeShow(1)" @mouseleave="qrcodeHide(1)">
-            <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
-            <div class="qrcode-warp" v-show="isQrShow1">
-              <div class="qrcodeCanvas"></div>
-              <span>Please scan the QR code</span>
-            </div>
-          </span>
-          <span @click="copyURL" title="Copy URL">
-            <svg-icon sign="icon-link" class="link-icon"></svg-icon>
-          </span>
+    <div v-show="chartShow">
+      <div class="table-nav clearfix">
+        <h3><i class="color-line color1"></i>Campaign Performance Overview</h3>
+        <div class="tool-box clearfix">
+          <div class="selection-box">
+            <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowOneHandle"
+                       ref="selectOptionOne"></selection>
+          </div>
+          <div class="icon-box">
+            <span title="Show Chartbar" @click="isChart=true">
+              <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
+            </span>
+            <span class="qrcode" @mouseenter="qrcodeShow(1)" @mouseleave="qrcodeHide(1)">
+              <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
+              <div class="qrcode-warp" v-show="isQrShow1">
+                <div class="qrcodeCanvas"></div>
+                <span>Please scan the QR code</span>
+              </div>
+            </span>
+            <span @click="copyURL" title="Copy URL">
+              <svg-icon sign="icon-link" class="link-icon"></svg-icon>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="table-box">
-      <div class="cam-per-ov">
-        <table id="camTableOv" class="data-table" style="width:100%">
-          <thead>
-          <tr>
-            <th>
-              <div>Period</div>
-            </th>
-            <th class="triangle Spending"><!-- @click="tips('Spending', 'Spending')"-->
-              <a class="hint--right hint--success hint--medium" aria-label="All cost on digital campaign."><div>Spending</div></a>
-            </th>
-            <th class="triangle Impression"><!-- @click="tips('Impression', 'Impression')"-->
-              <a class="hint--right hint--success hint--medium" aria-label="A single instance of an online advertisement being displayed."><div>Impression</div></a>
-            </th>
-            <th class="triangle Traffic"><!-- @click="tips('Traffic', 'Traffic')"-->
-              <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic</div></a>
-            </th>
-            <th class="triangle EC"><!-- @click="tips('Traffic to EC', 'EC')"-->
-              <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic to EC</div></a>
-            </th>
-            <th>
-              <div>Target</div>
-            </th>
-            <th></th>
-            <th class="triangle com"><!-- @click="tips('Traffic to .com', 'com')"-->
-              <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic to .com</div></a>
-            </th>
-            <th>
-              <div>Target</div>
-            </th>
-            <th></th>
-            <th class="triangle CTR"><!-- @click="tips('CTR', 'CTR')"-->
-              <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>CTR</div></a>
-            </th>
-            <th class="triangle Leads"><!-- @click="tips('Leads', 'Leads')"-->
-              <a class="hint--right hint--success hint--medium" aria-label="Number of B2C visits that resulted in a click on the buy button."><div>Leads</div></a>
-            </th>
-            <th class="triangle Cost"><!-- @click="tips('Cost per lead', 'Cost')"-->
-              <a class="hint--right hint--success hint--medium" aria-label="Cost per lead (CPL) is one form of performance-based adverting.Online advertising payment model in which payment is based on the number of qualifying leads generated."><div>Cost per lead</div></a>
-            </th>
-            <th class="triangle Baseline1"><!-- @click="tips('Baseline1', 'Baseline1')"-->
-              <a class="hint--right hint--success hint--medium" aria-label="Baseline is the performance in the last rolling 12M."><div>Baseline</div></a>
-            </th>
-            <th></th>
-            <th class="triangle Conversion"><!-- @click="tips('Conversion%', 'Conversion')"-->
-              <a class="hint--left hint--success hint--large" aria-label="Buy lead conversion shows the value of the conversion points used on the Philips digital platform.For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are represented by leads generated for completed HS lead form."><div>Conversion%</div></a>
-            </th>
-            <th class="triangle Baseline2"><!-- @click="tips('Baseline2', 'Baseline2')"-->
-              <a class="hint--left hint--success hint--medium" aria-label="Baseline is the performance in the last 12M."><div>Baseline</div></a>
-            </th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="(item, index) in camTableOvData" :class="{even: index%2 == 0, odd: index%2 != 0}">
-            <td>
-              <div>{{item.title}}</div>
-            </td>
-            <td>
-              <div>{{item.spending | formatThousands }}</div>
-            </td>
-            <td>
-              <div>{{item.impression | formatThousands }}</div>
-            </td>
-            <td>
-              <div>{{item.traffic | formatThousands }}</div>
-            </td>
-            <td>
-              <div>{{item.trafficEc | formatThousands }}</div>
-            </td>
-            <td>
-              <div>{{item.trafficEcTarget | formatThousands }}</div>
-            </td>
-            <td v-if="item.h==1">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
-            </td>
-            <td v-else-if="item.h==2">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
-            </td>
-            <td v-else-if="item.h==3">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
-            </td>
-            <td v-else="item.h==4">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
-            </td>
-            <td>
-              <div>{{item.trafficCom | formatThousands }}</div>
-            </td>
-            <td>
-              <div>{{item.trafficComTarget | formatThousands }}</div>
-            </td>
-            <td v-if="item.k==1">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
-            </td>
-            <td v-else-if="item.k==2">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
-            </td>
-            <td v-else-if="item.k==3">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
-            </td>
-            <td v-else="item.k==4">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
-            </td>
-            <td>
-              <div>{{item.ctr | percentile }}</div>
-            </td>
-            <td>
-              <div>{{item.leads | formatThousands }}</div>
-            </td>
-            <td>
-              <div>{{item.costLead | round }}</div>
-            </td>
-            <td>
-              <div>{{item.costLeadTarget | formatThousands }}</div>
-            </td>
-            <td v-if="item.p==1">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
-            </td>
-            <td v-else-if="item.p==2">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
-            </td>
-            <td v-else-if="item.p==3">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
-            </td>
-            <td v-else="item.p==4">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
-            </td>
-            <td>
-              <div>{{item.conversionRate | percentile }}</div>
-            </td>
-            <td>
-              <div>{{item.conversionRateTarget  | percentile }}</div>
-            </td>
-            <td v-if="item.s==1">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
-            </td>
-            <td v-else-if="item.s==2">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
-            </td>
-            <td v-else-if="item.s==3">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
-            </td>
-            <td v-else="item.s==4">
-              <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+      <div class="table-box">
+        <div class="cam-per-ov">
+          <table id="camTableOv" class="data-table" style="width:100%">
+            <thead>
+            <tr>
+              <th>
+                <div>Period</div>
+              </th>
+              <th class="triangle Spending"><!-- @click="tips('Spending', 'Spending')"-->
+                <a class="hint--right hint--success hint--medium" aria-label="All cost on digital campaign."><div>Spending</div></a>
+              </th>
+              <th class="triangle Impression"><!-- @click="tips('Impression', 'Impression')"-->
+                <a class="hint--right hint--success hint--medium" aria-label="A single instance of an online advertisement being displayed."><div>Impression</div></a>
+              </th>
+              <th class="triangle Traffic"><!-- @click="tips('Traffic', 'Traffic')"-->
+                <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic</div></a>
+              </th>
+              <th class="triangle EC"><!-- @click="tips('Traffic to EC', 'EC')"-->
+                <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic to EC</div></a>
+              </th>
+              <th>
+                <div>Target</div>
+              </th>
+              <th></th>
+              <th class="triangle com"><!-- @click="tips('Traffic to .com', 'com')"-->
+                <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic to .com</div></a>
+              </th>
+              <th>
+                <div>Target</div>
+              </th>
+              <th></th>
+              <th class="triangle CTR"><!-- @click="tips('CTR', 'CTR')"-->
+                <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>CTR</div></a>
+              </th>
+              <th class="triangle Leads"><!-- @click="tips('Leads', 'Leads')"-->
+                <a class="hint--right hint--success hint--medium" aria-label="Number of B2C visits that resulted in a click on the buy button."><div>Leads</div></a>
+              </th>
+              <th class="triangle Cost"><!-- @click="tips('Cost per lead', 'Cost')"-->
+                <a class="hint--right hint--success hint--medium" aria-label="Cost per lead (CPL) is one form of performance-based adverting.Online advertising payment model in which payment is based on the number of qualifying leads generated."><div>Cost per lead</div></a>
+              </th>
+              <th class="triangle Baseline1"><!-- @click="tips('Baseline1', 'Baseline1')"-->
+                <a class="hint--right hint--success hint--medium" aria-label="Baseline is the performance in the last rolling 12M."><div>Baseline</div></a>
+              </th>
+              <th></th>
+              <th class="triangle Conversion"><!-- @click="tips('Conversion%', 'Conversion')"-->
+                <a class="hint--left hint--success hint--large" aria-label="Buy lead conversion shows the value of the conversion points used on the Philips digital platform.For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are represented by leads generated for completed HS lead form."><div>Conversion%</div></a>
+              </th>
+              <th class="triangle Baseline2"><!-- @click="tips('Baseline2', 'Baseline2')"-->
+                <a class="hint--left hint--success hint--medium" aria-label="Baseline is the performance in the last 12M."><div>Baseline</div></a>
+              </th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item, index) in camTableOvData" :class="{even: index%2 == 0, odd: index%2 != 0}">
+              <td>
+                <div>{{item.title}}</div>
+              </td>
+              <td>
+                <div>{{item.spending | formatThousands }}</div>
+              </td>
+              <td>
+                <div>{{item.impression | formatThousands }}</div>
+              </td>
+              <td>
+                <div>{{item.traffic | formatThousands }}</div>
+              </td>
+              <td>
+                <div>{{item.trafficEc | formatThousands }}</div>
+              </td>
+              <td>
+                <div>{{item.trafficEcTarget | formatThousands }}</div>
+              </td>
+              <td v-if="item.h==1">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
+              </td>
+              <td v-else-if="item.h==2">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
+              </td>
+              <td v-else-if="item.h==3">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
+              </td>
+              <td v-else="item.h==4">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
+              </td>
+              <td>
+                <div>{{item.trafficCom | formatThousands }}</div>
+              </td>
+              <td>
+                <div>{{item.trafficComTarget | formatThousands }}</div>
+              </td>
+              <td v-if="item.k==1">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
+              </td>
+              <td v-else-if="item.k==2">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
+              </td>
+              <td v-else-if="item.k==3">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
+              </td>
+              <td v-else="item.k==4">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
+              </td>
+              <td>
+                <div>{{item.ctr | percentile }}</div>
+              </td>
+              <td>
+                <div>{{item.leads | formatThousands }}</div>
+              </td>
+              <td>
+                <div>{{item.costLead | round }}</div>
+              </td>
+              <td>
+                <div>{{item.costLeadTarget | formatThousands }}</div>
+              </td>
+              <td v-if="item.p==1">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
+              </td>
+              <td v-else-if="item.p==2">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
+              </td>
+              <td v-else-if="item.p==3">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
+              </td>
+              <td v-else="item.p==4">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
+              </td>
+              <td>
+                <div>{{item.conversionRate | percentile }}</div>
+              </td>
+              <td>
+                <div>{{item.conversionRateTarget  | percentile }}</div>
+              </td>
+              <td v-if="item.s==1">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
+              </td>
+              <td v-else-if="item.s==2">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
+              </td>
+              <td v-else-if="item.s==3">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #F3C883"></div>
+              </td>
+              <td v-else="item.s==4">
+                <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!---------------->
+
+      <div class="table-nav clearfix">
+        <h3><i class="color-line color1"></i>Individual Campaign Performance Analysis</h3>
+        <div class="tool-box clearfix">
+          <div class="selection-box">
+            <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowTwoHandle"
+                       ref="selectOptionTwo"></selection>
+            <selection :selections="selectListTwo" class="select-colorDarkseaGreen"
+                       @selectShow="selectShowThreeHandle" ref="selectOptionThree"></selection>
+          </div>
+          <div class="icon-box">
+            <span title="Show Chartbar" @click="isChartT=true">
+              <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
+            </span>
+            <span class="qrcode" @mouseenter="qrcodeShow(2)" @mouseleave="qrcodeHide(2)">
+              <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
+              <div class="qrcode-warp" v-show="isQrShow2">
+                <div class="qrcodeCanvas"></div>
+                <span>Please scan the QR code</span>
+              </div>
+            </span>
+            <span @click="copyURL" title="Click to copy this page link">
+              <svg-icon sign="icon-link" class="link-icon"></svg-icon>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="table-name color">{{category}}</div>
+      <div>
+        <div class="ind-cam-per">
+          <table id="camTableAn" class="data-table" style="width:100%">
+            <thead>
+            <tr>
+              <th>
+                <div>{{isMonth}}</div>
+              </th>
+              <th>
+                <div>Period</div>
+              </th>
+              <th>
+                <div>Channel</div>
+              </th>
+              <th>
+                <div>Spending</div>
+              </th>
+              <th>
+                <div>Impression</div>
+              </th>
+              <th>
+                <div>Click</div>
+              </th>
+              <th>
+                <div>CTR</div>
+              </th>
+              <th>
+                <div>Leads</div>
+              </th>
+              <th>
+                <div>Cost per lead</div>
+              </th>
+              <th>
+                <div>Conversion%</div>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in camOverAllTable" v-if="item.type == 'week'" class="even">
+              <td :rowspan="item.weekspan" :class="{hidden: item.weekdis}">
+                <div>{{item.week}}</div>
+              </td>
+              <td :rowspan="item.endDatespan" :class="{hidden: item.week == 'Overall'&&item.endDatedis}">
+                <div>{{item.startDate}}-{{item.endDate}}</div>
+              </td>
+              <td>
+                <div>{{item.channel}}</div>
+              </td>
+              <td>
+                <div>{{item.spending | formatThousands }}</div>
+              </td>
+              <td>
+                <div>{{item.impression | formatThousands }}</div>
+              </td>
+              <td>
+                <div>{{item.click | formatThousands }}</div>
+              </td>
+              <td>
+                <div>{{item.ctr | percentile }}</div>
+              </td>
+              <td>
+                <div>{{item.leads | formatThousands }}</div>
+              </td>
+              <td>
+                <div>{{item.costLead | round }}</div>
+              </td>
+              <td>
+                <div>{{item.conversionRate | percentile }}</div>
+              </td>
+            </tr>
+            <tr v-for="(item, index) in camWeekTable">
+              <td :rowspan="item.weekspan" :class="{odd: item.isColor, even: !item.isColor, hidden: item.weekdis}">
+                <div>{{item.week}}</div>
+              </td>
+              <td :rowspan="item.endDatespan" :class="{odd: item.isColor, even: !item.isColor, hidden: item.endDatedis}">
+                <div>{{item.startDate}}-{{item.endDate}}</div>
+              </td>
+              <td :class="{odd: item.isColor, even: !item.isColor}">
+                <div>{{item.channel}}</div>
+              </td>
+              <td :class="{odd: item.isColor, even: !item.isColor}">
+                <div>{{item.spending | formatThousands }}</div>
+              </td>
+              <td :class="{odd: item.isColor, even: !item.isColor}">
+                <div>{{item.impression | formatThousands }}</div>
+              </td>
+              <td :class="{odd: item.isColor, even: !item.isColor}">
+                <div>{{item.click | formatThousands }}</div>
+              </td>
+              <td :class="{odd: item.isColor, even: !item.isColor}">
+                <div>{{item.ctr | percentile }}</div>
+              </td>
+              <td :class="{odd: item.isColor, even: !item.isColor}">
+                <div>{{item.leads | formatThousands }}</div>
+              </td>
+              <td :class="{odd: item.isColor, even: !item.isColor}">
+                <div>{{item.costLead | round }}</div>
+              </td>
+              <td :class="{odd: item.isColor, even: !item.isColor}">
+                <div>{{item.conversionRate | percentile }}</div>
+              </td>
+            </tr>
+            <tr v-for="(item, index) in camMonthTable" v-if="item.type == 'month'" >
+              <td :rowspan="item.monthspan" :class="{odd: !item.isColor, even: item.isColor,  hidden: item.monthdis}">
+                <div>{{item.month}}</div>
+              </td>
+              <td :rowspan="item.endDatespan" :class="{odd: !item.isColor,  even: item.isColor, hidden: item.endDatedis}">
+                <div>{{item.startDate}}-{{item.endDate}}</div>
+              </td>
+              <td :class="{odd: !item.isColor, even: item.isColor}">
+                <div>{{item.channel}}</div>
+              </td>
+              <td :class="{odd: !item.isColor, even: item.isColor}">
+                <div>{{item.spending | formatThousands }}</div>
+              </td>
+              <td :class="{odd: !item.isColor, even: item.isColor}">
+                <div>{{item.impression | formatThousands }}</div>
+              </td>
+              <td :class="{odd: !item.isColor, even: item.isColor}">
+                <div>{{item.click | formatThousands }}</div>
+              </td>
+              <td :class="{odd: !item.isColor, even: item.isColor}">
+                <div>{{item.ctr | percentile }}</div>
+              </td>
+              <td :class="{odd: !item.isColor, even: item.isColor}">
+                <div>{{item.leads | formatThousands }}</div>
+              </td>
+              <td :class="{odd: !item.isColor, even: item.isColor}">
+                <div>{{item.costLead | round }}</div>
+              </td>
+              <td :class="{odd: !item.isColor, even: item.isColor}">
+                <div>{{item.conversionRate | percentile }}</div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!---------------->
 
-    <div class="table-nav clearfix">
-      <h3><i class="color-line color1"></i>Individual Campaign Performance Analysis</h3>
-      <div class="tool-box clearfix">
-        <div class="selection-box">
-          <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowTwoHandle"
-                     ref="selectOptionTwo"></selection>
-          <selection :selections="selectListTwo" class="select-colorDarkseaGreen"
-                     @selectShow="selectShowThreeHandle" ref="selectOptionThree"></selection>
+    <!---------------------------------------------------------------------------------------------------------------->
+
+    <div class="chart-wrap" :class="{active:isChart}">
+      <div class="table-nav clearfix">
+        <h3><i class="color-line color4"></i>Campaign Performance Overview</h3>
+        <div class="tool-box clearfix">
+          <div class="selection-box">
+            <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowOneHandle" ref="selectOptionOneC"></selection>
+          </div>
+          <div class="chart-icon-box" @click="isChart=false">
+            <svg-icon sign="icon-arrow-left-c" class="arrow-icon"></svg-icon><span class="back-botton">Back</span>
+          </div>
         </div>
-        <div class="icon-box">
-          <span title="Show Chartbar">
-            <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
-          </span>
-          <span class="qrcode" @mouseenter="qrcodeShow(2)" @mouseleave="qrcodeHide(2)">
-            <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
-            <div class="qrcode-warp" v-show="isQrShow2">
-              <div class="qrcodeCanvas"></div>
-              <span>Please scan the QR code</span>
-            </div>
-          </span>
-          <span @click="copyURL" title="Copy URL">
-            <svg-icon sign="icon-link" class="link-icon"></svg-icon>
-          </span>
+      </div>
+      <div class="chart-cont-wrap">
+        <div class="chart-list-wrap clearfix">
+          <div class="chart-cont-list">
+            <div class="chart-cont-list-cont" id="myEchart0"></div>
+            <p class="chart-cont-list-cont-t">Impression</p>
+          </div>
+          <div class="chart-cont-list">
+            <div class="chart-cont-list-cont" id="myEchart1"></div>
+            <p class="chart-cont-list-cont-t">Traffic</p>
+          </div>
+          <div class="chart-cont-list">
+            <div class="chart-cont-list-cont" id="myEchart2"></div>
+            <p class="chart-cont-list-cont-t">CTR</p>
+          </div>
+          <div class="chart-cont-list">
+            <div class="chart-cont-list-cont" id="myEchart3"></div>
+            <p class="chart-cont-list-cont-t">Leads</p>
+          </div>
+          <div class="chart-cont-list">
+            <div class="chart-cont-list-cont" id="myEchart4"></div>
+            <p class="chart-cont-list-cont-t">Cost per lead</p>
+          </div>
+          <div class="chart-cont-list">
+            <div class="chart-cont-list-cont" id="myEchart5"></div>
+            <p class="chart-cont-list-cont-t">Conversion</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="table-name color">{{category}}</div>
-    <div>
-      <div class="ind-cam-per">
-        <table id="camTableAn" class="data-table" style="width:100%">
-          <thead>
-          <tr>
-            <th>
-              <div>{{isMonth}}</div>
-            </th>
-            <th>
-              <div>Period</div>
-            </th>
-            <th>
-              <div>Channel</div>
-            </th>
-            <th>
-              <div>Spending</div>
-            </th>
-            <th>
-              <div>Impression</div>
-            </th>
-            <th>
-              <div>Click</div>
-            </th>
-            <th>
-              <div>CTR</div>
-            </th>
-            <th>
-              <div>Leads</div>
-            </th>
-            <th>
-              <div>Cost per lead</div>
-            </th>
-            <th>
-              <div>Conversion%</div>
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="item in camOverAllTable" v-if="item.type == 'week'" class="even">
-            <td :rowspan="item.weekspan" :class="{hidden: item.weekdis}">
-              <div>{{item.week}}</div>
-            </td>
-            <td :rowspan="item.endDatespan" :class="{hidden: item.week == 'Overall'&&item.endDatedis}">
-              <div>{{item.startDate}}-{{item.endDate}}</div>
-            </td>
-            <td>
-              <div>{{item.channel}}</div>
-            </td>
-            <td>
-              <div>{{item.spending | formatThousands }}</div>
-            </td>
-            <td>
-              <div>{{item.impression | formatThousands }}</div>
-            </td>
-            <td>
-              <div>{{item.click | formatThousands }}</div>
-            </td>
-            <td>
-              <div>{{item.ctr | percentile }}</div>
-            </td>
-            <td>
-              <div>{{item.leads | formatThousands }}</div>
-            </td>
-            <td>
-              <div>{{item.costLead | round }}</div>
-            </td>
-            <td>
-              <div>{{item.conversionRate | percentile }}</div>
-            </td>
-          </tr>
-          <tr v-for="(item, index) in camWeekTable">
-            <td :rowspan="item.weekspan" :class="{odd: item.isColor, even: !item.isColor, hidden: item.weekdis}">
-              <div>{{item.week}}</div>
-            </td>
-            <td :rowspan="item.endDatespan" :class="{odd: item.isColor, even: !item.isColor, hidden: item.endDatedis}">
-              <div>{{item.startDate}}-{{item.endDate}}</div>
-            </td>
-            <td :class="{odd: item.isColor, even: !item.isColor}">
-              <div>{{item.channel}}</div>
-            </td>
-            <td :class="{odd: item.isColor, even: !item.isColor}">
-              <div>{{item.spending | formatThousands }}</div>
-            </td>
-            <td :class="{odd: item.isColor, even: !item.isColor}">
-              <div>{{item.impression | formatThousands }}</div>
-            </td>
-            <td :class="{odd: item.isColor, even: !item.isColor}">
-              <div>{{item.click | formatThousands }}</div>
-            </td>
-            <td :class="{odd: item.isColor, even: !item.isColor}">
-              <div>{{item.ctr | percentile }}</div>
-            </td>
-            <td :class="{odd: item.isColor, even: !item.isColor}">
-              <div>{{item.leads | formatThousands }}</div>
-            </td>
-            <td :class="{odd: item.isColor, even: !item.isColor}">
-              <div>{{item.costLead | round }}</div>
-            </td>
-            <td :class="{odd: item.isColor, even: !item.isColor}">
-              <div>{{item.conversionRate | percentile }}</div>
-            </td>
-          </tr>
-          <tr v-for="(item, index) in camMonthTable" v-if="item.type == 'month'" >
-            <td :rowspan="item.monthspan" :class="{odd: !item.isColor, even: item.isColor,  hidden: item.monthdis}">
-              <div>{{item.month}}</div>
-            </td>
-            <td :rowspan="item.endDatespan" :class="{odd: !item.isColor,  even: item.isColor, hidden: item.endDatedis}">
-              <div>{{item.startDate}}-{{item.endDate}}</div>
-            </td>
-            <td :class="{odd: !item.isColor, even: item.isColor}">
-              <div>{{item.channel}}</div>
-            </td>
-            <td :class="{odd: !item.isColor, even: item.isColor}">
-              <div>{{item.spending | formatThousands }}</div>
-            </td>
-            <td :class="{odd: !item.isColor, even: item.isColor}">
-              <div>{{item.impression | formatThousands }}</div>
-            </td>
-            <td :class="{odd: !item.isColor, even: item.isColor}">
-              <div>{{item.click | formatThousands }}</div>
-            </td>
-            <td :class="{odd: !item.isColor, even: item.isColor}">
-              <div>{{item.ctr | percentile }}</div>
-            </td>
-            <td :class="{odd: !item.isColor, even: item.isColor}">
-              <div>{{item.leads | formatThousands }}</div>
-            </td>
-            <td :class="{odd: !item.isColor, even: item.isColor}">
-              <div>{{item.costLead | round }}</div>
-            </td>
-            <td :class="{odd: !item.isColor, even: item.isColor}">
-              <div>{{item.conversionRate | percentile }}</div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+
+    <!---------------------------------------------------------------------------------------------------------------->
+
+    <div class="chart-wrap" :class="{active:isChartT}">
+      <div class="table-nav clearfix">
+        <h3><i class="color-line color4"></i>Individual Campaign Performance Analysis</h3>
+        <div class="tool-box clearfix">
+          <div class="selection-box">
+            <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowTwoHandle"
+                       ref="selectOptionTwoC"></selection>
+            <selection :selections="selectListTwo" class="select-colorDarkseaGreen"
+                       @selectShow="selectShowThreeHandle" ref="selectOptionThreeC"></selection>
+          </div>
+          <div class="chart-icon-box" @click="isChartT=false">
+            <svg-icon sign="icon-arrow-left-c" class="arrow-icon"></svg-icon><span class="back-botton">Back</span>
+          </div>
+        </div>
+      </div>
+      <div class="table-name color">{{category}}</div>
+      <div class="chart-cont-wrap">
+        <div class="chart-list-wrap clearfix">
+          <div class="chart-cont-list">
+            <div class="chart-cont-list-cont" id="myEchartT0"></div>
+            <p class="chart-cont-list-cont-t">Impression</p>
+          </div>
+          <div class="chart-cont-list">
+            <div class="chart-cont-list-cont" id="myEchartT1"></div>
+            <p class="chart-cont-list-cont-t">Traffic</p>
+          </div>
+          <div class="chart-cont-list">
+            <div class="chart-cont-list-cont" id="myEchartT2"></div>
+            <p class="chart-cont-list-cont-t">CTR</p>
+          </div>
+          <div class="chart-cont-list">
+            <div class="chart-cont-list-cont" id="myEchartT3"></div>
+            <p class="chart-cont-list-cont-t">Leads</p>
+          </div>
+          <div class="chart-cont-list">
+            <div class="chart-cont-list-cont" id="myEchartT4"></div>
+            <p class="chart-cont-list-cont-t">Cost per lead</p>
+          </div>
+          <div class="chart-cont-list">
+            <div class="chart-cont-list-cont" id="myEchartT5"></div>
+            <p class="chart-cont-list-cont-t">Conversion</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -356,6 +451,7 @@
   const CMA_SEARCH = xhrUrls.CMA_SEARCH;
   let CAM_CATEGORY = xhrUrls.CAM_CATEGORY
   let CAM_GETPARAMETER = xhrUrls.CAM_GETPARAMETER
+  let CMA_SEARCHCHART = xhrUrls.CMA_SEARCHCHART
   export default {
     name: "campaign",
     data() {
@@ -384,18 +480,66 @@
           category: '',
           isDetailTable: true,
         },
+        chartData1: {
+          category: '',
+          chartType: '1',
+          month: ''
+        },
+        chartData2: {
+          category: '',
+          campaign: '',
+          chartType: '2'
+        },
         isMonth: '',
         url: '',
         isQrShow1: false,
         isQrShow2: false,
         locationHash: false,
         isSelectTwo: false,
+        isChart:false,
+        isChartT:false,
+        chartOption:{
+          legend: {
+            data: ''
+          },
+          grid: {
+            left: "3%",
+            right: "6%",
+            bottom: "3%",
+            top: "10%",
+            containLabel: true
+          },
+          xAxis: [{
+            type: "category",
+            data: '',
+            axisPointer: {
+              type: "shadow"
+            }
+          }],
+          yAxis: [
+            {
+              type: "value",
+              name: "",
+              min: 0
+            }
+          ],
+          series: '',
+        },
+        charts:[]
       }
     },
     computed: {
       getYearMonth() {
         return this.$store.getters.getYearMonth
       },
+      chartShow() {
+        if(this.isChart || this.isChartT){
+          return false
+        }else{
+          return true
+        }
+
+      }
     },
     mounted() {
 
@@ -416,6 +560,13 @@
         this.getCategoryList()
         this.getCampaignList()
         this.getOvTableData()
+        this.getChartData()
+      }
+
+      window.onresize = ()=>{
+        this.charts.forEach(val=>{
+          val.resize()
+        })
       }
 
     },
@@ -461,6 +612,44 @@
             console.log(data.errMsg)
           }
 
+        }).catch(err => console.log(err))
+      },
+
+      getChartData(){
+        this.chartData1.category = this.campaign
+        this.chartData1.month = this.getYearMonth
+        post(CMA_SEARCHCHART,this.chartData1).then(res => {
+          let data = res.data.data
+          data.forEach((val,index)=>{
+            this.chartOption.legend.data = val.legend
+            this.chartOption.xAxis[0].data = val.xAxis
+            this.chartOption.series = val.series
+            let dom = document.getElementById('myEchart'+index)
+            let myEchart = this.$echarts.init(dom)
+            myEchart.setOption(this.chartOption, {
+              notMerge: true
+            });
+            this.charts.push(myEchart)
+          })
+        }).catch(err => console.log(err))
+      },
+
+      getChartDataT(){
+        this.chartData2.campaign = this.category
+        this.chartData2.category = this.campaignTwo
+        post(CMA_SEARCHCHART,this.chartData2).then(res => {
+          let data = res.data.data
+          data.forEach((val,index)=>{
+            this.chartOption.legend.data = val.legend
+            this.chartOption.xAxis[0].data = val.xAxis
+            this.chartOption.series = val.series
+            let dom = document.getElementById('myEchartT'+index)
+            let myEchart = this.$echarts.init(dom)
+            myEchart.setOption(this.chartOption, {
+              notMerge: true
+            });
+            this.charts.push(myEchart)
+          })
         }).catch(err => console.log(err))
       },
 
@@ -638,6 +827,10 @@
 
           this.campaignId = val.id
 
+          this.$refs.selectOptionOne.nowIndex = val.id
+
+          this.$refs.selectOptionOneC.nowIndex = val.id
+
         }
 
       },
@@ -660,6 +853,10 @@
 
           this.campaignTwoId = val.id
 
+          this.$refs.selectOptionTwo.nowIndex = val.id
+
+          this.$refs.selectOptionTwoC.nowIndex = val.id
+
         }
 
       },
@@ -673,6 +870,10 @@
           val.val == 'All Categories' ? this.category = '' : this.category = val.val
 
           this.categoryId = val.id
+
+          this.$refs.selectOptionThree.nowIndex = val.id
+
+          this.$refs.selectOptionThreeC.nowIndex = val.id
 
         }
 
@@ -697,7 +898,11 @@
 
         this.$refs.selectOptionOne.nowIndex = campaignId
 
+        this.$refs.selectOptionOneC.nowIndex = campaignId
+
         this.getOvTableData()
+
+        this.getChartData()
 
         this.isSelectTwo = true
 
@@ -717,7 +922,11 @@
 
         this.$refs.selectOptionTwo.nowIndex = campaignTwoId
 
+        this.$refs.selectOptionTwoC.nowIndex = campaignTwoId
+
         this.$refs.selectOptionThree.nowIndex = categoryId
+
+        this.$refs.selectOptionThreeC.nowIndex = categoryId
 
         campaignTwo == 'null' ? this.campaignTwo = null : this.campaignTwo = campaignTwo
 
@@ -729,6 +938,8 @@
 
         this.getAnTableData()
 
+        this.getChartDataT()
+
       },
 
       weekStr: (params) => {
@@ -739,6 +950,7 @@
           return false
         }
       }
+
     },
     filters: {
       formatThousands: (params) => {
@@ -753,24 +965,33 @@
       round: (params) => {
         if (!params) return 0
         return params.toFixed(2)
-      },
-
+      }
     },
     watch: {
       selectListTwo() {
         if (!this.locationHash && !this.isSelectTwo) this.category = this.selectListTwo[0]
       },
       campaign() {
-        if (!this.locationHash) this.getOvTableData()
+        if (!this.locationHash) {
+          this.getOvTableData()
+          this.getChartData()
+        }
       },
       campaignTwo() {
-        if (!this.locationHash) this.getAnTableData()
+        if (!this.locationHash) {
+          this.getAnTableData()
+          this.getChartDataT()
+        }
       },
       category() {
-        if (!this.locationHash && !this.isSelectTwo) this.getAnTableData()
+        if (!this.locationHash && !this.isSelectTwo) {
+          this.getAnTableData()
+          this.getChartDataT()
+        }
       },
       getYearMonth() {
         this.getOvTableData()
+        this.getChartData()
       }
     }
   }

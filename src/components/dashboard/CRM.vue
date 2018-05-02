@@ -12,7 +12,7 @@
               <span>Please scan the QR code</span>
             </div>
           </span>
-          <span @click="copyURL">
+          <span @click="copyURL" title="Click to copy this page link">
             <svg-icon sign="icon-link" class="link-icon"></svg-icon>
           </span>
         </div>

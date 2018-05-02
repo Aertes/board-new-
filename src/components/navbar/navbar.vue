@@ -4,12 +4,14 @@
     <div class="pc-nav-bar clearfix">
       <a href="javascript:;"  class="logo box-shadow"  @click="linkTo('coverpage',1)"><img src="../../assets/img/logo.png" alt="philips" width="198" height="100"></a>
       <h1>One China Digital Performance Dashboard</h1>
-      <div class="selection-box">
-        <selection :selections="yearList" ref="yearBox"></selection>
-        <selection :selections="monthList" ref="monthBox" @selectShow="selectShowHandle"></selection>
-      </div>
-      <div class="page">
-        Page <span>{{type}}</span>/7
+      <div class="selection-box-wrap" :class="{afterLogin:!isUser}">
+        <div class="selection-box">
+          <selection :selections="yearList" ref="yearBox"></selection>
+          <selection :selections="monthList" ref="monthBox" @selectShow="selectShowHandle"></selection>
+        </div>
+        <div class="page">
+          Page <span>{{type}}</span>/7
+        </div>
       </div>
       <div class="user-info">
         <div class="after-login">
@@ -128,7 +130,7 @@
       </div>
 
       <div class="clearfix tools-wrap">
-        <div class="selection-box">
+        <div class="selection-box fl">
           <selection :selections="yearList" ref="yearBoxM"></selection>
           <selection :selections="monthList" ref="monthBoxM" @selectShow="selectShowHandle"></selection>
         </div>
@@ -473,6 +475,7 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import '../../assets/style/mixin.styl';
   .nav-bar-wrap
+    position relative
     margin-bottom 20px
     line-height 56px
     .logo
@@ -484,19 +487,32 @@
         height 100%
     h1
       float left
-      margin 0 35px 0 25px
+      margin 0 0px 0 25px
       font-size 25px
       color #a0a0a1
       font-weight normal
+    .selection-box-wrap
+      position absolute
+      left 557px
+      right 67px
+      text-align center
+      .selection-box
+        display inline-block
+        vertical-align top
+      .page
+        display inline-block
+        vertical-align top
+      &.afterLogin
+        right 201px
     .selection-box
-      float left
       .dropdown-wrap
         margin-top 8px
         &:last-of-type
           margin-left 10px
+      &.fl
+        float left
     .mobile-nav-bar
       .more-icon
-        font-size 50px !important
         margin-left 0 !important
     .mobile-nav-bar
       display none
@@ -507,7 +523,6 @@
         .dropdown-wrap
           margin-top 0
     .page
-      float left
       font-size 22px
       margin-left 35px
       color #B5B5B5
@@ -691,6 +706,9 @@
         background-color #ccc
 
   @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
+    .nav-bar-wrap
+      h1
+        font-size 28px
     .pc-nav-bar
       display none
     .mobile-nav-bar
