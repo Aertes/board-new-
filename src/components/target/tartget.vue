@@ -4,14 +4,14 @@
     <div action="" class="clearfix search-wrap">
       <div class="search">
         <selection :selections="selectTargetOptions" class="role-select styleone"
-                   @selectShowOne="selectTagetHandle"></selection>
+                   @selectShow="selectTagetHandle"></selection>
       </div>
       <div class="search" v-show="B">
-        <selection :selections="selectBOptions" class="role-select" ref="B" @selectShowOne="selectBHandle"></selection>
+        <selection :selections="selectBOptions" class="role-select" ref="B" @selectShow="selectBHandle"></selection>
       </div>
       <div class="search">
         <selection :selections="selectTimeOptions" class="role-select" ref="time"
-                   @selectShowOne="selectTimeHandle"></selection>
+                   @selectShow="selectTimeHandle"></selection>
       </div>
       <!--<span><svg-icon sign="icon-search" class="searchIcon"></svg-icon></span>-->
     </div>
@@ -819,7 +819,7 @@
       selectTagetHandle(val) {
         this.B = false
         this.$refs.B.nowIndex = 0
-        switch (val){
+        switch (val.val){
           case 'CAMPAIGN':
             this.isTableStyle = 0
             break;
@@ -836,7 +836,7 @@
         }
       },
       selectBHandle(val) {
-        switch (val){
+        switch (val.val){
           case 'B2C':
             this.isTableStyle = 1
             break;
@@ -846,7 +846,7 @@
         }
       },
       selectTimeHandle(val) {
-        this.time = val
+        this.time = val.val
       },
     },
     watch: {
@@ -893,6 +893,11 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .target-warp
+    table.dataTable thead th
+      padding 5px 10px
+    table.dataTable tbody td
+      padding 3px 10px
+  .target-warp
     .search-wrap
       width 100%
     .search
@@ -900,26 +905,28 @@
       margin-right 40px
       .dropdown-wrap
         display inline-block
-        height 40px
-        line-height 40px
+        height 35px
+        line-height 35px
         .dropdown-show
-          height 40px
-          line-height 40px
+          height 35px
+          line-height 35px
         &.styleone
-          width 240px
+          width 200px
+          span
+            font-size 18px
       label
         color #717071
         font-size 22px
         margin-right 15px
-        line-height 40px
+        line-height 35px
         display inline-block
       input, select
         margin-right 30px
         appearance none
         border 1px solid #E2DFDE
         border-radius 5px
-        height 40px
-        line-height 40px
+        height 35px
+        line-height 35px
         padding 0 10px
     .searchIcon
       font-size 30px
@@ -957,7 +964,6 @@
     .dropdown-menu
       max-height none
       overflow visible
-
   .tab-card
     .role-table
       .dataTables_wrapper

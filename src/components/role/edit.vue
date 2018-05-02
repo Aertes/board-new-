@@ -25,10 +25,10 @@
       <div class="search role-tree-wrap">
         <label></label>
         <div class="button-wrap">
-          <button class="box-shadow save-button" :hidden="viewRole || !isSave" @click="saveRole">Save</button>
-          <button class="box-shadow save-button" :hidden="viewRole || isSave" @click="saveRole">Update</button>
-          <button class="box-shadow cancel-button" :hidden="viewRole" @click="goBack">Cancel</button>
-          <button class="box-shadow back-button" :hidden="!viewRole" @click="goBack">Back</button>
+          <button class="save-button" :hidden="viewRole || !isSave" @click="saveRole">Save</button>
+          <button class="save-button" :hidden="viewRole || isSave" @click="saveRole">Update</button>
+          <button class="cancel-button" :hidden="viewRole" @click="goBack">Cancel</button>
+          <button class="back-button" :hidden="!viewRole" @click="goBack">Back</button>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@
     name: "roleEdit",
     data() {
       return {
-        selectStatusOptions: ['Enable', 'Disable'],
+        selectStatusOptions: ['Disable', 'Enable'],
         tableData: '',
         ztreeNodeData: [],
         nodeSetting: {
@@ -98,9 +98,9 @@
           let roleData = res.data.role
           this.roleName = roleData.name
           if (roleData.status == 1) {
-            this.$refs.roleSelect.nowIndex = 0
-          } else {
             this.$refs.roleSelect.nowIndex = 1
+          } else {
+            this.$refs.roleSelect.nowIndex = 0
           }
           nodeData.forEach((v, i) => {
             this.ztreeNodeData.push({
@@ -152,6 +152,7 @@
         this.treeNodes()
         this.helpOne = false
         this.helpTwo = false
+        let status = this.$refs.roleSelect.nowIndex
         if (this.treeId == '' && this.roleName == '') {
           this.helpOne = true
           this.helpTwo = true
@@ -229,7 +230,7 @@
           line-height 40px
       label
         color #717071
-        font-size 22px
+        font-size 18px
         margin-right 15px
         line-height 40px
         display inline-block
@@ -244,7 +245,7 @@
         height 40px
         line-height 40px
         padding 0 10px
-        font-size 21px
+        font-size 18px
     .searchIcon
       font-size 30px
       color #717071
@@ -310,6 +311,7 @@
         width 100px
         height 35px
         margin 0 20px
+        font-size 16px
         background-color #74A5D4
         border-radius 10px
         color #fff

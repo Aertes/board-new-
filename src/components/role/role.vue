@@ -65,7 +65,9 @@
         roleData: {
           search: {
             "name": '',
-            "status": ''
+            "status": '',
+            "start": 0,
+            "length": 100000
           }
         },
         roleName: '',
@@ -112,8 +114,8 @@
           bDestroy: true,
           ordering: false,
           pagingType: "simple_numbers",
-          pageLength: 6,
-          "paging": this.tableData.length > 6 ? true : false,
+          pageLength: 10,
+          "paging": this.tableData.length > 10 ? true : false,
           data: this.tableData,
           columns: [
             {
@@ -318,57 +320,58 @@
       float left
       .dropdown-wrap
         display inline-block
-        height 40px
-        line-height 40px
+        height 35px
+        line-height 35px
         .dropdown-show
-          height 40px
-          line-height 40px
+          height 35px
+          line-height 35px
       label
         color #717071
-        font-size 22px
+        font-size 18px
         margin-right 15px
-        line-height 40px
+        line-height 35px
         display inline-block
       input, select
         margin-right 30px
         appearance none
         border 1px solid #E2DFDE
         border-radius 5px
-        height 40px
-        line-height 40px
+        height 35px
+        line-height 35px
         padding 0 10px
     .searchIcon
-      font-size 30px
+      font-size 20px
       color #717071
       margin-left 30px
-      margin-top 7px
+      height 35px
+      line-height 35px
       cursor pointer
     .tables
       width 100%
       margin-top 30px
       .user-create
         color #fff
-        font-size 22px
+        font-size 18px
         e-pos(top:50%, y:-50%)
       .create
         border 1px solid #1f61ae
         border-radius 5px 5px 0 0
-        height 55px
-        line-height 55px
+        height 40px
+        line-height 40px
         cursor pointer
         padding-left 20px
         background #1f61ae
         position relative
         .newUser
-          margin-left 35px
+          margin-left 30px
           color #fff
-          line-height 55px
+          line-height 40px
           display inline-block
           position absolute;
           margin-top -3px
         span
           color #fff
-          font-size 20px
+          font-size 18px
       .role-table
         // margin-top 20px
         position relative
@@ -376,16 +379,26 @@
 
 </style>
 <style lang="stylus" rel="stylesheet/stylus">
+  .role-wrap
+    table.dataTable thead th
+      padding 5px 10px
+    table.dataTable tbody td
+      padding 3px 10px
+
   .role-select
+    .dropdown-show
+      span
+        font-size 17px
     .dropdown-menu
       max-height none
       overflow visible
-
+      top 36px
+      line-height 34px
+      font-size 17px
   .tab-card
     .role-table
       .dataTables_wrapper
         position static
         text-align center
         line-height 30px
-
 </style>

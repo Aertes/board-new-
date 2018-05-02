@@ -220,7 +220,6 @@
 			},
 			//刷新图表
 			refreshData(type) {
-        alert(type)
         switch (type){
           case 'Campaign':
             this.$Hub.$emit('CampaignUploadData');

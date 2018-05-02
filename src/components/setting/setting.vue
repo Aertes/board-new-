@@ -3,8 +3,8 @@
     <div class="userbox">
       <div class="tab">
         <ul class="clearfix">
-          <li v-for="(tab, index) in tabsName" :class="{active:tab.isActive}"><a href="javascript:;" class="tab-link"
-                                                                                 @click="tabsSwitch(index)">{{tab.name}}</a>
+          <li v-for="(tab, index) in tabsName" :class="{active:tab.isActive}">
+            <a href="javascript:;" class="tab-link" @click="tabsSwitch(index)">{{tab.name}}</a>
           </li>
         </ul>
       </div>
@@ -22,7 +22,7 @@
               </div>
               <div class="search">
                 <label for="">Status</label>
-                <selection :selections="selectStatusOptions" class="setting" @selectStatus="selectStatus"></selection>
+                <selection :selections="selectStatusOptions" class="setting" @selectShow="selectStatus"></selection>
               </div>
               <div @click="searchUser">
                 <svg-icon sign="icon-search" class="searchIcon"></svg-icon>
@@ -110,7 +110,8 @@
           <div>
             <label>Account ID</label>
             <label v-show="!isViewUser">{{userinfo.username}}</label>
-            <input type="text" v-show="isViewUser" :disabled='isUpdata' class="input" name="loginAccount" @change="onInput"
+            <input type="text" v-show="isViewUser" :disabled='isUpdata' class="input" name="loginAccount"
+                   @change="onInput"
                    :class="[isActive.isLogAccActive? 'active' : '']" v-model="userData.username">
           </div>
           <div>
@@ -186,9 +187,11 @@
           name: '',
           username: '',
           status: '',
-          orgid: ''
+          orgid: '',
+          start: 0,
+          length: 100000
         },
-        tableData:'',
+        tableData: '',
         active: false,
         selectedStatus: '',
         selectStatusOptions: ['All Status', 'Enable', 'Disable'],
@@ -217,7 +220,7 @@
           id: ''
         },
         isEdit: true,
-        isUpdata:false,
+        isUpdata: false,
         selectedRole: '',
         selectedOrg: '',
         selectRoleOptions: [],
@@ -256,7 +259,7 @@
         toRoleEditId: '',
         viewRole: false,
         isSave: true,
-        zTreeObj:''
+        zTreeObj: ''
       }
     },
     mounted() {
@@ -264,14 +267,15 @@
       this.userEnable();
       this.userDisable();
       this._initZtree();
-      this.getTaleData()
+      this.getTaleData();
+      this.viewUserClick();
+      this.editUserClick();
     },
-    activated(){
-      try{
-        this.viewUserClick();
-        this.editUserClick();
+    activated() {
+      try {
         this.removeStyleNode()
-      }catch (e){}
+      } catch (e) {
+      }
     },
     methods: {
       tabsSwitch(tabIndex) {
@@ -292,7 +296,7 @@
         tabCardCollection[tabIndex].style.display = "block";
       },
 
-      getTaleData(username, accountId, status, orgId){
+      getTaleData(name, accountId, status, orgId) {
         this.searchData.name = name
         this.searchData.username = accountId
         this.searchData.status = status
@@ -314,8 +318,8 @@
           bDestroy: true,
           ordering: false,
           pagingType: "simple_numbers",
-          pageLength: 10,
-          "paging": this.tableData.length > 10 ? true : false,
+          pageLength: 8,
+          "paging": this.tableData.length > 8 ? true : false,
           data: this.tableData,
           columns: [{
             data: "name",
@@ -377,8 +381,8 @@
           nodeData.forEach((v, i) => {
             this.ztreeNodeData.push({name: v.name, id: v.id, parentId: v.parentId})
           })
-         this.zTreeObj = $.fn.zTree.init($("#userZtree"), this.nodeSetting, this.ztreeNodeData);
-         this.zTreeObj.expandAll(true);
+          this.zTreeObj = $.fn.zTree.init($("#userZtree"), this.nodeSetting, this.ztreeNodeData);
+          this.zTreeObj.expandAll(true);
         }).catch(err => console.log(err))
       },
       //修改名称
@@ -443,7 +447,7 @@
           var btn = $("#addBtn_" + treeNode.tId);
           if (btn) btn.bind("click", function () {
             var zTree = $.fn.zTree.getZTreeObj("userZtree");
-            post(xhrUrls.ORG_SAVE, {name: "New dept", status:1,parentId: treeNode.id}).then(res => {
+            post(xhrUrls.ORG_SAVE, {name: "New dept", status: 1, parentId: treeNode.id}).then(res => {
               if (res.data.code == 200) {
                 layer.msg('Add success!', {
                   time: 2000,
@@ -481,7 +485,7 @@
       },
 
       //移除选中样式
-      removeStyleNode(){
+      removeStyleNode() {
         this.zTreeObj.cancelSelectedNode()
       },
 
@@ -507,7 +511,7 @@
                   skin: 'fontColor'
                 }, function (index) {
                   layer.close(index);
-                  that.userTable()
+                  that.getTaleData(that.searchData.name, that.searchData.username, that.searchData.status, that.searchData.orgid);
                 })
               } else {
                 layer.msg('Delete failure!', {
@@ -542,7 +546,7 @@
                 }, function (index) {
                   this.roleName = ''
                   layer.close(index);
-                  that.userTable()
+                  that.getTaleData(that.searchData.name, that.searchData.username, that.searchData.status, that.searchData.orgid);
                 })
               } else {
                 layer.confirm(res.data.errMsg, {
@@ -572,7 +576,7 @@
                 }, function (index) {
                   this.roleName = ''
                   layer.close(index);
-                  that.userTable()
+                  that.getTaleData(that.searchData.name, that.searchData.username, that.searchData.status, that.searchData.orgid);
                 })
               } else {
                 layer.confirm(res.data.errMsg, {
@@ -589,7 +593,7 @@
       //编辑用户
       editUserClick() {
         let that = this;
-        $(document).off('click','.editUser').on('click', '.editUser', function (event) {
+        $(document).off('click', '.editUser').on('click', '.editUser', function (event) {
           event.preventDefault();
           let id = $(this).data('id');
           if (id == 1) {
@@ -622,10 +626,10 @@
       viewUserClick() {
         let that = this
         let one = 0
-        $(document).off('click','.viewUser').on('click','.viewUser', function (event) {
+        $(document).off('click', '.viewUser').on('click', '.viewUser', function (event) {
           event.preventDefault();
           let id = $(this).data('id');
-          that.$emit('userView', {id:id})
+          that.$emit('userView', {id: id})
           $('.titles').html('USER DETAILS')
           $('.cancel').html('Back').css('background-color', '#00aeea')
           get(xhrUrls.USER_VIEW + '/' + id).then((res) => {
@@ -654,11 +658,11 @@
         this.userData.surePassword = ''
         this.userData.username = ''
         this.userData.orgid = ''
-        this.userinfo.name=''
-        this.userinfo.username=''
-        this.userinfo.org=''
-        this.userinfo.role=''
-        this.userinfo.status=''
+        this.userinfo.name = ''
+        this.userinfo.username = ''
+        this.userinfo.org = ''
+        this.userinfo.role = ''
+        this.userinfo.status = ''
         this.selectRoleOptions = []
         this.selectOrgOptions = []
         this.selectRoleOptionsId = []
@@ -684,10 +688,10 @@
       showCreate(obj) {
         this.layerOpen2('user')
         this.isViewUser = true
-        if(this.isEdit){
+        if (this.isEdit) {
           $('.titles').html('CREATE USER')
           this.isUpdata = false
-        }else{
+        } else {
           $('.titles').html('EDIT USER')
           this.isEdit = true
         }
@@ -723,15 +727,15 @@
         }).catch(err => console.log(err))
       },
       selectStatus(val) {
-        switch (val) {
-          case 'Enable':
-            this.searchData.status = 1
+        switch (val.id) {
+          case 1:
+            this.searchData.status = 1;
             break;
-          case 'Disable':
-            this.searchData.status = 0
+          case 2:
+            this.searchData.status = 0;
             break;
           default:
-            this.searchData.status = ""
+            this.searchData.status = "";
             break;
         }
       },
@@ -753,16 +757,16 @@
           this.isActive.isSurePwdActive = false;
         }
         if (this.userData.username != '') {
-          post(xhrUrls.USER_VALID_USERNAME, this.userData.username).then(res=>{
+          post(xhrUrls.USER_VALID_USERNAME, this.userData.username).then(res => {
             let data = res.data
-            if(!data){
+            if (!data) {
               this.isActive.isLogAccActive = true;
               return false
-            }else{
+            } else {
               this.isActive.isLogAccActive = false;
               return false
             }
-          }).catch(err=>console.log(err))
+          }).catch(err => console.log(err))
         }
       },
       submit() {
@@ -804,7 +808,7 @@
                   skin: 'fontColor'
                 }, function (index) {
                   that.closeLayerButton()
-                  that.userTable();
+                  that.getTaleData(that.searchData.name, that.searchData.username, that.searchData.status, that.searchData.orgid);
                   layer.close(index);
                 })
               } else {
@@ -840,7 +844,7 @@
                   skin: 'fontColor'
                 }, function (index) {
                   that.closeLayerButton()
-                  that.userTable();
+                  that.getTaleData(that.searchData.name, that.searchData.username, that.searchData.status, that.searchData.orgid);
                   layer.close(index);
                 })
               } else {
@@ -885,7 +889,7 @@
       RoleEdit,
       Target,
     },
-    watch:{
+    watch: {
       tableData() {
         this.$nextTick(() => {
           this.userTable();
@@ -963,6 +967,8 @@
       .dropdown-wrap
         margin-right 50px
         float left
+        span
+          font-size 18px
       .styleone
         width 350px
     .dashboard-all-wrap
@@ -1003,12 +1009,13 @@
             float left
             .dropdown-wrap
               display inline-block
-              width 200px
               height 35px
               line-height 35px
               .dropdown-show
                 height 35px
                 line-height 35px
+                span
+                  font-size 18px
             label
               color #717071
               font-size 18px
@@ -1028,8 +1035,8 @@
             color #717071
             font-size 20px
             margin-left 30px
-            height 40px
-            line-height 40px
+            height 35px
+            line-height 35px
             cursor pointer
           .user-content
             width 100%
@@ -1119,6 +1126,8 @@
             height 35px
             line-height 35px
             cursor pointer
+            span
+              font-size 18px
             .arrow-down
               e-pos(top:50%, y:-50%)
               right 10px
@@ -1196,9 +1205,13 @@
     .dropdown-show
       height 35px
       line-height 35px
+      font-size 18px
   .setting
     .dropdown-menu
       top 36px
       line-height 35px
       font-size 18px
+    .dropdown-show
+      span
+        font-size 18px;
 </style>

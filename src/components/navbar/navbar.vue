@@ -135,7 +135,9 @@
           <selection :selections="monthList" ref="monthBoxM" @selectShow="selectShowHandle"></selection>
         </div>
         <div class="page fr">
-          Page <span>{{type}}</span>/7
+          <span class="page-num">Page <span>{{type}}</span>/7</span>
+          <span @click="decrementType"><svg-icon sign="icon-arrow-left-o-copy" class="arrow-o-icon"></svg-icon></span>
+          <span @click="incrementType"><svg-icon sign="icon-arrow-right-o" class="arrow-o-icon"></svg-icon></span>
         </div>
       </div>
 
@@ -448,6 +450,7 @@
       layerHandle() {
         layer.close(this.layerId)
       },
+
       openUpload(name, link, type){
         this.layerOpen('upLoadBox')
         this.uploadProps.uploadLink = link
@@ -458,6 +461,14 @@
 
       toSetting(){
         this.$router.push({name:'setting'})
+      },
+
+      incrementType() {
+        this.$store.commit('increment')
+      },
+
+      decrementType() {
+        this.$store.commit('decrement')
       }
 
     },
@@ -526,6 +537,15 @@
       font-size 22px
       margin-left 35px
       color #B5B5B5
+      .page-num
+        font-size 28px
+        vertical-align: -6px;
+      .arrow-o-icon
+        font-size 60px
+        color #00B0F0
+        margin-left 30px
+        &:nth-of-type(2)
+          margin-left 20px
       &.fr
         float right
     .user-info

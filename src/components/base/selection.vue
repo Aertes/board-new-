@@ -1,11 +1,11 @@
 <template>
   <a href="javascript:;" class="dropdown-wrap" @blur="toggleUp">
     <div class="dropdown-show" @click="toggleDrop">
-      <span ref="span" :data-id="selectionsId[nowIndex]">{{selections[nowIndex]}}</span>
+      <span ref="span" :data-id="selectionsId[nowIndex]" class="j-select-val">{{selections[nowIndex]}}</span>
       <svg-icon sign="icon-arrow-down" class="arrow-down"></svg-icon>
     </div>
     <ul class="dropdown-menu" v-show="isShow">
-      <li v-for="(items,index) in selections" @click="chooseSelection(index)">{{items}}</li>
+      <li v-for="(items,index) in selections" @click="chooseSelection(index)" class="j-select-val-list">{{items}}</li>
     </ul>
   </a>
 </template>
@@ -24,20 +24,20 @@
         type: Array,
         default: () => ['test']
       },
-      selectionsId:{
+      selectionsId: {
         type: Array,
         default: () => ['0']
       },
-      perm:{
-        type:Boolean,
-        default: ()=> false
+      perm: {
+        type: Boolean,
+        default: () => false
       }
     },
-    mounted(){
+    mounted() {
     },
     methods: {
       toggleDrop() {
-        if(this.perm) return
+        if (this.perm) return
         this.isShow = !this.isShow
       },
       toggleUp(e) {
@@ -50,7 +50,7 @@
     },
     watch: {
       nowIndex: function () {
-        this.$emit('selectShow', {val:this.selections[this.nowIndex],id:this.nowIndex})
+        this.$emit('selectShow', {val: this.selections[this.nowIndex], id: this.nowIndex})
       }
     }
   }
@@ -76,10 +76,12 @@
         e-pos(top:50%, y:-50%)
         right 10px
       span
+        position relative
         display inline-block
         padding-left 15px
         padding-right 40px
         appearance none
+        z-index 11
     .dropdown-menu
       position absolute
       top 41px
@@ -102,6 +104,7 @@
         &:hover
           background-color #12BCFF
           color #fff
+
   .select-colorOrange
     background-color #FFC000
     .dropdown-menu
@@ -110,6 +113,7 @@
         &:hover
           background-color #FFC000
           color #fff
+
   .select-colorDarkseaGreen
     background-color #92D050
     .dropdown-menu
@@ -121,12 +125,13 @@
 
   @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .dropdown-wrap
-      height 60px!important
-      line-height 60px!important
+      height 60px !important
+      line-height 60px !important
       .dropdown-show
-        font-size 23px!important
+        font-size 23px !important
+
     .dropdown-menu
-      top 61px!important
-      line-height 60px!important
-      font-size 23px!important
+      top 61px !important
+      line-height 60px !important
+      font-size 23px !important
 </style>
