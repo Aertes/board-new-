@@ -1,5 +1,5 @@
 <template>
-  <a href="javascript:;" class="dropdown-wrap" @blur="toggleUp">
+  <div class="dropdown-wrap" v-click-outside="toggleUp"><!--@blur="toggleUp"-->
     <div class="dropdown-show" @click="toggleDrop">
       <span ref="span" :data-id="selectionsId[nowIndex]" class="j-select-val">{{selections[nowIndex]}}</span>
       <svg-icon sign="icon-arrow-down" class="arrow-down"></svg-icon>
@@ -7,12 +7,16 @@
     <ul class="dropdown-menu" v-show="isShow">
       <li v-for="(items,index) in selections" @click="chooseSelection(index)" class="j-select-val-list">{{items}}</li>
     </ul>
-  </a>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import ClickOutside from '../../assets/js/clickoutside';
   export default {
     name: "selection",
+    directives: {
+      ClickOutside
+    },
     data() {
       return {
         isShow: false,
@@ -93,6 +97,7 @@
       white-space: nowrap;
       border 1px solid #D9D9D9
       text-align center
+      z-index 12
       li
         padding 0 10px
         background-color #fff

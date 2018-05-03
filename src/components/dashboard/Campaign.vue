@@ -1,4 +1,3 @@
-<script src="../../../node_modules/amfe-flexible/index.js"></script>
 <template>
   <div class="campaign-wrap campaign-table">
 
@@ -11,7 +10,7 @@
                        ref="selectOptionOne"></selection>
           </div>
           <div class="icon-box">
-            <span title="Show Chartbar" @click="isChart=true">
+            <span title="Show Chartbar" @click="chartShowButton(0)">
               <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
             </span>
             <span class="qrcode" @mouseenter="qrcodeShow(1)" @mouseleave="qrcodeHide(1)">
@@ -190,7 +189,7 @@
                        @selectShow="selectShowThreeHandle" ref="selectOptionThree"></selection>
           </div>
           <div class="icon-box">
-            <span title="Show Chartbar" @click="isChartT=true">
+            <span title="Show Chartbar" @click="chartShowButtonT(0)">
               <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
             </span>
             <span class="qrcode" @mouseenter="qrcodeShow(2)" @mouseleave="qrcodeHide(2)">
@@ -357,7 +356,7 @@
           <div class="selection-box">
             <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowOneHandle" ref="selectOptionOneC"></selection>
           </div>
-          <div class="chart-icon-box" @click="isChart=false">
+          <div class="chart-icon-box" @click="chartShowButton(1)">
             <svg-icon sign="icon-arrow-left-c" class="arrow-icon"></svg-icon><span class="back-botton">Back</span>
           </div>
         </div>
@@ -404,13 +403,13 @@
             <selection :selections="selectListTwo" class="select-colorDarkseaGreen"
                        @selectShow="selectShowThreeHandle" ref="selectOptionThreeC"></selection>
           </div>
-          <div class="chart-icon-box" @click="isChartT=false">
+          <div class="chart-icon-box" @click="chartShowButtonT(1)">
             <svg-icon sign="icon-arrow-left-c" class="arrow-icon"></svg-icon><span class="back-botton">Back</span>
           </div>
         </div>
       </div>
       <div class="table-name color">{{category}}</div>
-      <div class="chart-cont-wrap">
+      <div class="chart-cont-wrap mobile">
         <div class="chart-list-wrap clearfix">
           <div class="chart-cont-list">
             <div class="chart-cont-list-cont" id="myEchartT0"></div>
@@ -499,6 +498,12 @@
         isChart:false,
         isChartT:false,
         chartOption:{
+          tooltip: {
+            trigger: "axis",
+            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+              type: "shadow" // 默认为直线，可选为："line" | "shadow"
+            }
+          },
           legend: {
             data: ''
           },
@@ -948,6 +953,30 @@
           return true
         } else {
           return false
+        }
+      },
+
+      chartShowButton(type){
+        if(type==0){
+          this.isChart=true
+          document.getElementsByTagName('body')[0].style.backgroundColor = '#F3F4FB'
+          document.getElementsByTagName('html')[0].style.backgroundColor = '#F3F4FB'
+        }else if(type==1){
+          this.isChart=false
+          document.getElementsByTagName('body')[0].style.backgroundColor = '#F2F2F2'
+          document.getElementsByTagName('html')[0].style.backgroundColor = '#F2F2F2'
+        }
+      },
+
+      chartShowButtonT(type){
+        if(type==0){
+          this.isChartT=true
+          document.getElementsByTagName('body')[0].style.backgroundColor = '#F3F4FB'
+          document.getElementsByTagName('html')[0].style.backgroundColor = '#F3F4FB'
+        }else if(type==1){
+          this.isChartT=false
+          document.getElementsByTagName('body')[0].style.backgroundColor = '#F2F2F2'
+          document.getElementsByTagName('html')[0].style.backgroundColor = '#F2F2F2'
         }
       }
 

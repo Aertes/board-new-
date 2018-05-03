@@ -1,14 +1,14 @@
 <template>
   <div class="app-wrapper">
-    <span @click="decrementType" v-if="type!=1"><svg-icon sign="icon-arrow-left-c" class="arrow-left"></svg-icon></span>
-    <span @click="incrementType" v-if="this.type!=1 && this.type!=7"><svg-icon sign="icon-arrow-right-c" class="arrow-right"></svg-icon></span>
+    <span @click="decrementType" v-if="type!=1 "><svg-icon sign="icon-arrow-left-c" class="arrow-left"></svg-icon></span>
+    <span @click="incrementType" v-if="this.type!=1 && this.type!=7 "><svg-icon sign="icon-arrow-right-c" class="arrow-right"></svg-icon></span>
     <nav-bar></nav-bar>
     <div class="clear">
       <app-main></app-main>
     </div>
     <transition name="fade" mode="out-in">
       <keep-alive>
-        <bottom v-if="isCoverPage"></bottom>
+        <bottom v-if="isCoverPage || isSetting"></bottom>
       </keep-alive>
     </transition>
   </div>
@@ -24,7 +24,8 @@
     data() {
       return {
         isCoverPage: true,
-        locationHash: false
+        isSetting: true,
+        locationHash: false,
       }
     },
     components: {
@@ -79,6 +80,11 @@
           this.isCoverPage = false
         } else {
           this.isCoverPage = true
+        }
+        if(this.$route.name == 'setting'){
+          this.isSetting = false
+        }else{
+          this.isSetting = true
         }
       },
       setType(){

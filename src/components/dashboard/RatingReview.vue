@@ -10,7 +10,7 @@
                        ref="selectOptionOne"></selection>
           </div>
           <div class="icon-box">
-          <span title="Show Chartbar" @click="isChart=true">
+          <span title="Show Chartbar" @click="chartShowButton(0)">
             <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
           </span>
             <span class="qrcode" @mouseenter="qrcodeShow" @mouseleave="qrcodeHide">
@@ -244,7 +244,7 @@
           <div class="selection-box">
             <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowOneHandle" ref="selectOptionTwo"></selection>
           </div>
-          <div class="chart-icon-box" @click="isChart=false">
+          <div class="chart-icon-box" @click="chartShowButton(1)">
             <svg-icon sign="icon-arrow-left-c" class="arrow-icon"></svg-icon><span class="back-botton">Back</span>
           </div>
         </div>
@@ -333,7 +333,14 @@
           ]
         },
         chartOption:{
+          tooltip: {
+            trigger: "axis",
+            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+              type: "shadow" // 默认为直线，可选为："line" | "shadow"
+            }
+          },
           barWidth: 20,
+          color:['#A9D18E'],
           grid: {
             left: "3%",
             right: "6%",
@@ -563,6 +570,18 @@
           notMerge: true
         });
       },
+
+      chartShowButton(type){
+        if(type==0){
+          this.isChart=true
+          document.getElementsByTagName('body')[0].style.backgroundColor = '#F3F4FB'
+          document.getElementsByTagName('html')[0].style.backgroundColor = '#F3F4FB'
+        }else if(type==1){
+          this.isChart=false
+          document.getElementsByTagName('body')[0].style.backgroundColor = '#F2F2F2'
+          document.getElementsByTagName('html')[0].style.backgroundColor = '#F2F2F2'
+        }
+      }
 
     },
     filters: {
