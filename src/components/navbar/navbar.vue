@@ -9,7 +9,7 @@
           <selection :selections="yearList" ref="yearBox"></selection>
           <selection :selections="monthList" ref="monthBox" @selectShow="selectShowHandle"></selection>
         </div>
-        <div class="page">
+        <div class="page" v-show="this.type != 8">
           Page <span>{{type}}</span>/7
         </div>
       </div>
@@ -246,7 +246,7 @@
           uploadLink:'',
           uplaodType:'',
           uploadName:''
-        }
+        },
       }
     },
     computed: {
@@ -461,6 +461,7 @@
 
       toSetting(){
         this.$router.push({name:'setting'})
+        this.$store.commit('voluation', 8)
       },
 
       incrementType() {
