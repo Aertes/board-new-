@@ -249,7 +249,7 @@
           </div>
         </div>
       </div>
-      <div class="chart-cont-wrap">
+      <div class="chart-cont-wrap RR">
         <div class="chart-cont" ref="myEchart"></div>
       </div>
     </div>
@@ -335,6 +335,7 @@
         chartOption:{
           tooltip: {
             trigger: "axis",
+            confine: true,
             axisPointer: { // 坐标轴指示器，坐标轴触发有效
               type: "shadow" // 默认为直线，可选为："line" | "shadow"
             }
@@ -342,22 +343,37 @@
           barWidth: 20,
           color:['#A9D18E'],
           grid: {
-            left: "3%",
-            right: "6%",
-            bottom: "3%",
-            top: "3%",
+            left: "1%",
+            right: "0%",
+            bottom: "1%",
+            top: "1%",
             containLabel: true
           },
           legend: {
             data: '',
-            show:false
+            show:false,
+            textStyle:{
+              color:'#a0a0a1'
+            }
           },
           xAxis: [{
             type: 'category',
             data: '',
             axisPointer: {
               type: 'shadow'
-            }
+            },
+            axisLine: {
+              lineStyle:{
+                type: 'solid',
+                color:'#ddd'
+              },
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#a0a0a1'
+              }
+            },
           }],
           yAxis: [
             {
@@ -366,6 +382,25 @@
               min: 0,
               axisLabel: {
                 formatter: "{value}%"
+              },
+              axisLine: {
+                lineStyle:{
+                  type: 'solid',
+                  color:'#ddd'
+                },
+              },
+              axisLabel: {
+                show: true,
+                textStyle: {
+                  color: '#a0a0a1'
+                }
+              },
+              splitLine:{
+                show: true,
+                lineStyle:{
+                  type: 'solid',
+                  color:'#ddd'
+                },
               }
             }
           ],
@@ -574,12 +609,8 @@
       chartShowButton(type){
         if(type==0){
           this.isChart=true
-          document.getElementsByTagName('body')[0].style.backgroundColor = '#F3F4FB'
-          document.getElementsByTagName('html')[0].style.backgroundColor = '#F3F4FB'
         }else if(type==1){
           this.isChart=false
-          document.getElementsByTagName('body')[0].style.backgroundColor = '#F2F2F2'
-          document.getElementsByTagName('html')[0].style.backgroundColor = '#F2F2F2'
         }
       }
 
@@ -670,5 +701,4 @@
           padding 0 !important
           div
             transform scale(.7)
-
 </style>

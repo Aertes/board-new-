@@ -93,7 +93,7 @@
   right 60px
   bottom 0
   top 76px
-  background-color #F3F4FB
+  background-color #F2F2F2
   transition transform .5s linear
   transform translateY(100%)
   z-index 1
@@ -114,28 +114,42 @@
     position absolute
     left 25px
     right 25px
-    top 105px
+    top 60px
     bottom 20px
-    overflow auto
+    &.T
+      top 105px
+    &.RR
+      top 100px
+    .chart-list-wrap
+      height 100%
     .chart-cont
-      height 600px
-      border 1px solid #DFE4ED
-      background-color #fff
+      height 100%
+      /*border 1px solid #DFE4ED
+      background-color #fff*/
     .chart-cont-list
       position relative
-      width 30%
+      width 32%
+      height 50%
       float left
       &:nth-of-type(2),&:nth-of-type(5)
-        margin 0 5%
+        margin 0 2%
       .chart-cont-list-cont
-        height 300px
-        background-color #fff
-        border 1px solid #DFE4ED
+        height 90%
+        /*background-color #fff
+        border 1px solid #DFE4ED*/
       .chart-cont-list-cont-t
-        line-height 40px
-        text-align center
+        display table
+        height 10%
+        width 100%
         font-size 20px
+        table-layout fixed
         color #009DE1
+        span
+          display table-cell
+          height 100%
+          width 100%
+          text-align center
+          vertical-align middle
       /*&:nth-of-type(1),&:nth-of-type(2),&:nth-of-type(3)
         .chart-cont-list-cont-t
           margin-bottom 10px*/
@@ -166,11 +180,20 @@
       left 0
       right 0
       top 140px
+      overflow-y auto
       &.mobile
         top 182px
+      &.RR
+        top 140px
       .chart-cont-list
         width 100%
         float none
         /*margin-bottom 10px*/
         &:nth-of-type(2),&:nth-of-type(5)
           margin 0
+  @media screen and (orientation: portrait),(-webkit-orientation: portrait)
+    .chart-cont
+      height 50%!important
+  @media screen and (orientation: landscape),(-webkit-orientation: landscape)
+    .chart-cont
+      height 100%!important

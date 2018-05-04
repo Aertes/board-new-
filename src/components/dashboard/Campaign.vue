@@ -351,7 +351,7 @@
 
     <div class="chart-wrap" :class="{active:isChart}">
       <div class="table-nav clearfix">
-        <h3><i class="color-line color4"></i>Campaign Performance Overview</h3>
+        <h3><i class="color-line color1"></i>Campaign Performance Overview</h3>
         <div class="tool-box clearfix">
           <div class="selection-box">
             <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowOneHandle" ref="selectOptionOneC"></selection>
@@ -364,28 +364,28 @@
       <div class="chart-cont-wrap">
         <div class="chart-list-wrap clearfix">
           <div class="chart-cont-list">
+            <p class="chart-cont-list-cont-t"><span>Impression</span></p>
             <div class="chart-cont-list-cont" id="myEchart0"></div>
-            <p class="chart-cont-list-cont-t">Impression</p>
           </div>
           <div class="chart-cont-list">
+            <p class="chart-cont-list-cont-t"><span>Traffic</span></p>
             <div class="chart-cont-list-cont" id="myEchart1"></div>
-            <p class="chart-cont-list-cont-t">Traffic</p>
           </div>
           <div class="chart-cont-list">
+            <p class="chart-cont-list-cont-t"><span>CTR</span></p>
             <div class="chart-cont-list-cont" id="myEchart2"></div>
-            <p class="chart-cont-list-cont-t">CTR</p>
           </div>
           <div class="chart-cont-list">
+            <p class="chart-cont-list-cont-t"><span>Leads</span></p>
             <div class="chart-cont-list-cont" id="myEchart3"></div>
-            <p class="chart-cont-list-cont-t">Leads</p>
           </div>
           <div class="chart-cont-list">
+            <p class="chart-cont-list-cont-t"><span>Cost per lead</span></p>
             <div class="chart-cont-list-cont" id="myEchart4"></div>
-            <p class="chart-cont-list-cont-t">Cost per lead</p>
           </div>
           <div class="chart-cont-list">
+            <p class="chart-cont-list-cont-t"><span>Conversion</span></p>
             <div class="chart-cont-list-cont" id="myEchart5"></div>
-            <p class="chart-cont-list-cont-t">Conversion</p>
           </div>
         </div>
       </div>
@@ -395,7 +395,7 @@
 
     <div class="chart-wrap" :class="{active:isChartT}">
       <div class="table-nav clearfix">
-        <h3><i class="color-line color4"></i>Individual Campaign Performance Analysis</h3>
+        <h3><i class="color-line color1"></i>Individual Campaign Performance Analysis</h3>
         <div class="tool-box clearfix">
           <div class="selection-box">
             <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowTwoHandle"
@@ -409,31 +409,31 @@
         </div>
       </div>
       <div class="table-name color">{{category}}</div>
-      <div class="chart-cont-wrap mobile">
+      <div class="chart-cont-wrap T mobile">
         <div class="chart-list-wrap clearfix">
           <div class="chart-cont-list">
+            <p class="chart-cont-list-cont-t"><span>Impression</span></p>
             <div class="chart-cont-list-cont" id="myEchartT0"></div>
-            <p class="chart-cont-list-cont-t">Impression</p>
           </div>
           <div class="chart-cont-list">
+            <p class="chart-cont-list-cont-t"><span>Traffic</span></p>
             <div class="chart-cont-list-cont" id="myEchartT1"></div>
-            <p class="chart-cont-list-cont-t">Traffic</p>
           </div>
           <div class="chart-cont-list">
+            <p class="chart-cont-list-cont-t"><span>CTR</span></p>
             <div class="chart-cont-list-cont" id="myEchartT2"></div>
-            <p class="chart-cont-list-cont-t">CTR</p>
           </div>
           <div class="chart-cont-list">
+            <p class="chart-cont-list-cont-t"><span>Leads</span></p>
             <div class="chart-cont-list-cont" id="myEchartT3"></div>
-            <p class="chart-cont-list-cont-t">Leads</p>
           </div>
           <div class="chart-cont-list">
+            <p class="chart-cont-list-cont-t"><span>Cost per lead</span></p>
             <div class="chart-cont-list-cont" id="myEchartT4"></div>
-            <p class="chart-cont-list-cont-t">Cost per lead</p>
           </div>
           <div class="chart-cont-list">
+            <p class="chart-cont-list-cont-t"><span>Conversion</span></p>
             <div class="chart-cont-list-cont" id="myEchartT5"></div>
-            <p class="chart-cont-list-cont-t">Conversion</p>
           </div>
         </div>
       </div>
@@ -500,32 +500,75 @@
         chartOption:{
           tooltip: {
             trigger: "axis",
+            confine: true,
             axisPointer: { // 坐标轴指示器，坐标轴触发有效
               type: "shadow" // 默认为直线，可选为："line" | "shadow"
             }
           },
+          color:['#b1be19','#4abfe0','#b7a1db'],
           legend: {
-            data: ''
+            left:'right',
+            data: '',
+            textStyle:{
+              color:'#a0a0a1'
+            }
           },
           grid: {
-            left: "3%",
-            right: "6%",
-            bottom: "3%",
-            top: "10%",
+            left: "1%",
+            right: "0%",
+            bottom: "5%",
+            top: "30px",
             containLabel: true
           },
-          xAxis: [{
-            type: "category",
-            data: '',
-            axisPointer: {
-              type: "shadow"
+          xAxis: [
+            {
+              type: "category",
+              data: '',
+              axisPointer: {
+                type: "shadow"
+              },
+              axisLine: {
+                lineStyle:{
+                  type: 'solid',
+                  color:'#ddd'
+                },
+              },
+              axisLabel: {
+                show: true,
+                textStyle: {
+                  color: '#a0a0a1'
+                }
+              },
             }
-          }],
+          ],
           yAxis: [
             {
               type: "value",
               name: "",
-              min: 0
+              min: 0,
+              nameTextStyle: {
+                color: '#a0a0a1'
+              },
+              axisLine: {
+                lineStyle:{
+                  type: 'solid',
+                  color:'#ddd'
+                },
+              },
+              axisLabel: {
+                show: true,
+                textStyle: {
+                  color: '#a0a0a1'
+                },
+                formatter: ''
+              },
+              splitLine:{
+                show: true,
+                lineStyle:{
+                  type: 'solid',
+                  color:'#ddd'
+                },
+              }
             }
           ],
           series: '',
@@ -544,7 +587,8 @@
           return true
         }
 
-      }
+      },
+
     },
     mounted() {
 
@@ -626,11 +670,68 @@
         post(CMA_SEARCHCHART,this.chartData1).then(res => {
           let data = res.data.data
           data.forEach((val,index)=>{
+            /*val.series.forEach(val=>{
+              if(val.name == 'This year'){
+                val.lineStyle = {
+                  type: 'solid',
+                  color:'#b1be19'
+                }
+              }else if(val.name == 'Last Year'){
+                val.lineStyle = {
+                  type: 'solid',
+                  color:'#4abfe0'
+                }
+
+              }else if(val.name == 'Target'){
+                val.lineStyle = {
+                  type: 'solid',
+                  color:'#b7a1db'
+                }
+              }
+            })*/
             this.chartOption.legend.data = val.legend
             this.chartOption.xAxis[0].data = val.xAxis
             this.chartOption.series = val.series
             let dom = document.getElementById('myEchart'+index)
             let myEchart = this.$echarts.init(dom)
+            switch (index){
+              case 0:
+                this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
+                  return (value/1000000)+'M'
+                }
+                this.chartOption.yAxis[0].name = '(Million)'
+                break;
+              case 1:
+                this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
+                  return (value/1000)+'K'
+                }
+                this.chartOption.yAxis[0].name = '(Thousand)'
+                break;
+              case 2:
+                this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
+                  return (value*100)+'%'
+                }
+                this.chartOption.yAxis[0].name = '(%)'
+                break;
+              case 3:
+                this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
+                  return (value/1000)+'K'
+                }
+                this.chartOption.yAxis[0].name = '(Thousand)'
+                break;
+              case 4:
+                this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
+                  return value
+                }
+                this.chartOption.yAxis[0].name = ''
+                break;
+              case 5:
+                this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
+                  return (value*100)+'%'
+                }
+                this.chartOption.yAxis[0].name = '(%)'
+                break;
+            }
             myEchart.setOption(this.chartOption, {
               notMerge: true
             });
@@ -650,6 +751,44 @@
             this.chartOption.series = val.series
             let dom = document.getElementById('myEchartT'+index)
             let myEchart = this.$echarts.init(dom)
+            switch (index){
+              case 0:
+                this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
+                  return (value/1000000)+'M'
+                }
+                this.chartOption.yAxis[0].name = '(Million)'
+                break;
+              case 1:
+                this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
+                  return (value/1000)+'K'
+                }
+                this.chartOption.yAxis[0].name = '(Thousand)'
+                break;
+              case 2:
+                this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
+                  return (value*100)+'%'
+                }
+                this.chartOption.yAxis[0].name = '(%)'
+                break;
+              case 3:
+                this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
+                  return (value/1000)+'K'
+                }
+                this.chartOption.yAxis[0].name = '(Thousand)'
+                break;
+              case 4:
+                this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
+                  return value
+                }
+                this.chartOption.yAxis[0].name = ''
+                break;
+              case 5:
+                this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
+                  return (value*100)+'%'
+                }
+                this.chartOption.yAxis[0].name = '(%)'
+                break;
+            }
             myEchart.setOption(this.chartOption, {
               notMerge: true
             });
@@ -959,24 +1098,16 @@
       chartShowButton(type){
         if(type==0){
           this.isChart=true
-          document.getElementsByTagName('body')[0].style.backgroundColor = '#F3F4FB'
-          document.getElementsByTagName('html')[0].style.backgroundColor = '#F3F4FB'
         }else if(type==1){
           this.isChart=false
-          document.getElementsByTagName('body')[0].style.backgroundColor = '#F2F2F2'
-          document.getElementsByTagName('html')[0].style.backgroundColor = '#F2F2F2'
         }
       },
 
       chartShowButtonT(type){
         if(type==0){
           this.isChartT=true
-          document.getElementsByTagName('body')[0].style.backgroundColor = '#F3F4FB'
-          document.getElementsByTagName('html')[0].style.backgroundColor = '#F3F4FB'
         }else if(type==1){
           this.isChartT=false
-          document.getElementsByTagName('body')[0].style.backgroundColor = '#F2F2F2'
-          document.getElementsByTagName('html')[0].style.backgroundColor = '#F2F2F2'
         }
       }
 

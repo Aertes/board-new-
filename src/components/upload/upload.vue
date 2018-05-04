@@ -220,6 +220,7 @@
 			},
 			//刷新图表
 			refreshData(type) {
+			  alert(type)
         switch (type){
           case 'Campaign':
             this.$Hub.$emit('CampaignUploadData');
@@ -259,6 +260,7 @@
 								}, function(index) {
 									layer.close(index);
 									that.getHistoryData(that.Data.channel, that.name)
+                  that.refreshData(that.types)
 								})
 							} else {
 								layer.msg('Delete failed !', {
