@@ -85,7 +85,7 @@
         padding-left 15px
         padding-right 40px
         appearance none
-        z-index 99999991
+        z-index 20
     .dropdown-menu
       position absolute
       top 41px
