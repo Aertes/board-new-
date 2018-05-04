@@ -75,11 +75,7 @@ select:-webkit-autofill
   line-height 1
 #fileTable_wrapper
 		#fileTable_paginate
-			margin 40px 0 0
-			bottom -70px
-			// position absolute;
-			// left 50%
-			// transform: translateX(-50%)
+			margin 20px 0 0
 #fileTable_wrapper .dataTables_wrapper .dataTables_paginate .paginate_button.current,
 #fileTable_wrapper .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover
 	  color #777!important
@@ -104,6 +100,10 @@ select:-webkit-autofill
     padding: 5px 30px !important
     font-size: 18px !important
 .layui-layer-dialog
+  min-width: 400px !important
+.layui-layer-msg
+  min-width: auto !important
+.layui-layer-dialog
 	.layui-layer-title
       background-color #ffffff
       font-size 20px
@@ -122,13 +122,13 @@ select:-webkit-autofill
         font-size 18px
         height 35px
         line-height 35px
-        border-radius 10px
+        border-radius 5px
       .layui-layer-btn0
         background #00b0f0
         border-color #00b0f0
       .layui-layer-btn1
-        background #ccc
-        border-color #ccc
+        background orange
+        border-color orange
         color: #fff
 .layui-layer-setwin a:before
   top -10px !important
@@ -139,6 +139,9 @@ input:-ms-input-placeholder
 ::-webkit-input-placeholder
   color #ccc !important
 
+body .fontColor
+  width: auto !important;
+
 body .fontColor .layui-layer-content
   color  #fff
   background  rgba(43,43,43,.651)
@@ -147,7 +150,6 @@ body .fontColor .layui-layer-content
 body .fontColorBg
   overflow visible
   border-radius 0
-  //border 1px solid #F4B183
   .layui-layer-content
     color  #7F7F7F
     background  #FFF2CC

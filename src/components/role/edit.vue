@@ -25,10 +25,10 @@
       <div class="search role-tree-wrap">
         <label></label>
         <div class="button-wrap">
-          <button class="save-button" :hidden="viewRole || !isSave" @click="saveRole">Save</button>
-          <button class="save-button" :hidden="viewRole || isSave" @click="saveRole">Update</button>
+          <button class="save-button" :hidden="viewRole || !isSave" @click="saveRole">Submit</button>
+          <button class="save-button" :hidden="viewRole || isSave" @click="saveRole">Submit</button>
           <button class="cancel-button" :hidden="viewRole" @click="goBack">Cancel</button>
-          <button class="back-button" :hidden="!viewRole" @click="goBack">Back</button>
+          <button class="cancel-button" :hidden="!viewRole" @click="goBack">Cancel</button>
         </div>
       </div>
     </div>
@@ -119,7 +119,7 @@
         post(ROLE_TREE, {}).then(res => {
           let nodeData = res.data.resultList
           this.roleName = ''
-          this.$refs.roleSelect.nowIndex = 0
+          this.$refs.roleSelect.nowIndex = 1
           nodeData.forEach((v, i) => {
             this.ztreeNodeData.push({name: v.name, id: v.id, parentId: v.parentId})
           })
@@ -326,7 +326,7 @@
   .help
     display inline-block
     color red
-    font-size 21px
+    font-size 18px
     line-height 40px
     vertical-align top
 

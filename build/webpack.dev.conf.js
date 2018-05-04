@@ -58,8 +58,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': require('../config/dev.env'),
-      'BASE_URL': JSON.stringify("http://192.168.1.17:8080/"),
-      // 'BASE_URL': JSON.stringify("http://119.23.53.39:8080/dashboard/"),
+      // 'BASE_URL': JSON.stringify("http://192.168.1.17:8080/"),
+      'BASE_URL': JSON.stringify("http://119.23.53.39:8080/dashboard/"),
       'PROD':JSON.stringify(false),
       'DEV':JSON.stringify(true)
     }),

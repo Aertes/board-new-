@@ -674,11 +674,11 @@
       position: relative
       padding-left: 20px
       font-size: 24px
-      line-height: 45px
+      line-height: 60px
       height 45px
       color: #a0a0a1
       .icon
-        e-pos(top:50%, y:-50%)
+        e-pos(top:60%, y:-50%)
         right: 20px
         font-size: 24px
         color: #A0A0A1

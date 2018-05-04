@@ -114,8 +114,8 @@
           bDestroy: true,
           ordering: false,
           pagingType: "simple_numbers",
-          pageLength: 10,
-          "paging": this.tableData.length > 10 ? true : false,
+          pageLength: 6,
+          "paging": this.tableData.length > 6 ? true : false,
           data: this.tableData,
           columns: [
             {

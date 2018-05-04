@@ -38,11 +38,11 @@
             <thead>
             <tr>
               <th>YearMonth</th>
-              <th>Total<br/>Traffic</th>
-              <th>Free<br/>Traffic</th>
-              <th>Paid<br/>Traffic</th>
-              <th>Bounce<br/>Rate</th>
-              <th>Conversion<br/>Rate</th>
+              <th>Total Traffic</th>
+              <th>Free Traffic</th>
+              <th>Paid Traffic</th>
+              <th>Bounce Rate</th>
+              <th>Conversion Rate</th>
               <th>UGCR</th>
             </tr>
             </thead>
@@ -56,11 +56,11 @@
             <thead>
             <tr>
               <th>YearMonth</th>
-              <th>Total<br/>Traffic</th>
-              <th>Free<br/>Traffic</th>
-              <th>Paid<br/>Traffic</th>
-              <th>Bounce<br/>Rate</th>
-              <th>Conversion<br/>Rate</th>
+              <th>Total Traffic</th>
+              <th>Free Traffic</th>
+              <th>Paid Traffic</th>
+              <th>Bounce Rate</th>
+              <th>Conversion Rate</th>
               <th>UGCR</th>
               <th>MQL</th>
               <th>SQL</th>
@@ -221,8 +221,8 @@
               bDestroy: true,
               ordering: false,
               pagingType: "simple_numbers",
-              pageLength: 7,
-              "paging": this.camTableData.length > 7 ? true : false,
+              pageLength: 6,
+              "paging": this.camTableData.length > 6 ? true : false,
               data: this.camTableData,
               columns: [
                 {
@@ -440,8 +440,8 @@
               bDestroy: true,
               ordering: false,
               pagingType: "simple_numbers",
-              pageLength: 7,
-              "paging": this.crmTableData.length > 7 ? true : false,
+              pageLength: 6,
+              "paging": this.crmTableData.length > 6 ? true : false,
               data: this.crmTableData,
               columns: [
                 {
@@ -501,8 +501,8 @@
               bDestroy: true,
               ordering: false,
               pagingType: "simple_numbers",
-              pageLength: 7,
-              "paging": this.rbTableData.length > 7 ? true : false,
+              pageLength: 6,
+              "paging": this.rbTableData.length > 6 ? true : false,
               data: this.rbTableData,
               columns: [
                 {
@@ -974,4 +974,5 @@
   .editInput
     input
       text-align center
+      width 100px
 </style>

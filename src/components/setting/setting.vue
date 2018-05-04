@@ -318,8 +318,8 @@
           bDestroy: true,
           ordering: false,
           pagingType: "simple_numbers",
-          pageLength: 8,
-          "paging": this.tableData.length > 8 ? true : false,
+          pageLength: 6,
+          "paging": this.tableData.length > 6 ? true : false,
           data: this.tableData,
           columns: [{
             data: "name",
@@ -385,6 +385,7 @@
           this.zTreeObj.expandAll(true);
         }).catch(err => console.log(err))
       },
+
       //修改名称
       onRename(event, treeId, treeNode, isCancel) {
         event.stopImmediatePropagation();
@@ -402,7 +403,6 @@
           }
         }).catch(err => console.log(err))
       },
-
       //删除org
       beforeRemove(treeId, treeNode) {
         let id = treeNode.id;
@@ -1042,7 +1042,7 @@
             margin-top 30px
             .ztreebox
               width 20%
-              height 450px
+              height 360px
               float left
               border 1px solid #d6e3f0
               border-radius 5px
@@ -1097,11 +1097,11 @@
       position: relative
       padding-left: 20px
       font-size: 20px
-      line-height: 40px
-      height 40px
+      line-height: 60px
+      height 50px
       color: #a0a0a1
       .icon
-        e-pos(top:50%, y:-50%)
+        e-pos(top:60%, y:-50%)
         right: 20px
         font-size: 20px
         color: #A0A0A1
@@ -1145,7 +1145,7 @@
               &:disabled
                 background-color #fff
         label
-          font-size 18px
+          font-size 20px
           display inline-block
           width 40%
           float left

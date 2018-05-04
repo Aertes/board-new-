@@ -34,9 +34,7 @@
 				<span id="num" class="progressbarNum">0%</span>
 				<span id="progressBar" class="percentage" style="width: 0%" role="progressbar" aria-valuemin="0" aria-valuemax="100"></span>
 			</div>
-			<div id="errMsg" class="errMsg">
-
-			</div>
+			<div id="errMsg" class="errMsg"></div>
 		</div>
 		<span id="operate" hidden>
 			<svg-icon sign="icon-trash"></svg-icon>
@@ -109,6 +107,7 @@
 
 				// 文件上传过程中创建进度条实时显示。
 				this.uploader.on("uploadProgress", function(file, percentage) {
+				  debugger
 					var percent = Math.round(percentage * 100);
 					this.progress = percent
 					$("#num").html("" + percent + " %");
@@ -138,7 +137,7 @@
 						let errMsg = res.errMsg.replace(/\,/g, '<br>')
 						$("#text").html("UPLOAD ERROR!");
 						$('#progress').hide()
-						$('#errMsg').show().html('')
+						$('#errMsg').show().html('Template invalid!')
 						$("#num").html("0%");
 						$("#progressBar").css("width", "0%");
 					}
@@ -147,7 +146,7 @@
 				this.uploader.on("uploadError", function(file, res) {
 					$("#text").html("UPLOAD ERROR!");
 					$('#progress').hide()
-					$('#errMsg').show().html(res.errMsg)
+					$('#errMsg').show().html('Template invalid!')
 					$("#num").html("0%");
 					$("#progressBar").css("width", "0%");
 					setTimeout(() => {
@@ -220,7 +219,6 @@
 			},
 			//刷新图表
 			refreshData(type) {
-			  alert(type)
         switch (type){
           case 'Campaign':
             this.$Hub.$emit('CampaignUploadData');
@@ -315,7 +313,7 @@
 			.paginate_button.disabled
 				border: 1px solid transparent
   .tables-wrap
-    width: 700px
+    width: 600px
     max-height: 90%
     background-color: #fff
     border-radius: 10px
@@ -371,7 +369,7 @@
           cursor: pointer
           opacity: 0
     .tables-container
-      padding: 0 20px 40px
+      padding: 0 20px 20px
       font-size: 16px
       .dataTables_info
         display: none !important
@@ -392,24 +390,28 @@
           border-right: 1px solid #EBEBEB
           text-align: center
           vertical-align: center
+  #errMsg
+    font-size: 20px
+    color: #a0a0a1
+    margin-top 50px
 	.progress-ba
-			padding: 0 80px
+			padding: 0 40px
 			text-align: center
 			.text
-				font-size: 28px
+				font-size: 24px
 				color: #a0a0a1
 				margin-bottom: 30px
 				margin-top: 50px
 			.progress
 				position: relative
-				border-radius: 30px
+				border-radius: 25px
 				width: 100%
 				background: #f5f6f8
-				height: 30px
+				height: 25px
 				position: relative
 				display: inline-block
 				text-align: center
-				line-height: 30px
+				line-height: 25px
 				color: #a0a0a1
 				.percentage
 					position: absolute
