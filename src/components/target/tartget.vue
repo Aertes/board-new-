@@ -15,7 +15,6 @@
       </div>
       <!--<span><svg-icon sign="icon-search" class="searchIcon"></svg-icon></span>-->
     </div>
-
     <div class="tables">
       <div class="role-table clearfix">
 
@@ -23,7 +22,7 @@
           <table id="Table0" class="display" style="width:100%" cellpadding="0" cellspacing="0" border="0">
             <thead>
             <tr>
-              <th>YearMonth</th>
+              <th style="width: 300px">YearMonth</th>
               <th>Baselline Conversion Target</th>
               <th>Baselline Cost Per Load</th>
             </tr>
@@ -37,13 +36,13 @@
           <table id="Table1" class="display" style="width:100%" cellpadding="0" cellspacing="0" border="0">
             <thead>
             <tr>
-              <th>YearMonth</th>
-              <th>Total Traffic</th>
-              <th>Free Traffic</th>
-              <th>Paid Traffic</th>
-              <th>Bounce Rate</th>
-              <th>Conversion Rate</th>
-              <th>UGCR</th>
+              <th width="10%">YearMonth</th>
+              <th width="10%">Total Traffic</th>
+              <th width="10%">Free Traffic</th>
+              <th width="10%">Paid Traffic</th>
+              <th width="10%">Bounce Rate</th>
+              <th width="10%">Conversion Rate</th>
+              <th width="10%">UGCR</th>
             </tr>
             </thead>
             <tbody>
@@ -55,15 +54,15 @@
           <table id="Table2" class="display" style="width:100%" cellpadding="0" cellspacing="0" border="0">
             <thead>
             <tr>
-              <th>YearMonth</th>
-              <th>Total Traffic</th>
-              <th>Free Traffic</th>
-              <th>Paid Traffic</th>
-              <th>Bounce Rate</th>
-              <th>Conversion Rate</th>
-              <th>UGCR</th>
-              <th>MQL</th>
-              <th>SQL</th>
+              <th width="10%">YearMonth</th>
+              <th width="10%">Total Traffic</th>
+              <th width="10%">Free Traffic</th>
+              <th width="10%">Paid Traffic</th>
+              <th width="10%">Bounce Rate</th>
+              <th width="10%">Conversion Rate</th>
+              <th width="10%">UGCR</th>
+              <th width="10%">MQL</th>
+              <th width="10%">SQL</th>
             </tr>
             </thead>
             <tbody>
@@ -75,11 +74,11 @@
           <table id="Table3" class="display" style="width:100%" cellpadding="0" cellspacing="0" border="0">
             <thead>
             <tr>
-              <th>YearMonth</th>
-              <th>Registrations Target</th>
-              <th>Engagement Rate Target</th>
-              <th>Sales Target</th>
-              <th>Conversion Target</th>
+              <th width="10%">YearMonth</th>
+              <th width="10%">Registrations Target</th>
+              <th width="10%">Engagement Rate Target</th>
+              <th width="10%">Sales Target</th>
+              <th width="10%">Conversion Target</th>
             </tr>
             </thead>
             <tbody>
@@ -91,8 +90,8 @@
           <table id="Table4" class="display" style="width:100%" cellpadding="0" cellspacing="0" border="0">
             <thead>
             <tr>
-              <th>YearMonth</th>
-              <th>Target Avg Rating</th>
+              <th width="10%">YearMonth</th>
+              <th width="10%">Target Avg Rating</th>
             </tr>
             </thead>
             <tbody>
@@ -102,7 +101,6 @@
 
       </div>
     </div>
-
   </div>
 
 </template>
@@ -237,6 +235,8 @@
                 {
                   data: 'baseLine',
                   render: (data, type, row) => {
+                    if (!data) return 0;
+                    var data =  (Number(data) * 100).toFixed(2) + '%';
                     return '<div class="editInput">' +
                       '<input type="text" class="" value="' + data + '" data-type="1" data-month="' + row.month + '" data-baseline="' + row.baseLine + '" data-id="' + row.id + '" data-costLead="' + row.costLead + '" style="display: none">' +
                       '<span>' + data + '</span>' +
@@ -316,6 +316,8 @@
                 {
                   data: 'conversionRate',
                   render: (data, type, row) => {
+                    if (!data) return 0;
+                    var data =  (Number(data) * 100).toFixed(2) + '%';
                     return '<div class="editInput">' +
                       '<input type="text" class="" value="' + data + '" data-id="' + row.id + '" data-type="5" data-month="' + row.month + '" data-totalTraffic="' + row.totalTraffic + '" data-freeTraffic="' + row.freeTraffic + '" data-paidTraffic="' + row.paidTraffic + '" data-bounceRate="' + row.bounceRate + '" data-conversionRate="' + row.conversionRate + '" data-ugcr="' + row.ugcr + '" style="display: none">' +
                       '<span>' + data + '</span>' +
@@ -325,6 +327,8 @@
                 {
                   data: 'ugcr',
                   render: (data, type, row) => {
+                    if (!data) return 0;
+                    var data =  (Number(data) * 100).toFixed(0) + '%';
                     return '<div class="editInput">' +
                       '<input type="text" class="" value="' + data + '" data-id="' + row.id + '" data-type="6" data-month="' + row.month + '" data-totalTraffic="' + row.totalTraffic + '" data-freeTraffic="' + row.freeTraffic + '" data-paidTraffic="' + row.paidTraffic + '" data-bounceRate="' + row.bounceRate + '" data-conversionRate="' + row.conversionRate + '" data-ugcr="' + row.ugcr + '" style="display: none">' +
                       '<span>' + data + '</span>' +
@@ -395,6 +399,8 @@
                 {
                   data: 'conversionRate',
                   render: (data, type, row) => {
+                    if (!data) return 0;
+                    var data =  (Number(data) * 100).toFixed(2) + '%';
                     return '<div class="editInput">' +
                       '<input type="text" class="" value="' + data + '" data-id="' + row.id + '" data-type="5" data-month="' + row.month + '" data-totalTraffic="' + row.totalTraffic + '" data-freeTraffic="' + row.freeTraffic + '" data-paidTraffic="' + row.paidTraffic + '" data-bounceRate="' + row.bounceRate + '" data-conversionRate="' + row.conversionRate + '" data-ugcr="' + row.ugcr + '" data-mql="' + row.mql + '" data-comSql="' + row.comSql + '" style="display: none">' +
                       '<span>' + data + '</span>' +
@@ -465,6 +471,8 @@
                 {
                   data: 'engagementTarget',
                   render: (data, type, row) => {
+                    if (!data) return 0;
+                    var data =  (Number(data) * 100).toFixed(0) + '%';
                     return '<div class="editInput">' +
                       '<input type="text" class="" value="' + data + '" data-id="' + row.id + '" data-type="2" data-month="' + row.month + '" data-registrationsTarget="' + row.registrationsTarget + '" data-engagementTarget="' + row.engagementTarget + '" data-sales="' + row.sales + '" data-conversionTarget="' + row.conversionTarget + '" style="display: none">' +
                       '<span>' + data + '</span>' +
@@ -581,7 +589,9 @@
 
       tableEdit() {
         let that = this
+        let inputOldVal = ''
         $(document).on('click', '.editInput', function () {
+          inputOldVal = $(this).find('span').html();
           $(this).find('input').show().focus().end().find('span').hide()
         })
         $(document).on('blur', '.editInput input', function () {
@@ -590,6 +600,7 @@
           let inputVal = $(this).val()
           let type = $(this).data('type')
           let id = $(this).data('id')
+          if(inputVal == '')return
           switch (that.isTableStyle){
             case 0:
               let baseLine = $(this).data('baseline')
@@ -614,9 +625,9 @@
               post(TARGET_CAMUPDATE, data).then(res => {
                 let code = res.data.code
                 if (code != 200) {
-                  layer.confirm(res.data.errMsg, {
-                    title: 'Prompt information',
-                    btn: ['Cancel'],
+                  layer.msg(res.data.errMsg, {
+                    time: 2000,
+                    skin: 'fontColor'
                   })
                 } else {
                   if(type==0){
@@ -671,9 +682,9 @@
               post(TARGET_COMUPDATE, data2).then(res => {
                 let code = res.data.code
                 if (code != 200) {
-                  layer.confirm(res.data.errMsg, {
-                    title: 'Prompt information',
-                    btn: ['Cancel'],
+                  layer.msg(res.data.errMsg, {
+                    time: 2000,
+                    skin: 'fontColor'
                   })
                 } else {
                   $(this).hide().siblings('span').text(formatThousands(inputVal))
@@ -734,9 +745,9 @@
               post(TARGET_COMUPDATE, data3).then(res => {
                 let code = res.data.code
                 if (code != 200) {
-                  layer.confirm(res.data.errMsg, {
-                    title: 'Prompt information',
-                    btn: ['Cancel'],
+                  layer.msg(res.data.errMsg, {
+                    time: 2000,
+                    skin: 'fontColor'
                   })
                 } else {
                   $(this).hide().siblings('span').text(formatThousands(inputVal))
@@ -776,9 +787,9 @@
               post(TARGET_CRMUPDATE, data4).then(res => {
                 let code = res.data.code
                 if (code != 200) {
-                  layer.confirm(res.data.errMsg, {
-                    title: 'Prompt information',
-                    btn: ['Cancel'],
+                  layer.msg(res.data.errMsg, {
+                    time: 2000,
+                    skin: 'fontColor'
                   })
                 } else {
                   $(this).hide().siblings('span').text(formatThousands(inputVal))
@@ -803,9 +814,9 @@
               post(TARGET_RBUPDATE, data5).then(res => {
                 let code = res.data.code
                 if (code != 200) {
-                  layer.confirm(res.data.errMsg, {
-                    title: 'Prompt information',
-                    btn: ['Cancel'],
+                  layer.msg(res.data.errMsg, {
+                    time: 2000,
+                    skin: 'fontColor'
                   })
                 } else {
                   $(this).hide().siblings('span').text(formatThousands(inputVal))
@@ -835,16 +846,20 @@
             break;
         }
       },
+
       selectBHandle(val) {
-        switch (val.val){
-          case 'B2C':
-            this.isTableStyle = 1
-            break;
-          case 'B2B':
-            this.isTableStyle = 2
-            break;
+        if(this.B){
+          switch (val.val){
+            case 'B2C':
+              this.isTableStyle = 1
+              break;
+            case 'B2B':
+              this.isTableStyle = 2
+              break;
+          }
         }
       },
+
       selectTimeHandle(val) {
         this.time = val.val
       },
@@ -887,7 +902,26 @@
           this.getDate()
         })
       }
-    }
+    },
+    filters: {
+      formatThousands: (params, name) => {
+        if (!params) return 0
+        if(name == 'CRM Engagement Rate (rolling 6 months)'){
+          return (Number(params) * 100).toFixed(0) + '%'
+        }else{
+          let str = Math.round(params).toFixed(0)
+          return (str + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+        }
+      },
+      percentile: (params) => {
+        if (!params) return 0
+        return (Number(params) * 100).toFixed(2) + '%'
+      },
+      round: (params) => {
+        if (!params) return 0
+        return params.toFixed(2)
+      }
+    },
   }
 </script>
 
@@ -975,4 +1009,6 @@
     input
       text-align center
       width 100px
+      font-size 15px
+      font-weight 400
 </style>

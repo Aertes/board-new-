@@ -57,7 +57,7 @@ export default {
   ROLE_GETROLE: BASE_URL + 'sys/role/role/',
   ROLE_SAVE: BASE_URL + 'sys/role/save',
   ROLE_UPDATE: BASE_URL + 'sys/role/update',
-
+  ROLE_VIEW : BASE_URL + 'sys/role/view',
 
   //user
   USER_SEARCH: BASE_URL + 'sys/user/search',

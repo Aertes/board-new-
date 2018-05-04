@@ -25,9 +25,10 @@
       <div class="search role-tree-wrap">
         <label></label>
         <div class="button-wrap">
-          <button class="save-button" :hidden="viewRole || !isSave" @click="saveRole">Submit</button>
-          <button class="save-button" :hidden="viewRole || isSave" @click="saveRole">Submit</button>
+          <button class="save-button" :hidden="viewRole || !isSave" @click="saveRole">Submit</button><!--save-->
+          <button class="save-button" :hidden="viewRole || isSave" @click="saveRole">Submit</button><!--edit-->
           <button class="cancel-button" :hidden="viewRole" @click="goBack">Cancel</button>
+          <!--<button class="save-button" :hidden="!viewRole" @click="toEdit">Edit</button>-->
           <button class="cancel-button" :hidden="!viewRole" @click="goBack">Cancel</button>
         </div>
       </div>
@@ -47,6 +48,7 @@
   let ROLE_GETROLE = xhrUrls.ROLE_GETROLE
   let ROLE_SAVE = xhrUrls.ROLE_SAVE
   let ROLE_UPDATE = xhrUrls.ROLE_UPDATE
+  let ROLE_VIEW = xhrUrls.ROLE_VIEW
 
   export default {
     name: "roleEdit",
@@ -93,27 +95,54 @@
     methods: {
       getRoleEdit() {
         this.ztreeNodeData = [];
-        get(`${ROLE_GETROLE}${this.toRoleEditId}`).then(res => {
-          let nodeData = res.data.nodes
-          let roleData = res.data.role
-          this.roleName = roleData.name
-          if (roleData.status == 1) {
-            this.$refs.roleSelect.nowIndex = 1
-          } else {
-            this.$refs.roleSelect.nowIndex = 0
-          }
-          nodeData.forEach((v, i) => {
-            this.ztreeNodeData.push({
-              name: v.name,
-              id: v.id,
-              parentId: v.parentId,
-              checked: (v.checked == 'TRUE' ? true : false)
+        if(this.viewRole){
+          //查看
+          get(`${ROLE_VIEW}/${this.toRoleEditId}`).then(res => {
+            let nodeData = res.data.nodes
+            let roleData = res.data.role
+            this.roleName = roleData.name
+            if (roleData.status == 1) {
+              this.$refs.roleSelect.nowIndex = 1
+            } else {
+              this.$refs.roleSelect.nowIndex = 0
+            }
+            nodeData.forEach((v, i) => {
+              this.ztreeNodeData.push({
+                name: v.name,
+                id: v.id,
+                parentId: v.parentId,
+                checked: (v.checked == 'TRUE' ? true : false)
+              })
             })
-          })
-          this.nodeSetting.check.enable = !this.viewRole
-          $.fn.zTree.init($("#roleZtree"), this.nodeSetting, this.ztreeNodeData).expandAll(true);
-        }).catch(err => console.log(err))
+            this.nodeSetting.check.enable = !this.viewRole
+            $.fn.zTree.init($("#roleZtree"), this.nodeSetting, this.ztreeNodeData).expandAll(true);
+          }).catch(err => console.log(err))
+        }else{
+          //编辑
+          get(`${ROLE_GETROLE}${this.toRoleEditId}`).then(res => {
+            let nodeData = res.data.nodes
+            let roleData = res.data.role
+            this.roleName = roleData.name
+            if (roleData.status == 1) {
+              this.$refs.roleSelect.nowIndex = 1
+            } else {
+              this.$refs.roleSelect.nowIndex = 0
+            }
+            nodeData.forEach((v, i) => {
+              this.ztreeNodeData.push({
+                name: v.name,
+                id: v.id,
+                parentId: v.parentId,
+                checked: (v.checked == 'TRUE' ? true : false)
+              })
+            })
+            this.nodeSetting.check.enable = !this.viewRole
+            $.fn.zTree.init($("#roleZtree"), this.nodeSetting, this.ztreeNodeData).expandAll(true);
+          }).catch(err => console.log(err))
+        }
+
       },
+
       getTreeData() {
         this.ztreeNodeData = []
         post(ROLE_TREE, {}).then(res => {
@@ -127,12 +156,15 @@
           $.fn.zTree.init($("#roleZtree"), this.nodeSetting, this.ztreeNodeData).expandAll(true);
         }).catch(err => console.log(err))
       },
+
       goBack() {
         this.$emit('closeRoleEdit')
       },
+
       checkName(){
         if(this.roleName != '') this.helpOne = false;
       },
+
       treeNodes() {
         let that = this
         let treeObj = $.fn.zTree.getZTreeObj("roleZtree")
@@ -147,6 +179,7 @@
           }
         });
       },
+
       saveRole() {
         let that = this
         this.treeNodes()
@@ -210,6 +243,11 @@
             })
           }
         }
+      },
+
+      toEdit() {
+        this.viewRole = false
+        this.isSave = false
       }
     }
   }
@@ -245,7 +283,7 @@
         height 40px
         line-height 40px
         padding 0 10px
-        font-size 18px
+        font-size 16px
     .searchIcon
       font-size 30px
       color #717071
@@ -282,7 +320,7 @@
       margin-bottom 0
     .role-tree
       display inline-block
-      border 1px solid #ECECEC
+      border 1px solid #d6e3f0
       width 400px
       height 345px
       vertical-align top

@@ -110,7 +110,7 @@
               if (res.data.code == 200) {
                 setTimeout(() => {
                   this.isShow = false
-                  if (this.typeOfName == undefined) {
+                  if (this.typeOfName == undefined || this.typeOfName == 'undefined') {
                     this.$router.push({
                       name: "coverpage"
                     });

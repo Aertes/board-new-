@@ -145,14 +145,14 @@
                   operClassName = 'roleEnable'
                   operTitle = 'Enable'
                 } else {
-                  operColor = '#74A5D4'
+                  operColor = '#1f61ae'
                   operClassName = 'roleDisable'
                   operTitle = 'Disable'
                 }
                 return '<div style="text-align: center;">' +
-                  '<a title="View" style="color:#74A5D4; font-size:18px; cursor: pointer" class="roleView" data-id="' + row.id + '">' + $("#roleView").html() + '</a>' +
-                  '<a title="Edit" style="color:#87B562; font-size:18px; cursor: pointer;margin-left: 11px" class="roleEdit" data-id="' + row.id + '">' + $("#roleEdit").html() + '</a>' +
-                  '<a title="Delete" style="color:#DE8B7A; font-size:18px; cursor: pointer;;margin-left: 10px" class="roleDel" data-id="' + row.id + '">' + $("#roleDel").html() + '</a>' +
+                  '<a title="View" style="color:#1f61ae; font-size:18px; cursor: pointer" class="roleView" data-id="' + row.id + '">' + $("#roleView").html() + '</a>' +
+                  '<a title="Edit" style="color:green; font-size:18px; cursor: pointer;margin-left: 11px" class="roleEdit" data-id="' + row.id + '">' + $("#roleEdit").html() + '</a>' +
+                  '<a title="Delete" style="color:red; font-size:18px; cursor: pointer;;margin-left: 10px" class="roleDel" data-id="' + row.id + '">' + $("#roleDel").html() + '</a>' +
                   '<a title="'+ operTitle +'" style="color:'+ operColor +'; font-size:18px; cursor: pointer;;margin-left: 10px" class="'+ operClassName +'" data-id="' + row.id + '">' + $("#roleDisable").html() + '</a>'
                 '</div>';
               }
@@ -199,9 +199,9 @@
                   that.getTaleData()
                 })
               } else {
-                layer.confirm(res.data.errMsg, {
-                  title: 'Prompt information',
-                  btn: ['Cancel'],
+                layer.msg(res.data.errMsg, {
+                  time: 2000,
+                  skin: 'fontColor'
                 })
               }
             })

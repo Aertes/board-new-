@@ -17,17 +17,17 @@
         <div class="after-login">
           <div class="user-operation-hover">
             <span  title="Upload"><svg-icon sign="icon-upload" class="upload-icon" :class="{none:isUser}"></svg-icon></span>
-            <div class="upload-warp user-operation">
+            <div class="upload-warp user-operation" v-show="all">
               <img src="../../assets/img/triangle.png" alt="triangle" class="triangle">
               <div class="a-wrap box-shadow">
-                <a href="javascript:;" v-for="(item, index) in uploadList"  @click="openUpload(item.name, item.link, item.type)">
+                <a href="javascript:;" v-for="(item, index) in uploadList"  v-show="item.status"  @click="openUpload(item.name, item.link, item.type)">
                   <svg-icon sign="icon-upload" class="upload-icon" :class="{none:isUser}"></svg-icon>
                   <span>{{item.name}}</span>
                 </a>
               </div>
             </div>
           </div>
-          <span  title="Setting" @click="toSetting"><svg-icon sign="icon-setting" class="setting-icon" :class="{none:isUser}" title="Setting"></svg-icon></span>
+          <span  title="Setting" @click="toSetting" v-show="system"><svg-icon sign="icon-setting" class="setting-icon" :class="{none:isUser}" title="Setting"></svg-icon></span>
           <div class="user-operation-hover" :class="{noHover:isUser}">
             <span @click="goToLogin"><svg-icon sign="icon-user" class="user-icon"></svg-icon></span>
             <div class="user-operation box-shadow">
@@ -88,7 +88,7 @@
         <div class="user-info">
           <div class="after-login user-operation-mobile-wrap" :class="{active:sideSlide}">
             <i class="shadow-cover" @click="sideSlideShow"></i>
-            <span @click="sideSlideShow"><svg-icon sign="icon-more" class="more-icon"></svg-icon></span>
+            <span @click="sideSlideShow" class="more-icon-wrap"><svg-icon sign="icon-more" class="more-icon"></svg-icon></span>
             <div class="user-operation user-operation-mobile" :class="{active:sideSlide}">
               <p class="title">
                 <svg-icon sign="icon-addr" class="addr-icon"></svg-icon>
@@ -294,7 +294,7 @@
           if (v == 'ec:upload') {
             this.uploadList[4].status = true;
           }
-          if (v == 'sys:setup') {
+          if (v == 'sys:sys') {
             this.system = true;
           }
           if (v.indexOf(':upload') != -1 && v.indexOf(':setup') != -1) {
@@ -422,14 +422,13 @@
           post(xhrUrls.EDIT_PWD, this.data)
             .then(res => {
               if (res.data.code == 200) {
+                layer.close(this.layerId)
                 layer.msg('Password update success!', {
                   time: 2000,
                   skin: 'fontColor'
                 }, function(index) {
                   layer.close(index);
-                  that.$router.push({path: "/"});
-                  that.USERINFO = removeSessionItem('USERINFO')
-                  layer.close(this.layerId)
+                  that.outLogin()
                 })
               } else {
                 that.isOldActive=true
@@ -524,6 +523,9 @@
       &.fl
         float left
     .mobile-nav-bar
+      .more-icon-wrap
+        display inline-block
+        padding-left 20px
       .more-icon
         margin-left 0 !important
     .mobile-nav-bar
@@ -563,7 +565,7 @@
           background-color rgba(0,0,0,.5)
           transition all .5s linear
           display none
-          z-index 10000000
+          z-index 99999999
         &.active
           .shadow-cover
             display block
@@ -651,7 +653,7 @@
           transition transform .2s linear
           line-height 70px
           border-radius 0
-          z-index 10000000
+          z-index 99999999
           span
             font-size 26px
           &.active
@@ -712,7 +714,7 @@
       text-align center
       padding 20px 0
       button
-        background-color #00b0f0
+        background-color #74a5d4
         border-radius 5px
         color #fff
         border medium
@@ -724,7 +726,7 @@
         margin-right 10px
       .cancel
         margin-left 10px
-        background-color #ccc
+        background-color orange
 
   @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .nav-bar-wrap

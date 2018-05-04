@@ -35,7 +35,7 @@
       perm: {
         type: Boolean,
         default: () => false
-      }
+      },
     },
     mounted() {
     },
@@ -54,7 +54,7 @@
     },
     watch: {
       nowIndex: function () {
-        this.$emit('selectShow', {val: this.selections[this.nowIndex], id: this.nowIndex})
+        this.$emit('selectShow', {val: this.selections[this.nowIndex], id: this.nowIndex, dataId: this.selectionsId[this.nowIndex]})
       }
     }
   }
@@ -85,7 +85,7 @@
         padding-left 15px
         padding-right 40px
         appearance none
-        z-index 11
+        z-index 99999991
     .dropdown-menu
       position absolute
       top 41px
@@ -97,7 +97,7 @@
       white-space: nowrap;
       border 1px solid #D9D9D9
       text-align center
-      z-index 12
+      z-index 99999992
       li
         padding 0 10px
         background-color #fff

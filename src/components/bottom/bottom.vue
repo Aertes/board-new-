@@ -1,7 +1,7 @@
 <template>
   <div class="bottom-wrap">
     <h5>Highlight
-      <span @click="showHight" title="Add Highlight">
+      <span @click="showHight" title="Add Highlight" :class="{none:!isUser}">
         <svg-icon sign="icon-tianjia"></svg-icon>
       </span>
     </h5>
@@ -9,7 +9,7 @@
       <li v-for="(item, index) in HighLightData" >
         <input type="text" :id="item.id" :value="item.content" @blur="HighLightUpdata(item.id, item.month, item.type)">
         <p>
-          <span :id="item.id" @click="HighLightEdit()">{{item.content}}<span class="del" @click="highLightDel(item.id)"><svg-icon sign="icon-closed"></svg-icon></span></span>
+          <span :id="item.id" @click="HighLightEdit()">{{item.content}}<span class="del" @click="highLightDel(item.id)" v-if="isUser"><svg-icon sign="icon-closed"></svg-icon></span></span>
         </p>
       </li>
     </ul>
@@ -31,6 +31,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {getSessionItem} from "../../assets/config/storage.js"
   import xhrUrls from '../../assets/config/xhrUrls'
   import {get, post} from '../../assets/config/http'
   let layerId;
@@ -49,7 +50,9 @@
         isShow: false,
         isIndex: 0,
         context: '',
-        locationHash: false
+        locationHash: false,
+        USERINFO: null,
+        isUser:false
       }
     },
     computed: {
@@ -61,6 +64,23 @@
       }
     },
     mounted() {
+
+      const USERINFO = JSON.parse(getSessionItem('USERINFO'))
+
+      this.USERINFO = USERINFO
+
+      this.USERINFO ? this.isUser = true : this.isUser = false
+
+      try{
+        let per = USERINFO.permissions
+        let perNum = 0
+        per.forEach((v, i) => {
+          if (v.indexOf(':upload') != -1) {
+            perNum++
+          }
+        });
+        perNum == 0 ? this.isUser = false : this.isUser = true
+      }catch(e){}
 
       if (window.location.hash.indexOf("?") != -1) {
         this.locationHash = true
@@ -85,7 +105,7 @@
 
       HighLightEdit() {
         let dpr = window.devicePixelRatio || 1
-        if(dpr>1) return
+        if(dpr>1 || !this.isUser) return
         this.isEdit = true;
         $('#'+event.target.id).parents('li').addClass('edit').siblings().removeClass('edit')
       },

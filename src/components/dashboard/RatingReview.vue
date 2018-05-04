@@ -344,7 +344,7 @@
           color:['#A9D18E'],
           grid: {
             left: "1%",
-            right: "0%",
+            right: "4%",
             bottom: "1%",
             top: "1%",
             containLabel: true

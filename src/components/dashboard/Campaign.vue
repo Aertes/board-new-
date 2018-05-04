@@ -346,7 +346,6 @@
       </div>
     </div>
 
-
     <!---------------------------------------------------------------------------------------------------------------->
 
     <div class="chart-wrap" :class="{active:isChart}">
@@ -446,6 +445,9 @@
   import xhrUrls from '../../assets/config/xhrUrls';
   import {getQueryString, getHashString} from '../../assets/config/urlQuery';
   import {get, post} from '../../assets/config/http';
+  import {
+    formatThousands
+  } from '../../assets/chartsData/index'
 
   const CMA_SEARCH = xhrUrls.CMA_SEARCH;
   let CAM_CATEGORY = xhrUrls.CAM_CATEGORY
@@ -503,7 +505,8 @@
             confine: true,
             axisPointer: { // 坐标轴指示器，坐标轴触发有效
               type: "shadow" // 默认为直线，可选为："line" | "shadow"
-            }
+            },
+            formatter:''
           },
           color:['#b1be19','#4abfe0','#b7a1db'],
           legend: {
@@ -700,36 +703,78 @@
                   return (value/1000000)+'M'
                 }
                 this.chartOption.yAxis[0].name = '(Million)'
+                this.chartOption.tooltip.formatter = function(value){
+                  let res = value[0].name + '<br/>';
+                  value.forEach(val=>{
+                    res += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + val.color + '"></span>' + val.seriesName + '：' + formatThousands(Math.round(val.value)) + '<br/>';
+                  })
+                  return res;
+                }
                 break;
               case 1:
                 this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
                   return (value/1000)+'K'
                 }
                 this.chartOption.yAxis[0].name = '(Thousand)'
+                this.chartOption.tooltip.formatter = function(value){
+                  let res = value[0].name + '<br/>';
+                  value.forEach(val=>{
+                    res += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + val.color + '"></span>' + val.seriesName + '：' + formatThousands(Math.round(val.value)) + '<br/>';
+                  })
+                  return res;
+                }
                 break;
               case 2:
                 this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
-                  return (value*100)+'%'
+                  return (value*100).toFixed(2)+'%'
                 }
                 this.chartOption.yAxis[0].name = '(%)'
+                this.chartOption.tooltip.formatter = function(value){
+                  let res = value[0].name + '<br/>';
+                  value.forEach(val=>{
+                    res += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + val.color + '"></span>' + val.seriesName + '：' + (val.value*100).toFixed(2) + '%' + '<br/>';
+                  })
+                  return res;
+                }
                 break;
               case 3:
                 this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
                   return (value/1000)+'K'
                 }
                 this.chartOption.yAxis[0].name = '(Thousand)'
+                this.chartOption.tooltip.formatter = function(value){
+                  let res = value[0].name + '<br/>';
+                  value.forEach(val=>{
+                    res += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + val.color + '"></span>' + val.seriesName + '：' + formatThousands(Math.round(val.value)) + '<br/>';
+                  })
+                  return res;
+                }
                 break;
               case 4:
                 this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
                   return value
                 }
                 this.chartOption.yAxis[0].name = ''
+                this.chartOption.tooltip.formatter = function(value){
+                  let res = value[0].name + '<br/>';
+                  value.forEach(val=>{
+                    res += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + val.color + '"></span>' + val.seriesName + '：' + Math.round(val.value) + '<br/>';
+                  })
+                  return res;
+                }
                 break;
               case 5:
                 this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
-                  return (value*100)+'%'
+                  return (value*100).toFixed(2)+'%'
                 }
                 this.chartOption.yAxis[0].name = '(%)'
+                this.chartOption.tooltip.formatter = function(value){
+                  let res = value[0].name + '<br/>';
+                  value.forEach(val=>{
+                    res += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + val.color + '"></span>' + val.seriesName + '：' + (val.value*100).toFixed(2) + '%' + '<br/>';
+                  })
+                  return res;
+                }
                 break;
             }
             myEchart.setOption(this.chartOption, {
@@ -757,36 +802,78 @@
                   return (value/1000000)+'M'
                 }
                 this.chartOption.yAxis[0].name = '(Million)'
+                this.chartOption.tooltip.formatter = function(value){
+                  let res = value[0].name + '<br/>';
+                  value.forEach(val=>{
+                    res += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + val.color + '"></span>' + val.seriesName + '：' + formatThousands(Math.round(val.value)) + '<br/>';
+                  })
+                  return res;
+                }
                 break;
               case 1:
                 this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
                   return (value/1000)+'K'
                 }
                 this.chartOption.yAxis[0].name = '(Thousand)'
+                this.chartOption.tooltip.formatter = function(value){
+                  let res = value[0].name + '<br/>';
+                  value.forEach(val=>{
+                    res += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + val.color + '"></span>' + val.seriesName + '：' + formatThousands(Math.round(val.value)) + '<br/>';
+                  })
+                  return res;
+                }
                 break;
               case 2:
                 this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
-                  return (value*100)+'%'
+                  return (value*100).toFixed(2)+'%'
                 }
                 this.chartOption.yAxis[0].name = '(%)'
+                this.chartOption.tooltip.formatter = function(value){
+                  let res = value[0].name + '<br/>';
+                  value.forEach(val=>{
+                    res += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + val.color + '"></span>' + val.seriesName + '：' + (val.value*100).toFixed(2) + '%' + '<br/>';
+                  })
+                  return res;
+                }
                 break;
               case 3:
                 this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
                   return (value/1000)+'K'
                 }
                 this.chartOption.yAxis[0].name = '(Thousand)'
+                this.chartOption.tooltip.formatter = function(value){
+                  let res = value[0].name + '<br/>';
+                  value.forEach(val=>{
+                    res += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + val.color + '"></span>' + val.seriesName + '：' + formatThousands(Math.round(val.value)) + '<br/>';
+                  })
+                  return res;
+                }
                 break;
               case 4:
                 this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
                   return value
                 }
                 this.chartOption.yAxis[0].name = ''
+                this.chartOption.tooltip.formatter = function(value){
+                  let res = value[0].name + '<br/>';
+                  value.forEach(val=>{
+                    res += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + val.color + '"></span>' + val.seriesName + '：' + Math.round(val.value) + '<br/>';
+                  })
+                  return res;
+                }
                 break;
               case 5:
                 this.chartOption.yAxis[0].axisLabel.formatter = function (value,index){
-                  return (value*100)+'%'
+                  return (value*100).toFixed(2)+'%'
                 }
                 this.chartOption.yAxis[0].name = '(%)'
+                this.chartOption.tooltip.formatter = function(value){
+                  let res = value[0].name + '<br/>';
+                  value.forEach(val=>{
+                    res += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + val.color + '"></span>' + val.seriesName + '：' + (val.value*100).toFixed(2) + '%' + '<br/>';
+                  })
+                  return res;
+                }
                 break;
             }
             myEchart.setOption(this.chartOption, {

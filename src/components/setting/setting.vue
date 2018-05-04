@@ -117,14 +117,14 @@
           <div>
             <label>Department</label>
             <label v-show="!isViewUser">{{userinfo.org}}</label>
-            <selection ref='user' v-show="isViewUser" :selections="selectOrgOptions" :selectedId='selectOrgOptionsId'
-                       @selectUser="selectUserHandle" class="user-select"></selection>
+            <selection ref='user' v-show="isViewUser"  :selections="selectOrgOptions" :selectionsId='selectOrgOptionsId'
+                       @selectShow="selectUserHandle" class="user-select"></selection>
           </div>
           <div>
             <label>System Role</label>
             <label v-show="!isViewUser">{{userinfo.role}}</label>
-            <selection ref='role' v-show="isViewUser" :selections="selectRoleOptions" :selectedId="selectRoleOptionsId"
-                       @selectRole="selectRoleHandle" class="user-select" :perm="isDisable"></selection>
+            <selection ref='role' v-show="isViewUser" :selections="selectRoleOptions" :selectionsId="selectRoleOptionsId"
+                       @selectShow="selectRoleHandle" class="user-select" :perm="isDisable"></selection>
           </div>
           <div>
             <label>Account Status</label>
@@ -160,6 +160,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {getSessionItem} from "../../assets/config/storage.js"
   import xhrUrls from '../../assets/config/xhrUrls'
   import {get, post} from '../../assets/config/http'
   import Role from '../../components/role/role'
@@ -181,7 +182,7 @@
           username: '',
           org: '',
           role: '',
-          status: ''
+          status: '',
         },
         searchData: {
           name: '',
@@ -189,7 +190,7 @@
           status: '',
           orgid: '',
           start: 0,
-          length: 100000
+          length: 100000,
         },
         tableData: '',
         active: false,
@@ -252,6 +253,7 @@
           callback: {
             onClick: this.getOrgId,
             onRename: this.onRename,
+            beforeRename: this.beforeRename,
             beforeRemove: this.beforeRemove,
           }
         },
@@ -259,10 +261,13 @@
         toRoleEditId: '',
         viewRole: false,
         isSave: true,
-        zTreeObj: ''
+        zTreeObj: '',
+        oldName:''
       }
     },
     mounted() {
+      const USERINFO = JSON.parse(getSessionItem('USERINFO'))
+      if(!USERINFO) this.$router.push({name:'coverpage'})
       this.removeUser();
       this.userEnable();
       this.userDisable();
@@ -355,17 +360,17 @@
                   operClassName = 'userEnable'
                   operTitle = 'Enable'
                 } else {
-                  operColor = '#74A5D4'
+                  operColor = '#1f61ae'
                   operClassName = 'userDisable'
                   operTitle = 'Disable'
                 }
                 if (row.id != 1) {
-                  html += '<a title="DELETE" style="color:#DE8B7A; font-size:18px; cursor: pointer;;margin-left: 10px" class="removeUser" data-id="' + row.id + '">' + $("#deluser").html() + '</a>'
+                  html += '<a title="DELETE" style="color:red; font-size:18px; cursor: pointer;;margin-left: 10px" class="removeUser" data-id="' + row.id + '">' + $("#deluser").html() + '</a>'
                   html += '<a title="' + operTitle + '" style="color:' + operColor + '; font-size:18px; cursor: pointer;;margin-left: 10px" class="' + operClassName + '" data-id="' + row.id + '">' + $("#userDisable").html() + '</a>'
                 }
                 return '<div style="text-align: center;">' +
-                  '<a title="VIEW" style="color:#74A5D4; font-size:18px; cursor: pointer" class="viewUser" data-id="' + row.id + '">' + $("#viewuser").html() + '</a>' +
-                  '<a title="EDIT" style="color:#87B562; font-size:18px; cursor: pointer;margin-left: 10px" class="editUser" data-id="' + row.id + '">' + $("#edituser").html() + '</a>'
+                  '<a title="VIEW" style="color:#1f61ae; font-size:18px; cursor: pointer" class="viewUser" data-id="' + row.id + '">' + $("#viewuser").html() + '</a>' +
+                  '<a title="EDIT" style="color: green; font-size:18px; cursor: pointer;margin-left: 10px" class="editUser" data-id="' + row.id + '">' + $("#edituser").html() + '</a>'
                   + html +
                   '</div>';
               }
@@ -379,7 +384,7 @@
         get(xhrUrls.USER_ORG_ZTREE).then(res => {
           let nodeData = res.data.data
           nodeData.forEach((v, i) => {
-            this.ztreeNodeData.push({name: v.name, id: v.id, parentId: v.parentId})
+            this.ztreeNodeData.push({name: v.name, id: v.id, parentId: v.parentId, textName: v.name})
           })
           this.zTreeObj = $.fn.zTree.init($("#userZtree"), this.nodeSetting, this.ztreeNodeData);
           this.zTreeObj.expandAll(true);
@@ -387,22 +392,36 @@
       },
 
       //修改名称
-      onRename(event, treeId, treeNode, isCancel) {
+      onRename(event, treeId, treeNode) {
         event.stopImmediatePropagation();
-        post(xhrUrls.ORG_UPDATE, {name: treeNode.name, id: treeNode.id}).then(res => {
-          if (res.data.code == 200) {
-            layer.msg('Edit success!', {
-              time: 2000,
-              skin: 'fontColor'
-            })
-          } else {
-            layer.msg('Edit failure!', {
-              time: 2000,
-              skin: 'fontColor'
-            })
-          }
-        }).catch(err => console.log(err))
+        let Obj = $.fn.zTree.getZTreeObj("userZtree");
+        if(this.oldName == treeNode.name || treeNode.name == ''){
+          treeNode.name = this.oldName
+          Obj.updateNode(treeNode)
+          return false
+        }else{
+          post(xhrUrls.ORG_UPDATE, {name: treeNode.name, id: treeNode.id}).then(res => {
+            if (res.data.code == 200) {
+              layer.msg('Edit success!', {
+                time: 2000,
+                skin: 'fontColor'
+              })
+            } else {
+              layer.msg('Edit failure!', {
+                time: 2000,
+                skin: 'fontColor'
+              })
+            }
+          }).catch(err => console.log(err))
+        }
+
       },
+
+      beforeRename(event, treeId, treeNode){
+        debugger
+        this.oldName = treeId.name;
+      },
+
       //删除org
       beforeRemove(treeId, treeNode) {
         let id = treeNode.id;
@@ -630,7 +649,6 @@
           let id = $(this).data('id');
           that.$emit('userView', {id: id})
           $('.titles').html('USER DETAILS')
-          $('.cancel').html('Back').css('background-color', '#00aeea')
           get(xhrUrls.USER_VIEW + '/' + id).then((res) => {
             if (res.data.code == 200) {
               that.$set(that.userinfo, 'name', res.data.user.name)
@@ -695,18 +713,19 @@
           this.isEdit = true
         }
         $('.cancel').html('Cancel').css('background-color', 'orange')
-        let roleId = this.userData.roleIds;
-        let orgid = this.userData.orgid;
+        // let roleId = this.userData.roleIds;
+        // let orgid = this.userData.orgid;
         post(xhrUrls.ROLE_SEARCH, {}).then(res => {
           let data = res.data.data.data;
-          data.forEach((v, i) => {
+          data.forEach((v, j) => {
             this.selectRoleOptions.push(v.name);
             this.selectRoleOptionsId.push(v.id)
-            if (i == 0 && !roleId) {
+            if (j == 0 && !this.userData.roleIds) {
               this.userData.roleIds = v.id
             }
-            if (roleId == v.id) {
-              this.$refs.role.nowIndex = i
+            if (this.userData.roleIds == v.id) {
+              console.log(j)
+              this.$refs.role.nowIndex = j
             }
           });
         }).catch(err => console.log(err))
@@ -716,10 +735,10 @@
           data.forEach((v, i) => {
             this.selectOrgOptions.push(v.name);
             this.selectOrgOptionsId.push(v.id);
-            if (i == 0 && !orgid) {
+            if (i == 0 && !this.userData.orgid) {
               this.userData.orgid = v.id
             }
-            if (orgid == v.id) {
+            if (this.userData.orgid == v.id) {
               this.$refs.user.nowIndex = i
             }
           });
@@ -739,10 +758,11 @@
         }
       },
       selectUserHandle(val) {
-        this.userData.orgid = val.id
+        this.userData.orgid = val.dataId
       },
       selectRoleHandle(val) {
-        this.userData.roleIds = val.id
+        console.log(val)
+        this.userData.roleIds = val.dataId
       },
 
       onInput() {
@@ -771,7 +791,6 @@
       submit() {
         let that = this;
         let canSubmit = true;
-        console.log(this.selectedRole)
         if (this.userData.name == '') {
           this.isActive.isUserActive = true;
           canSubmit = false;
@@ -893,7 +912,7 @@
         this.$nextTick(() => {
           this.userTable();
         })
-      }
+      },
     }
   }
 </script>
@@ -1048,7 +1067,7 @@
               border-radius 5px
               padding 0
               .ztreeDome
-                max-height 380px
+                max-height 315px
                 overflow auto
               h4
                 height 40px
