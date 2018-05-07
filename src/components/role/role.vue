@@ -392,9 +392,9 @@
     .dropdown-menu
       max-height none
       overflow visible
-      top 36px
-      line-height 34px
-      font-size 17px
+      top 36px !important
+      line-height 34px !important
+      font-size 17px !important
   .tab-card
     .role-table
       .dataTables_wrapper

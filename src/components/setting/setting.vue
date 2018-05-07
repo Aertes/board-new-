@@ -1226,10 +1226,10 @@
       font-size 18px
   .setting
     .dropdown-menu
-      top 36px
-      line-height 35px
-      font-size 18px
+      top 36px !important
+      line-height 35px !important
+      font-size 18px !important
     .dropdown-show
       span
-        font-size 18px;
+        font-size 18px !important
 </style>
