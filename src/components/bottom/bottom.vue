@@ -1,6 +1,8 @@
 <template>
   <div class="bottom-wrap">
-    <h5>Highlight
+    <h5>
+      <span v-if="HighLightShow">Highlight</span>
+      <span v-else style="color: #A6A6A6">No Highlight</span>
       <span @click="showHight" title="Add Highlight" :class="{none:!isUser}">
         <svg-icon sign="icon-tianjia"></svg-icon>
       </span>
@@ -52,7 +54,8 @@
         context: '',
         locationHash: false,
         USERINFO: null,
-        isUser:false
+        isUser:false,
+        HighLightShow:true
       }
     },
     computed: {
@@ -105,9 +108,10 @@
 
       HighLightEdit() {
         let dpr = window.devicePixelRatio || 1
+        let id = `#${event.target.id}`
         if(dpr>1 || !this.isUser) return
         this.isEdit = true;
-        $('#'+event.target.id).parents('li').addClass('edit').siblings().removeClass('edit')
+        $(id).parents('li').addClass('edit').siblings().removeClass('edit').end().find('input').focus()
       },
 
       HighLightUpdata(id, month, type) {
@@ -118,6 +122,10 @@
           id: id,
           month: this.getYearMonth,
           type: type
+        }
+        if(newVal==''){
+          this.layerMsg('Can not edit without empty!')
+          return
         }
         post(HIGHT_LIGHT_UPDATE, data).then(res => {
           let data = res.data;
@@ -205,6 +213,13 @@
       },
       getYearMonth(){
         this.getHighLight(this.getTypeOfName)
+      },
+      HighLightData(){
+        if(this.HighLightData.length==0){
+          this.HighLightShow = false
+        }else{
+          this.HighLightShow = true
+        }
       }
     }
   }

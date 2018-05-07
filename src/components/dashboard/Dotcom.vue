@@ -46,7 +46,7 @@
         <tr v-for="(item, index) in b2cTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
             v-if="b2cTableData.length >= 0">
           <td :id="'tipss'+index"><!-- @click="tips(index, 'tipss'+index)"-->
-            <a class="hint--right hint--success hint--medium" :class="{'hint--large':index==4}" :aria-label="getTipsCont(index)">
+            <a class="hint--success hint--medium" :class="{'hint--large':index==4, 'hint--right': index == 0 || index == 3 || index == 4 || index == 5}" :aria-label="getTipsCont(index)">
               <div class="floatL">{{item.name}}</div>
               <svg-icon v-if="index==0||index==3||index==4||index==5" sign="icon-gantanhao" class="gantanhao-icon  icon-tanhao"></svg-icon>
             </a>
@@ -131,10 +131,12 @@
         <tbody>
         <tr v-for="(item, index) in b2bTableData" :class="{odd: index%2 == 0, even: index%2 != 0}" v-if="b2bTableData.length >= 0">
           <td :id="'tip'+index"><!-- @click="tips(index, 'tip'+index)"-->
-            <a class="hint--right hint--success hint--medium" :class="{'hint--large':index==4}" :aria-label="getTipsCont(index)">
+
+            <a class="hint--success hint--medium" :class="{'hint--large':index==4, 'hint--right': index == 0 || index == 3 || index == 4 || index == 5 || index == 6 || index == 7}" :aria-label="getTipsCont(index)">
               <div class="floatL">{{item.name}}</div>
               <svg-icon v-if="index==0||index==3||index==4||index==5||index==6||index==7" sign="icon-gantanhao" class="gantanhao-icon icon-tanhao"></svg-icon>
             </a>
+
           </td>
           <td>
             <div>{{item.month | formatThousands(item.name)}}</div>
@@ -292,7 +294,7 @@
         input.select()
         if (document.execCommand('copy')) {
           document.execCommand('copy')
-          this.layerMsg("Copy success !")
+          this.layerMsg("Page URL has been copied successfully!")
         }
         document.body.removeChild(input)
       },

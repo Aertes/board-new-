@@ -360,7 +360,6 @@
         background-color #FFA500
       .back-button
         background-color #00AEEA
-
   .help
     display inline-block
     color red

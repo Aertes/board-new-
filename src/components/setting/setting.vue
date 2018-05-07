@@ -167,7 +167,7 @@
   import RoleEdit from '../../components/role/edit'
   import Target from '../../components/target/tartget'
 
-  let layerId2;
+  let layerId2, num = 0;
   const USER_SEARCH = xhrUrls.USER_SEARCH
 
   export default {
@@ -407,7 +407,9 @@
                 skin: 'fontColor'
               })
             } else {
-              layer.msg('Edit failure!', {
+              treeNode.name = this.oldName
+              Obj.updateNode(treeNode)
+              layer.msg(res.data.errMsg, {
                 time: 2000,
                 skin: 'fontColor'
               })
@@ -418,7 +420,6 @@
       },
 
       beforeRename(event, treeId, treeNode){
-        debugger
         this.oldName = treeId.name;
       },
 
@@ -465,8 +466,9 @@
           sObj.after(addStr);
           var btn = $("#addBtn_" + treeNode.tId);
           if (btn) btn.bind("click", function () {
+            num ++
             var zTree = $.fn.zTree.getZTreeObj("userZtree");
-            post(xhrUrls.ORG_SAVE, {name: "New dept", status: 1, parentId: treeNode.id}).then(res => {
+            post(xhrUrls.ORG_SAVE, {name: "New dept"+num, status: 1, parentId: treeNode.id}).then(res => {
               if (res.data.code == 200) {
                 layer.msg('Add success!', {
                   time: 2000,
@@ -474,9 +476,9 @@
                 }, function (index) {
                   layer.close(index);
                 })
-                zTree.addNodes(treeNode, {id: res.data.data.id, pId: treeNode.id, name: "New dept"});
+                zTree.addNodes(treeNode, {id: res.data.data.id, pId: treeNode.id, name: "New dept"+num});
               } else {
-                layer.msg('Add failure!', {
+                layer.msg(res.data.errMsg, {
                   time: 2000,
                   skin: 'fontColor'
                 }, function (index) {
@@ -724,7 +726,6 @@
               this.userData.roleIds = v.id
             }
             if (this.userData.roleIds == v.id) {
-              console.log(j)
               this.$refs.role.nowIndex = j
             }
           });
@@ -761,7 +762,6 @@
         this.userData.orgid = val.dataId
       },
       selectRoleHandle(val) {
-        console.log(val)
         this.userData.roleIds = val.dataId
       },
 

@@ -35,46 +35,46 @@
                 <div>Period</div>
               </th>
               <th class="triangle Spending"><!-- @click="tips('Spending', 'Spending')"-->
-                <a class="hint--right hint--success hint--medium" aria-label="All cost on digital campaign."><div>Spending</div></a>
+                <a class="hint--top hint--success hint--medium" aria-label="All cost on digital campaign."><div>Spending</div></a>
               </th>
               <th class="triangle Impression"><!-- @click="tips('Impression', 'Impression')"-->
-                <a class="hint--right hint--success hint--medium" aria-label="A single instance of an online advertisement being displayed."><div>Impression</div></a>
+                <a class="hint--top hint--success hint--medium" aria-label="A single instance of an online advertisement being displayed."><div>Impression</div></a>
               </th>
               <th class="triangle Traffic"><!-- @click="tips('Traffic', 'Traffic')"-->
-                <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic</div></a>
+                <a class="hint--top hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic</div></a>
               </th>
               <th class="triangle EC"><!-- @click="tips('Traffic to EC', 'EC')"-->
-                <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic to EC</div></a>
+                <a class="hint--top hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic to EC</div></a>
               </th>
               <th>
                 <div>Target</div>
               </th>
               <th></th>
               <th class="triangle com"><!-- @click="tips('Traffic to .com', 'com')"-->
-                <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic to .com</div></a>
+                <a class="hint--top hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic to .com</div></a>
               </th>
               <th>
                 <div>Target</div>
               </th>
               <th></th>
               <th class="triangle CTR"><!-- @click="tips('CTR', 'CTR')"-->
-                <a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>CTR</div></a>
+                <a class="hint--top hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>CTR</div></a>
               </th>
               <th class="triangle Leads"><!-- @click="tips('Leads', 'Leads')"-->
-                <a class="hint--right hint--success hint--medium" aria-label="Number of B2C visits that resulted in a click on the buy button."><div>Leads</div></a>
+                <a class="hint--top hint--success hint--medium" aria-label="Number of B2C visits that resulted in a click on the buy button."><div>Leads</div></a>
               </th>
               <th class="triangle Cost"><!-- @click="tips('Cost per lead', 'Cost')"-->
-                <a class="hint--right hint--success hint--medium" aria-label="Cost per lead (CPL) is one form of performance-based adverting.Online advertising payment model in which payment is based on the number of qualifying leads generated."><div>Cost per lead</div></a>
+                <a class="hint--top hint--success hint--large hint--medium" aria-label="Cost per lead (CPL) is one form of performance-based adverting.Online advertising payment model in which payment is based on the number of qualifying leads generated."><div>Cost per lead</div></a>
               </th>
               <th class="triangle Baseline1"><!-- @click="tips('Baseline1', 'Baseline1')"-->
-                <a class="hint--right hint--success hint--medium" aria-label="Baseline is the performance in the last rolling 12M."><div>Baseline</div></a>
+                <a class="hint--top hint--success hint--medium" aria-label="Baseline is the performance in the last rolling 12M."><div>Baseline</div></a>
               </th>
               <th></th>
               <th class="triangle Conversion"><!-- @click="tips('Conversion%', 'Conversion')"-->
-                <a class="hint--left hint--success hint--large" aria-label="Buy lead conversion shows the value of the conversion points used on the Philips digital platform.For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are represented by leads generated for completed HS lead form."><div>Conversion%</div></a>
+                <a class="hint--top hint--success hint--large" aria-label="Buy lead conversion shows the value of the conversion points used on the Philips digital platform.For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are represented by leads generated for completed HS lead form."><div>Conversion%</div></a>
               </th>
               <th class="triangle Baseline2"><!-- @click="tips('Baseline2', 'Baseline2')"-->
-                <a class="hint--left hint--success hint--medium" aria-label="Baseline is the performance in the last 12M."><div>Baseline</div></a>
+                <a class="hint--top hint--success hint--medium" aria-label="Baseline is the performance in the last 12M."><div>Baseline</div></a>
               </th>
               <th></th>
             </tr>
@@ -987,7 +987,7 @@
 
           document.execCommand('copy')
 
-          this.layerMsg("Copy success !")
+          this.layerMsg("Page URL has been copied successfully!")
 
         }
 
@@ -1266,15 +1266,16 @@
           word-wrap break-word
         .triangle
           position relative
-          &:before
-            position absolute
-            content ' '
-            width 0
-            height 0
-            border-top 8px solid #FF0000
-            border-left 8px solid transparent
-            top 0
-            right 0
+          border-right 2px solid #f7499c
+          /*&:before*/
+            /*position absolute*/
+            /*content ' '*/
+            /*width 0*/
+            /*height 0*/
+            /*border-top 8px solid #FF0000*/
+            /*border-left 8px solid transparent*/
+            /*top 0*/
+            /*right 0*/
     tbody > tr
       &.odd
         background-color #F2F2F2
@@ -1299,10 +1300,24 @@
         width 190px
 
   #camTableOv
+    .hint--success
+      &:after
+        background-color #f7499c
+        color #fff;
+        border-radius 5px;
     th
       &:nth-child(7), &:nth-child(10), &:nth-child(15), &:nth-child(18)
         width 30px
-
+      &:nth-child(14), &:nth-child(17)
+        width 58px
+      &:nth-child(13), &:nth-child(16)
+        width 90px
+      &:nth-child(3)
+        width 100px
+      &:nth-child(8)
+        width 95px
+      &:nth-child(11)
+        width 65px
   @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .data-table
       tr
@@ -1316,5 +1331,21 @@
       th
         &:nth-child(2)
           width 100px
+    #camTableOv
+      th
+        &:nth-child(1)
+          width 60px
+        &:nth-child(7), &:nth-child(10), &:nth-child(15), &:nth-child(18)
+          width 30px
+        &:nth-child(14), &:nth-child(17)
+          width auto
+        &:nth-child(13), &:nth-child(16)
+          width auto
+        &:nth-child(3)
+          width auto
+        &:nth-child(8)
+          width auto
+        &:nth-child(11)
+          width auto
 
 </style>

@@ -31,8 +31,8 @@
             <th colspan="2"><div>其他</div></th>
           </tr>
           <tr>
-            <th class="triangle Traffic"><a class="hint--right hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic</div></a></th> <!--@click="tips('Traffic', 'Traffic')"-->
-            <th class="triangle Conversion"><a class="hint--right hint--success hint--medium" aria-label="'Buy lead conversion shows the value of the conversion points used on the Philips digital platform.For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are."><div>Conversion%</div></a></th><!--@click="tips('Conversion', 'Conversion')"-->
+            <th class="triangle Traffic"><a class="hint--top hint--success hint--medium" aria-label="The amount of visitors and visits a Web site receives."><div>Traffic</div></a></th> <!--@click="tips('Traffic', 'Traffic')"-->
+            <th class="triangle Conversion"><a class="hint--top hint--success hint--medium" aria-label="Buy lead conversion shows the value of the conversion points used on the Philips digital platform.For B2C, the conversion point refers to the buy button clicks. For B2B, conversion points are."><div>Conversion%</div></a></th><!--@click="tips('Conversion', 'Conversion')"-->
             <th><div>Traffic</div></th>
             <th><div>Conversion%</div></th>
             <th><div>Traffic</div></th>
@@ -167,7 +167,7 @@
         input.select()
         if (document.execCommand('copy')) {
           document.execCommand('copy')
-          this.layerMsg("Copy success !")
+          this.layerMsg("Page URL has been copied successfully!")
         }
         document.body.removeChild(input)
       },
@@ -316,16 +316,16 @@
         word-wrap break-word
       .triangle
         position relative
-        &:before
-          position absolute
-          content ' '
-          width 0
-          height 0
-          border-top 8px solid #FF0000
-          border-left 8px solid transparent
-          top 0
-          right 0
-
+        border-right 2px solid #f7499c
+        /*&:before*/
+          /*position absolute*/
+          /*content ' '*/
+          /*width 0*/
+          /*height 0*/
+          /*border-top 8px solid #FF0000*/
+          /*border-left 8px solid transparent*/
+          /*top 0*/
+          /*right 0*/
   tbody > tr
     &.odd
       background-color #F2F2F2
@@ -343,6 +343,12 @@
         text-align center
     .hidden
       display none
+  #ecTable
+    .hint--success
+      &:after
+        background-color #f7499c
+        color #fff;
+        border-radius 5px;
   @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .data-table
       tr

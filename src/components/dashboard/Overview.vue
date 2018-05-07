@@ -849,7 +849,7 @@
         input.select()
         if (document.execCommand('copy')) {
           document.execCommand('copy')
-          this.layerMsg("Copy success !")
+          this.layerMsg("Page URL has been copied successfully!")
         }
         document.body.removeChild(input)
       },

@@ -235,7 +235,12 @@
                 {
                   data: 'baseLine',
                   render: (data, type, row) => {
-                    if (!data) return 0;
+                    if (!data){
+                      return '<div class="editInput">' +
+                        '<input type="text" class="" value="' + data + '" data-type="1" data-month="' + row.month + '" data-baseline="' + row.baseLine + '" data-id="' + row.id + '" data-costLead="' + row.costLead + '" style="display: none">' +
+                        '<span>' + data + '</span>' +
+                        '</div>';
+                    }
                     var data =  (Number(data) * 100).toFixed(2) + '%';
                     return '<div class="editInput">' +
                       '<input type="text" class="" value="' + data + '" data-type="1" data-month="' + row.month + '" data-baseline="' + row.baseLine + '" data-id="' + row.id + '" data-costLead="' + row.costLead + '" style="display: none">' +
@@ -246,6 +251,13 @@
                 {
                   data: 'costLead',
                   render: (data, type, row) => {
+                    if (!data){
+                      return '<div class="editInput">' +
+                        '<input type="text" class="" value="' + data + '" data-type="2" data-month="' + row.month + '" data-baseline="' + row.baseLine + '" data-id="' + row.id + '" data-costLead="' + row.costLead + '" style="display: none">' +
+                        '<span>' + data + '</span>' +
+                        '</div>';
+                    }
+                    var data =  (Number(data) * 100).toFixed(2) + '%';
                     return '<div class="editInput">' +
                       '<input type="text" class="" value="' + data + '" data-type="2" data-month="' + row.month + '" data-baseline="' + row.baseLine + '" data-id="' + row.id + '" data-costLead="' + row.costLead + '" style="display: none">' +
                       '<span>' + data + '</span>' +
@@ -316,7 +328,12 @@
                 {
                   data: 'conversionRate',
                   render: (data, type, row) => {
-                    if (!data) return 0;
+                    if (!data){
+                      return '<div class="editInput">' +
+                        '<input type="text" class="" value="' + data + '" data-id="' + row.id + '" data-type="5" data-month="' + row.month + '" data-totalTraffic="' + row.totalTraffic + '" data-freeTraffic="' + row.freeTraffic + '" data-paidTraffic="' + row.paidTraffic + '" data-bounceRate="' + row.bounceRate + '" data-conversionRate="' + row.conversionRate + '" data-ugcr="' + row.ugcr + '" style="display: none">' +
+                        '<span>' + data + '</span>' +
+                        '</div>';
+                    }
                     var data =  (Number(data) * 100).toFixed(2) + '%';
                     return '<div class="editInput">' +
                       '<input type="text" class="" value="' + data + '" data-id="' + row.id + '" data-type="5" data-month="' + row.month + '" data-totalTraffic="' + row.totalTraffic + '" data-freeTraffic="' + row.freeTraffic + '" data-paidTraffic="' + row.paidTraffic + '" data-bounceRate="' + row.bounceRate + '" data-conversionRate="' + row.conversionRate + '" data-ugcr="' + row.ugcr + '" style="display: none">' +
@@ -327,7 +344,12 @@
                 {
                   data: 'ugcr',
                   render: (data, type, row) => {
-                    if (!data) return 0;
+                    if (!data){
+                      return '<div class="editInput">' +
+                        '<input type="text" class="" value="' + data + '" data-id="' + row.id + '" data-type="6" data-month="' + row.month + '" data-totalTraffic="' + row.totalTraffic + '" data-freeTraffic="' + row.freeTraffic + '" data-paidTraffic="' + row.paidTraffic + '" data-bounceRate="' + row.bounceRate + '" data-conversionRate="' + row.conversionRate + '" data-ugcr="' + row.ugcr + '" style="display: none">' +
+                        '<span>' + data + '</span>' +
+                        '</div>';
+                    }
                     var data =  (Number(data) * 100).toFixed(0) + '%';
                     return '<div class="editInput">' +
                       '<input type="text" class="" value="' + data + '" data-id="' + row.id + '" data-type="6" data-month="' + row.month + '" data-totalTraffic="' + row.totalTraffic + '" data-freeTraffic="' + row.freeTraffic + '" data-paidTraffic="' + row.paidTraffic + '" data-bounceRate="' + row.bounceRate + '" data-conversionRate="' + row.conversionRate + '" data-ugcr="' + row.ugcr + '" style="display: none">' +
@@ -399,7 +421,12 @@
                 {
                   data: 'conversionRate',
                   render: (data, type, row) => {
-                    if (!data) return 0;
+                    if (!data){
+                      return '<div class="editInput">' +
+                        '<input type="text" class="" value="' + data + '" data-id="' + row.id + '" data-type="5" data-month="' + row.month + '" data-totalTraffic="' + row.totalTraffic + '" data-freeTraffic="' + row.freeTraffic + '" data-paidTraffic="' + row.paidTraffic + '" data-bounceRate="' + row.bounceRate + '" data-conversionRate="' + row.conversionRate + '" data-ugcr="' + row.ugcr + '" data-mql="' + row.mql + '" data-comSql="' + row.comSql + '" style="display: none">' +
+                        '<span>' + data + '</span>' +
+                        '</div>';
+                    }
                     var data =  (Number(data) * 100).toFixed(2) + '%';
                     return '<div class="editInput">' +
                       '<input type="text" class="" value="' + data + '" data-id="' + row.id + '" data-type="5" data-month="' + row.month + '" data-totalTraffic="' + row.totalTraffic + '" data-freeTraffic="' + row.freeTraffic + '" data-paidTraffic="' + row.paidTraffic + '" data-bounceRate="' + row.bounceRate + '" data-conversionRate="' + row.conversionRate + '" data-ugcr="' + row.ugcr + '" data-mql="' + row.mql + '" data-comSql="' + row.comSql + '" style="display: none">' +
@@ -471,7 +498,12 @@
                 {
                   data: 'engagementTarget',
                   render: (data, type, row) => {
-                    if (!data) return 0;
+                    if (!data){
+                      return '<div class="editInput">' +
+                        '<input type="text" class="" value="' + data + '" data-id="' + row.id + '" data-type="2" data-month="' + row.month + '" data-registrationsTarget="' + row.registrationsTarget + '" data-engagementTarget="' + row.engagementTarget + '" data-sales="' + row.sales + '" data-conversionTarget="' + row.conversionTarget + '" style="display: none">' +
+                        '<span>' + data + '</span>' +
+                        '</div>';
+                    }
                     var data =  (Number(data) * 100).toFixed(0) + '%';
                     return '<div class="editInput">' +
                       '<input type="text" class="" value="' + data + '" data-id="' + row.id + '" data-type="2" data-month="' + row.month + '" data-registrationsTarget="' + row.registrationsTarget + '" data-engagementTarget="' + row.engagementTarget + '" data-sales="' + row.sales + '" data-conversionTarget="' + row.conversionTarget + '" style="display: none">' +
@@ -590,17 +622,25 @@
       tableEdit() {
         let that = this
         let inputOldVal = ''
-        $(document).on('click', '.editInput', function () {
-          inputOldVal = $(this).find('span').html();
-          $(this).find('input').show().focus().end().find('span').hide()
+        $(document).on('click', '.editInput span', function () {
+          inputOldVal = $(this).html();
+          $(this).hide().siblings('input').val(inputOldVal).show().focus()
         })
         $(document).on('blur', '.editInput input', function () {
           $(this).hide().siblings('span').show()
+          let timeReg = /^[1-9]\d{3}(0[1-9]|1[0-2])$/
           let month = $(this).data('month')
           let inputVal = $(this).val()
           let type = $(this).data('type')
           let id = $(this).data('id')
-          if(inputVal == '')return
+          if(inputVal == ''){
+            $(this).val(inputOldVal)
+            return
+          }
+          if(!timeReg.test(inputVal) && type==0){
+            console.log(timeReg.test(inputVal))
+            return
+          }
           switch (that.isTableStyle){
             case 0:
               let baseLine = $(this).data('baseline')
@@ -616,10 +656,10 @@
                   data.month = inputVal
                   break;
                 case 1:
-                  data.baseLine = inputVal
+                  data.baseLine = inputVal.replace(/%/, '')*100/10000
                   break;
                 case 2:
-                  data.costLead = inputVal
+                  data.costLead = inputVal.replace(/%/, '')*100/10000
                   break;
               }
               post(TARGET_CAMUPDATE, data).then(res => {
@@ -635,6 +675,7 @@
                   }else{
                     $(this).hide().siblings('span').text(formatThousands(inputVal))
                   }
+                  that.getSearch()
                 }
               })
               break;
@@ -673,10 +714,10 @@
                   data2.bounceRate = inputVal
                   break;
                 case 5:
-                  data2.conversionRate = inputVal
+                  data2.conversionRate = inputVal.replace(/%/, '')*100/10000
                   break;
                 case 6:
-                  data2.ugcr = inputVal
+                  data2.ugcr = inputVal.replace(/%/, '')*100/10000
                   break;
               }
               post(TARGET_COMUPDATE, data2).then(res => {
@@ -687,7 +728,12 @@
                     skin: 'fontColor'
                   })
                 } else {
-                  $(this).hide().siblings('span').text(formatThousands(inputVal))
+                  if(type==0){
+                    $(this).hide().siblings('span').text(inputVal)
+                  }else{
+                    $(this).hide().siblings('span').text(formatThousands(inputVal))
+                  }
+                  that.getSearch()
                 }
               })
               break;
@@ -730,7 +776,7 @@
                   data3.bounceRate = inputVal
                   break;
                 case 5:
-                  data3.conversionRate = inputVal
+                  data3.conversionRate = inputVal.replace(/%/, '')*100/10000
                   break;
                 case 6:
                   data3.ugcr = inputVal
@@ -750,7 +796,12 @@
                     skin: 'fontColor'
                   })
                 } else {
-                  $(this).hide().siblings('span').text(formatThousands(inputVal))
+                  if(type==0){
+                    $(this).hide().siblings('span').text(inputVal)
+                  }else{
+                    $(this).hide().siblings('span').text(formatThousands(inputVal))
+                  }
+                  that.getSearch()
                 }
               })
               break;
@@ -775,7 +826,7 @@
                   data4.registrationsTarget = inputVal
                   break;
                 case 2:
-                  data4.engagementTarget = inputVal
+                  data4.engagementTarget = inputVal.replace(/%/, '')*100/10000
                   break;
                 case 3:
                   data4.sales = inputVal
@@ -792,7 +843,12 @@
                     skin: 'fontColor'
                   })
                 } else {
-                  $(this).hide().siblings('span').text(formatThousands(inputVal))
+                  if(type==0){
+                    $(this).hide().siblings('span').text(inputVal)
+                  }else{
+                    $(this).hide().siblings('span').text(formatThousands(inputVal))
+                  }
+                  that.getSearch()
                 }
               })
               break;
@@ -819,7 +875,12 @@
                     skin: 'fontColor'
                   })
                 } else {
-                  $(this).hide().siblings('span').text(formatThousands(inputVal))
+                  if(type==0){
+                    $(this).hide().siblings('span').text(inputVal)
+                  }else{
+                    $(this).hide().siblings('span').text(formatThousands(inputVal))
+                  }
+                  that.getSearch()
                 }
               })
               break;
