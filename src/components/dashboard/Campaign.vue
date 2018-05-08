@@ -185,7 +185,7 @@
           <div class="selection-box">
             <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowTwoHandle"
                        ref="selectOptionTwo"></selection>
-            <selection :selections="selectListTwo" class="select-colorDarkseaGreen"
+            <selection :selections="selectListTwo" class="select-colorDarkseaGreen selection-style"
                        @selectShow="selectShowThreeHandle" ref="selectOptionThree"></selection>
           </div>
           <div class="icon-box">
@@ -399,7 +399,7 @@
           <div class="selection-box">
             <selection :selections="selectListOne" class="select-colorOrange" @selectShow="selectShowTwoHandle"
                        ref="selectOptionTwoC"></selection>
-            <selection :selections="selectListTwo" class="select-colorDarkseaGreen"
+            <selection :selections="selectListTwo" class="select-colorDarkseaGreen selection-style"
                        @selectShow="selectShowThreeHandle" ref="selectOptionThreeC"></selection>
           </div>
           <div class="chart-icon-box" @click="chartShowButtonT(1)">
@@ -1266,16 +1266,16 @@
           word-wrap break-word
         .triangle
           position relative
-          border-right 2px solid #f7499c
-          /*&:before*/
-            /*position absolute*/
-            /*content ' '*/
-            /*width 0*/
-            /*height 0*/
-            /*border-top 8px solid #FF0000*/
-            /*border-left 8px solid transparent*/
-            /*top 0*/
-            /*right 0*/
+          /*border-right 2px solid #f7499c*/
+          &:before
+            position absolute
+            content ''
+            width 1px
+            //height 97%
+            border-right 2px solid #f7499c
+            top 0
+            bottom 0
+            right -1px
     tbody > tr
       &.odd
         background-color #F2F2F2
@@ -1298,7 +1298,6 @@
     th
       &:nth-child(2)
         width 190px
-
   #camTableOv
     .hint--success
       &:after
@@ -1318,7 +1317,7 @@
         width 95px
       &:nth-child(11)
         width 65px
-  @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
+  @media screen and (max-device-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .data-table
       tr
         td

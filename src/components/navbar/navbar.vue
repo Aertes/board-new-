@@ -15,7 +15,7 @@
       </div>
       <div class="user-info">
         <div class="after-login">
-          <div class="user-operation-hover">
+          <div v-show="all" class="user-operation-hover">
             <span  title="Upload"><svg-icon sign="icon-upload" class="upload-icon" :class="{none:isUser}"></svg-icon></span>
             <div class="upload-warp user-operation" v-show="all">
               <img src="../../assets/img/triangle.png" alt="triangle" class="triangle">
@@ -280,27 +280,27 @@
         let per = USERINFO.permissions;
         per.forEach((v, i) => {
           if (v == 'compaign:upload') {
+            this.all = true;
             this.uploadList[0].status = true;
           }
           if (v == 'com:upload') {
+            this.all = true;
             this.uploadList[1].status = true;
           }
           if (v == 'crm:upload') {
+            this.all = true;
             this.uploadList[2].status = true;
           }
           if (v == 'rr:upload') {
+            this.all = true;
             this.uploadList[3].status = true;
           }
           if (v == 'ec:upload') {
+            this.all = true;
             this.uploadList[4].status = true;
           }
           if (v == 'sys:sys') {
             this.system = true;
-          }
-          if (v.indexOf(':upload') != -1 && v.indexOf(':setup') != -1) {
-            this.all = false;
-          } else {
-            this.all = true;
           }
         });
       }catch(e){}
@@ -728,7 +728,7 @@
         margin-left 10px
         background-color orange
 
-  @media screen and (max-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
+  @media screen and (max-device-width: 1235px) and (-webkit-min-device-pixel-ratio: 2) , (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 2.75) , (min-device-pixel-ratio: 2.75) , (-webkit-min-device-pixel-ratio: 3) , (min-device-pixel-ratio: 3)
     .nav-bar-wrap
       h1
         font-size 28px

@@ -268,6 +268,21 @@
     mounted() {
       const USERINFO = JSON.parse(getSessionItem('USERINFO'))
       if(!USERINFO) this.$router.push({name:'coverpage'})
+      try {
+        let per = USERINFO.permissions;
+        let flag = false;
+        per.forEach((v, i) => {
+          if (v == 'sys:sys'){
+            flag = true
+          }
+        });
+        if(flag){
+          this.$router.push({name:'setting'})
+        }else{
+          this.$router.push({name:'coverpage'})
+        }
+      }catch(e){}
+
       this.removeUser();
       this.userEnable();
       this.userDisable();
@@ -510,7 +525,6 @@
         this.zTreeObj.cancelSelectedNode()
       },
 
-
       searchUser() {
         this.getTaleData(this.searchData.name, this.searchData.username, this.searchData.status, this.searchData.orgid)
       },
@@ -704,7 +718,7 @@
           resize: false,
         })
       },
-      showCreate(obj) {
+      showCreate(roleId, orgid) {
         this.layerOpen2('user')
         this.isViewUser = true
         if (this.isEdit) {
@@ -715,6 +729,7 @@
           this.isEdit = true
         }
         $('.cancel').html('Cancel').css('background-color', 'orange')
+        // console.log(roleId+'+'+orgid)
         // let roleId = this.userData.roleIds;
         // let orgid = this.userData.orgid;
         post(xhrUrls.ROLE_SEARCH, {}).then(res => {
@@ -762,6 +777,7 @@
         this.userData.orgid = val.dataId
       },
       selectRoleHandle(val) {
+        // console.log(val.dataId)
         this.userData.roleIds = val.dataId
       },
 
@@ -1109,7 +1125,6 @@
                 // margin-top 20px
                 position relative
                 width 100%
-
   #user
     width 600px
     .tables-title

@@ -107,7 +107,6 @@
 
 				// 文件上传过程中创建进度条实时显示。
 				this.uploader.on("uploadProgress", function(file, percentage) {
-				  debugger
 					var percent = Math.round(percentage * 100);
 					this.progress = percent
 					$("#num").html("" + percent + " %");
@@ -146,7 +145,7 @@
 				this.uploader.on("uploadError", function(file, res) {
 					$("#text").html("UPLOAD ERROR!");
 					$('#progress').hide()
-					$('#errMsg').show().html('Template invalid!')
+					$('#errMsg').show().html('Upload system error!')
 					$("#num").html("0%");
 					$("#progressBar").css("width", "0%");
 					setTimeout(() => {

@@ -129,6 +129,9 @@ const store = new Vuex.Store({
         case 7:
           return 'ecommerce'
           break;
+        case 8:
+          return 'setting'
+          break;
       }
 
     }
