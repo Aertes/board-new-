@@ -322,7 +322,7 @@
           content ' '
           width 1px
           //height 97%
-          border-right 2px solid #f7499c
+          border-right 2px solid #FFFF33
           top 0
           bottom 0
           right -1px
