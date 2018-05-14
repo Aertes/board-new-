@@ -10,7 +10,7 @@
                        ref="selectOptionOne"></selection>
           </div>
           <div class="icon-box">
-            <span title="Show Chartbar" @click="chartShowButton(0)">
+            <span title="Show Chartbar" class="" @click="chartShowButton(0)">
               <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
             </span>
             <span class="qrcode" @mouseenter="qrcodeShow(1)" @mouseleave="qrcodeHide(1)">
@@ -189,7 +189,7 @@
                        @selectShow="selectShowThreeHandle" ref="selectOptionThree"></selection>
           </div>
           <div class="icon-box">
-            <span title="Show Chartbar" @click="chartShowButtonT(0)">
+            <span title="Show Chartbar" class="none" @click="chartShowButtonT(0)">
               <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
             </span>
             <span class="qrcode" @mouseenter="qrcodeShow(2)" @mouseleave="qrcodeHide(2)">
@@ -513,7 +513,7 @@
             left:'right',
             data: '',
             textStyle:{
-              color:'#a0a0a1'
+              color:'#7f7f7f'
             }
           },
           grid: {
@@ -533,13 +533,13 @@
               axisLine: {
                 lineStyle:{
                   type: 'solid',
-                  color:'#ddd'
+                  color:'#9f9f9f'
                 },
               },
               axisLabel: {
                 show: true,
                 textStyle: {
-                  color: '#a0a0a1'
+                  color: '#7f7f7f'
                 }
               },
             }
@@ -550,18 +550,18 @@
               name: "",
               min: 0,
               nameTextStyle: {
-                color: '#a0a0a1'
+                color: '#7f7f7f'
               },
               axisLine: {
                 lineStyle:{
                   type: 'solid',
-                  color:'#ddd'
+                  color:'#9f9f9f'
                 },
               },
               axisLabel: {
                 show: true,
                 textStyle: {
-                  color: '#a0a0a1'
+                  color: '#7f7f7f'
                 },
                 formatter: ''
               },
@@ -569,7 +569,7 @@
                 show: true,
                 lineStyle:{
                   type: 'solid',
-                  color:'#ddd'
+                  color:'#9f9f9f'
                 },
               }
             }

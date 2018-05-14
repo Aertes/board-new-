@@ -10,16 +10,16 @@
                        ref="selectOptionOne"></selection>
           </div>
           <div class="icon-box">
-          <span title="Show Chartbar" @click="chartShowButton(0)">
-            <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
-          </span>
+            <span title="Show Chartbar" class="none" @click="chartShowButton(0)">
+              <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
+            </span>
             <span class="qrcode" @mouseenter="qrcodeShow" @mouseleave="qrcodeHide">
-            <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
-            <div class="qrcode-warp" v-show="isQrShow">
-              <div class="qrcodeCanvas"></div>
-              <span>Please scan the QR code</span>
-            </div>
-          </span>
+              <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
+              <div class="qrcode-warp" v-show="isQrShow">
+                <div class="qrcodeCanvas"></div>
+                <span>Please scan the QR code</span>
+              </div>
+            </span>
             <span @click="copyURL" title="Click to copy this page link">
             <svg-icon sign="icon-link" class="link-icon"></svg-icon>
           </span>
@@ -115,7 +115,7 @@
               <div>{{item.percentNegative | percentile}}</div>
             </td>
             <td>
-              <div>{{item.timelyResponse | strikethrough}}</div>
+              <div>{{item.timelyResponse | strikethroughOne}}</div>
             </td>
             <td>
               <div>{{item.timelyResponseRate | strikethrough}}</div>
@@ -219,7 +219,7 @@
               <div>{{item.percentNegative | percentile}}</div>
             </td>
             <td>
-              <div>{{item.timelyResponse | strikethrough}}</div>
+              <div>{{item.timelyResponse | strikethroughOne}}</div>
             </td>
             <td>
               <div>{{item.timelyResponseRate | strikethrough}}</div>
@@ -353,7 +353,7 @@
             data: '',
             show:false,
             textStyle:{
-              color:'#a0a0a1'
+              color:'#7f7f7f'
             }
           },
           xAxis: [{
@@ -365,13 +365,13 @@
             axisLine: {
               lineStyle:{
                 type: 'solid',
-                color:'#ddd'
+                color:'#9f9f9f'
               },
             },
             axisLabel: {
               show: true,
               textStyle: {
-                color: '#a0a0a1'
+                color: '#7f7f7f'
               }
             },
           }],
@@ -386,20 +386,20 @@
               axisLine: {
                 lineStyle:{
                   type: 'solid',
-                  color:'#ddd'
+                  color:'#9f9f9f'
                 },
               },
               axisLabel: {
                 show: true,
                 textStyle: {
-                  color: '#a0a0a1'
+                  color: '#7f7f7f'
                 }
               },
               splitLine:{
                 show: true,
                 lineStyle:{
                   type: 'solid',
-                  color:'#ddd'
+                  color:'#9f9f9f'
                 },
               }
             }
@@ -622,15 +622,20 @@
         return (str + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
       },
       percentile: (params) => {
-        if (!params) return 0 + '%'
-        return (Number(params) * 100).toFixed(0) + '%'
+        if (!params) return  '0.00%'
+        return (Number(params) * 100).toFixed(2) + '%'
       },
       round: (params) => {
         if (!params) return 0
         return params.toFixed(2)
       },
+      strikethroughOne: (params) => {
+        if (!params) return '-'
+        return params
+      },
       strikethrough: (params) => {
         if (!params) return '-'
+        return (Number(params) * 100).toFixed(2) + '%'
       }
     },
     watch: {
@@ -694,11 +699,25 @@
       tr
         td
         th
+          &:nth-child(6)
+            width 75px!important /*130*/
           &:nth-child(13)
-            width 135px!important
+            width 60px!important /*130*/
           &:nth-child(14)
-            width 150px!important
+            width 60px!important /*150*/
           padding 0 !important
           div
             transform scale(.7)
+
+  @media screen and (orientation: landscape),(-webkit-orientation: landscape)
+    .data-table
+      tr
+        td
+        th
+          &:nth-child(6)
+            width auto!important
+          &:nth-child(13)
+            width auto!important
+          &:nth-child(14)
+            width 135px!important
 </style>

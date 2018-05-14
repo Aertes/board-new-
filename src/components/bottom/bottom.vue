@@ -1,8 +1,8 @@
 <template>
   <div class="bottom-wrap">
     <h5>
-      <span v-if="HighLightShow">Highlight</span>
-      <span v-else style="color: #A6A6A6">No Highlight</span>
+      <span v-if="isUser">Highlight</span><!--HighLightShow-->
+      <!--<span v-else style="color: #A6A6A6">No Highlight</span>-->
       <span @click="showHight" title="Add Highlight" :class="{none:!isUser}">
         <svg-icon sign="icon-tianjia"></svg-icon>
       </span>
@@ -55,7 +55,7 @@
         locationHash: false,
         USERINFO: null,
         isUser:false,
-        HighLightShow:true
+        HighLightShow:false
       }
     },
     computed: {
@@ -214,13 +214,13 @@
       getYearMonth(){
         this.getHighLight(this.getTypeOfName)
       },
-      HighLightData(){
+      /*HighLightData(){
         if(this.HighLightData.length==0){
           this.HighLightShow = false
         }else{
           this.HighLightShow = true
         }
-      }
+      }*/
     }
   }
 </script>

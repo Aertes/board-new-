@@ -29,12 +29,12 @@
             <div>Month</div>
           </th>
           <th>
-            <div>YTD</div>
-          </th>
-          <th>
             <div>Month Target</div>
           </th>
           <th></th>
+          <th>
+            <div>YTD</div>
+          </th>
           <th>
             <div>YTD Target</div>
           </th>
@@ -54,9 +54,6 @@
             <div>{{item.month | formatThousands(item.name) }}</div>
           </td>
           <td>
-            <div>{{item.ytd | formatThousands(item.name) }}</div>
-          </td>
-          <td>
             <div>{{item.target | formatThousands(item.name) }}</div>
           </td>
           <td v-if="item.mT==1">
@@ -70,6 +67,9 @@
           </td>
           <td v-else="item.mT==4">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
+          </td>
+          <td>
+            <div>{{item.ytd | formatThousands(item.name) }}</div>
           </td>
           <td>
             <div>{{item.ytdTarget | formatThousands(item.name) }}</div>
@@ -247,7 +247,7 @@
       formatThousands: (params, name) => {
         if (!params) return 0
         if(name == 'CRM Engagement Rate (rolling 6 months)'){
-          return (Number(params) * 100).toFixed(0) + '%'
+          return (Number(params) * 100).toFixed(2) + '%'
         }else{
           let str = Math.round(params).toFixed(0)
           return (str + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
@@ -291,7 +291,7 @@
         word-wrap break-word
         &:nth-child(1)
           width 400px
-        &:nth-child(5), &:nth-child(7)
+        &:nth-child(4), &:nth-child(7)
           width 60px
 
   tbody > tr
@@ -337,7 +337,7 @@
         th
           &:nth-child(1)
             width 320px!important
-          &:nth-child(5), &:nth-child(7)
+          &:nth-child(4), &:nth-child(7)
             width 30px!important
           padding 0 !important
           .icon-tanhao

@@ -8,10 +8,7 @@
         <div class="selection-box">
           <selection :selections="yearList" ref="yearBox"></selection>
           <selection :selections="monthList" ref="monthBox" @selectShow="selectShowHandle"></selection>
-        </div>
-        <div class="page" v-show="this.type != 8">
-          Page <span>{{type}}</span>/7
-        </div>
+        </div><div class="page page-box" v-show="this.type != 8">Page <span>{{type}}</span>/7</div>
       </div>
       <div class="user-info">
         <div class="after-login">
@@ -508,11 +505,15 @@
       right 67px
       text-align center
       .selection-box
+        width 50%
         display inline-block
         vertical-align top
+        text-align right
       .page
         display inline-block
         vertical-align top
+      .page-box
+        width 50%
       &.afterLogin
         right 201px
     .selection-box
@@ -538,8 +539,8 @@
           margin-top 0
     .page
       font-size 22px
-      margin-left 35px
-      color #B5B5B5
+      //margin-left 35px
+      color #7f7f7f
       .page-num
         font-size 28px
         vertical-align: -6px;

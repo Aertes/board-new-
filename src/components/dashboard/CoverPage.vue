@@ -2,6 +2,17 @@
     <div class="cover-page-wrap">
       <div class="table-nav clearfix">
         <h3><i class="color-line color"></i>Cover Page</h3>
+        <div class="tool-box clearfix">
+          <div class="icon-box">
+            <span class="qrcode" @mouseenter="qrcodeShow" @mouseleave="qrcodeHide">
+            <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
+            <div class="qrcode-warp" v-show="isQrShow">
+              <div class="qrcodeCanvas"></div>
+              <span>Please scan the QR code</span>
+            </div>
+          </span>
+          </div>
+        </div>
       </div>
       <div class="content">
         <div class="wrap">
@@ -19,7 +30,8 @@
     name: "cover-page",
     data(){
       return {
-        time:''
+        time:'',
+        isQrShow: false,
       }
     },
     computed: {
@@ -41,7 +53,29 @@
       getTime(){
         let val = this.getYearMonth
         this.time = val.slice(0, 4) + '/' + val.slice(4, 6)
-      }
+      },
+      qrcodeShow() {
+        let nowTime
+        let nowDateYear = new Date().getFullYear()
+        let nowDateMonth = new Date().getMonth()+1
+        if (nowDateMonth < 10) {
+
+          nowTime = nowDateYear + '0' + nowDateMonth
+
+        } else {
+
+          nowTime = nowDateYear.toString() + nowDateMonth.toString()
+
+        }
+        let baseUrl = `${window.location}`;
+        console.log(baseUrl)
+        $('.qrcodeCanvas').html('')
+        $('.qrcodeCanvas').qrcode({width: 150,height: 150,text: baseUrl});
+        this.isQrShow = true
+      },
+      qrcodeHide() {
+        this.isQrShow = false
+      },
     },
     watch: {
       getYearMonth(){
