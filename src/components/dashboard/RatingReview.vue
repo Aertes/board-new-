@@ -35,25 +35,25 @@
               <div>Category</div>
             </th>
             <th>
-              <div>Rate</div>
+              <div>Rating</div>
             </th>
             <th>
-              <div>Over 4.3%</div>
+              <div>Over 4.3</div>
             </th>
             <th>
-              <div>Below 4.5%</div>
+              <div>Below 4.5</div>
             </th>
             <th>
-              <div>Over 4.8%</div>
+              <div>Over 4.8</div>
             </th>
             <th>
               <div>Sellout volume</div>
             </th>
             <th>
-              <div>%of review</div>
+              <div>Total review</div>
             </th>
             <th>
-              <div>Total review</div>
+              <div>% of review</div>
             </th>
             <th>
               <div>Positive</div>
@@ -65,42 +65,55 @@
               <div>Negative</div>
             </th>
             <th>
-              <div>%of negative</div>
+              <div>% of negative</div>
             </th>
             <th>
               <div>Timely Response</div>
             </th>
             <th>
-              <div>Timely Response%</div>
+              <div>Timely Response %</div>
             </th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(item, index) in yearTableData" :class="{odd: index%2 == 0, even: index%2 != 0}"
               v-if="yearTableData.length >= 0">
+
             <td>
               <div class="floatL">{{item.category}}</div>
             </td>
-            <td>
+            <td v-if="channelId ==0">
+              <div>-</div>
+            </td>
+            <td v-else="channelId != 0">
               <div>{{item.avgRating | round}}</div>
             </td>
-            <td>
+            <td v-if="channelId ==0">
+              <div>-</div>
+            </td>
+            <td v-else="channelId != 0">
               <div>{{item.smallVolume | percentile}}</div>
             </td>
-            <td>
+            <td v-if="channelId ==0">
+              <div>-</div>
+            </td>
+            <td v-else="channelId != 0">
               <div>{{item.midVolume | percentile}}</div>
             </td>
-            <td>
+            <td v-if="channelId ==0">
+              <div>-</div>
+            </td>
+            <td v-else="channelId != 0">
               <div>{{item.bigVolume | percentile}}</div>
             </td>
             <td>
               <div>{{item.selloutVolume | formatThousands}}</div>
             </td>
             <td>
-              <div>{{item.percentReview | percentile}}</div>
+              <div>{{item.totalReview | formatThousands}}</div>
             </td>
             <td>
-              <div>{{item.totalReview | formatThousands}}</div>
+              <div>{{item.percentReview | percentile}}</div>
             </td>
             <td>
               <div>{{item.positive | formatThousands}}</div>
@@ -114,10 +127,16 @@
             <td>
               <div>{{item.percentNegative | percentile}}</div>
             </td>
-            <td>
+            <td v-if="channelId ==0">
+              <div>-</div>
+            </td>
+            <td v-else="channelId != 0">
               <div>{{item.timelyResponse | strikethroughOne}}</div>
             </td>
-            <td>
+            <td v-if="channelId ==0">
+              <div>-</div>
+            </td>
+            <td v-else="channelId != 0">
               <div>{{item.timelyResponseRate | strikethrough}}</div>
             </td>
           </tr>
@@ -139,25 +158,25 @@
               <div>Category</div>
             </th>
             <th>
-              <div>Rate</div>
+              <div>Rating</div>
             </th>
             <th>
-              <div>Over 4.3%</div>
+              <div>Over 4.3</div>
             </th>
             <th>
-              <div>Below 4.5%</div>
+              <div>Below 4.5</div>
             </th>
             <th>
-              <div>Over 4.8%</div>
+              <div>Over 4.8</div>
             </th>
             <th>
               <div>Sellout volume</div>
             </th>
             <th>
-              <div>%of review</div>
+              <div>Total review</div>
             </th>
             <th>
-              <div>Total review</div>
+              <div>% of review</div>
             </th>
             <th>
               <div>Positive</div>
@@ -169,13 +188,13 @@
               <div>Negative</div>
             </th>
             <th>
-              <div>%of negative</div>
+              <div>% of negative</div>
             </th>
             <th>
               <div>Timely Response</div>
             </th>
             <th>
-              <div>Timely Response%</div>
+              <div>Timely Response %</div>
             </th>
           </tr>
           </thead>
@@ -201,10 +220,10 @@
               <div>{{item.selloutVolume | formatThousands}}</div>
             </td>
             <td>
-              <div>{{item.percentReview | percentile}}</div>
+              <div>{{item.totalReview | formatThousands}}</div>
             </td>
             <td>
-              <div>{{item.totalReview | formatThousands}}</div>
+              <div>{{item.percentReview | percentile}}</div>
             </td>
             <td>
               <div>{{item.positive | formatThousands}}</div>
@@ -218,10 +237,16 @@
             <td>
               <div>{{item.percentNegative | percentile}}</div>
             </td>
-            <td>
+            <td v-if="channelId ==0">
+              <div>-</div>
+            </td>
+            <td v-else="channelId != 0">
               <div>{{item.timelyResponse | strikethroughOne}}</div>
             </td>
-            <td>
+            <td v-if="channelId ==0">
+              <div>-</div>
+            </td>
+            <td v-else="channelId != 0">
               <div>{{item.timelyResponseRate | strikethrough}}</div>
             </td>
           </tr>
@@ -567,7 +592,6 @@
         if (!this.locationHash) {
 
           val.val == 'All Channels' ? this.channel = null : this.channel = val.val
-
           this.channelId = val.id
 
           this.$refs.selectOptionOne.nowIndex = val.id

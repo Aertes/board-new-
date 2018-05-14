@@ -29,14 +29,14 @@
             <div>Month</div>
           </th>
           <th>
-            <div>Month Target</div>
+            <div>Target</div>
           </th>
           <th></th>
           <th>
             <div>YTD</div>
           </th>
           <th>
-            <div>YTD Target</div>
+            <div>Target</div>
           </th>
           <th></th>
         </tr>
@@ -56,7 +56,10 @@
           <td>
             <div>{{item.target | formatThousands(item.name) }}</div>
           </td>
-          <td v-if="item.mT==1">
+          <td v-if="item.name=='CRM Registrations'">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #D65532"></div>
+          </td>
+          <td v-else-if="item.mT==1">
             <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
           </td>
           <td v-else-if="item.mT==2">

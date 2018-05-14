@@ -30,14 +30,14 @@
             <div>Month</div>
           </th>
           <th>
-            <div>Month Target</div>
+            <div>Target</div>
           </th>
           <th></th>
           <th>
             <div>YTD</div>
           </th>
           <th>
-            <div>YTD Target</div>
+            <div>Target</div>
           </th>
           <th></th>
         </tr>
@@ -57,7 +57,10 @@
           <td>
             <div>{{item.target | formatThousands(item.name)}}</div>
           </td>
-          <td v-if="item.mT==0" width ="10%">
+          <td v-if="index==4" width ="10%">
+            <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #68A490"></div>
+          </td>
+          <td v-else-if="item.mT==0" width ="10%">
             <!--<div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>-->
           </td>
           <td v-else-if="item.mT==1" width ="10%">
@@ -116,14 +119,14 @@
             <div>Month</div>
           </th>
           <th>
-            <div>Month Target</div>
+            <div>Target</div>
           </th>
           <th></th>
           <th>
             <div>YTD</div>
           </th>
           <th>
-            <div>YTD Target</div>
+            <div>Target</div>
           </th>
           <th></th>
         </tr>
