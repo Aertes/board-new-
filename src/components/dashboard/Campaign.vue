@@ -189,7 +189,7 @@
                        @selectShow="selectShowThreeHandle" ref="selectOptionThree"></selection>
           </div>
           <div class="icon-box">
-            <span title="Show Chartbar" class="none" @click="chartShowButtonT(0)">
+            <span title="Show Chartbar" class="" @click="chartShowButtonT(0)">
               <svg-icon sign="icon-chartbar" class="chart-icon"></svg-icon>
             </span>
             <span class="qrcode" @mouseenter="qrcodeShow(2)" @mouseleave="qrcodeHide(2)">
@@ -445,9 +445,7 @@
   import xhrUrls from '../../assets/config/xhrUrls';
   import {getQueryString, getHashString} from '../../assets/config/urlQuery';
   import {get, post} from '../../assets/config/http';
-  import {
-    formatThousands
-  } from '../../assets/chartsData/index'
+  import { formatThousands } from '../../assets/chartsData/index'
 
   const CMA_SEARCH = xhrUrls.CMA_SEARCH;
   let CAM_CATEGORY = xhrUrls.CAM_CATEGORY

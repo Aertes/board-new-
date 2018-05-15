@@ -133,8 +133,8 @@
         </div>
         <div class="page fr">
           <span class="page-num">Page <span>{{type}}</span>/7</span>
-          <span @click="decrementType"><svg-icon sign="icon-arrow-left-o-copy" class="arrow-o-icon"></svg-icon></span>
-          <span @click="incrementType"><svg-icon sign="icon-arrow-right-o" class="arrow-o-icon"></svg-icon></span>
+          <span @click="decrementType" v-if="type!=1 && this.type != 8"><svg-icon sign="icon-arrow-left-o-copy" class="arrow-o-icon"></svg-icon></span>
+          <span @click="incrementType" v-if="this.type!=1 && this.type!=7 && this.type != 8"><svg-icon sign="icon-arrow-right-o" class="arrow-o-icon"></svg-icon></span>
         </div>
       </div>
 

@@ -971,6 +971,9 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../appmain/appmain.styl"
+  .table-box
+    width 100%
+    overflow-x auto
   .data-table
     border-collapse collapse
     border none
@@ -1044,19 +1047,23 @@
       tr
         td
         th
+          font-size 25px
+          height 50px
+          &:nth-child(4),&:nth-child(5),&:nth-child(7),&:nth-child(8)
+            width 140px!important
           &:nth-child(1)
-            width 40px!important
+            width 80px!important
           &:nth-child(2)
-            width 130px!important
+            width 200px!important
           &:nth-child(3)
-            width 300px!important
+            width 450px!important
           padding 0 !important
           .icon-tanhao
             font-size 12px!important
           &:nth-child(6),&:nth-child(9)
             width 30px!important
-          div
-            transform scale(.7)!important
+          /*div
+            transform scale(.7)!important*/
         &:nth-child(1),&:nth-child(13)
           td
             &:nth-child(3)
