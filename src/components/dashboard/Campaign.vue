@@ -1007,9 +1007,7 @@
         }else{
           qrcodeUrl = `${window.location}`;
         }
-        debugger
         baseUrl = `${qrcodeUrl}?yearMonth=${this.getYearMonth}&campaign=${this.campaign}&campaignId=${this.campaignId}&campaignTwo=${this.campaignTwo}&campaignTwoId=${this.campaignTwoId}&category=${this.category}&categoryId=${this.categoryId}`;
-        console.log(baseUrl)
         $('.qrcodeCanvas').html('')
         $('.qrcodeCanvas').qrcode({width: 150,height: 150,text: baseUrl});
         switch (id) {
