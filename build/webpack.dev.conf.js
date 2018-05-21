@@ -44,22 +44,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       poll: config.dev.poll,
     },
 
-    // add API
-    // before(app){
-    //   app.get('/static/table', (req, res) => {
-    //     res.json({
-    //       errno:0,
-    //       data:data
-    //     })
-    //   })
-    // }
-
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': require('../config/dev.env'),
-      'BASE_URL': JSON.stringify("http://192.168.1.14:8080/"),
-      // 'BASE_URL': JSON.stringify("http://47.100.119.227:9999/dashboard/"),
+      // 'BASE_URL': JSON.stringify("http://192.168.1.14:8080/"),
+      'BASE_URL': JSON.stringify("http://47.100.119.227:9999/dashboard/"),
+      'QRCODE_URL': JSON.stringify(false),
       'PROD':JSON.stringify(false),
       'DEV':JSON.stringify(true)
     }),

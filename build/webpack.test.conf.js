@@ -32,6 +32,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env,
       'BASE_URL':JSON.stringify("http://119.23.53.39:8080/dashboard/"),
+      'QRCODE_URL': JSON.stringify(false),
       'PROD':JSON.stringify(true),
       'DEV':JSON.stringify(false)
     }),

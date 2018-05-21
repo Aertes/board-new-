@@ -310,7 +310,13 @@
       },
 
       qrcodeShow() {
-        let baseUrl = `${window.location}?yearMonth=${this.getYearMonth}`;
+        let baseUrl, qrcodeUrl;
+        if(QRCODE_URL){
+          qrcodeUrl = `http://www.philipsreport.cn`;
+        }else{
+          qrcodeUrl = `${window.location}`;
+        }
+        baseUrl = `${qrcodeUrl}?yearMonth=${this.getYearMonth}`;
         $('.qrcodeCanvas').html('')
         $('.qrcodeCanvas').qrcode({width: 150,height: 150,text: baseUrl});
         this.isQrShow = true

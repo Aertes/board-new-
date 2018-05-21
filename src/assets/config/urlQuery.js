@@ -16,6 +16,8 @@ function getHashString(name) {
   return HashUrl;
 }
 
+
+
 export {
   getQueryString,
   getHashString

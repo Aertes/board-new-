@@ -31,7 +31,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env,
-      'BASE_URL':JSON.stringify("http://47.100.119.227:9999/dashboard/"),
+      'BASE_URL': JSON.stringify("http://47.100.119.227:9999/dashboard/"),
+      'QRCODE_URL': JSON.stringify(true),
       'PROD':JSON.stringify(true),
       'DEV':JSON.stringify(false)
     }),

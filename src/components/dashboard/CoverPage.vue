@@ -1,36 +1,36 @@
 <template>
-    <div class="cover-page-wrap">
-      <div class="table-nav clearfix">
-        <h3><i class="color-line color"></i>Cover Page</h3>
-        <div class="tool-box clearfix">
-          <div class="icon-box">
-            <span class="qrcode" @mouseenter="qrcodeShow" @mouseleave="qrcodeHide">
-            <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
-            <div class="qrcode-warp" v-show="isQrShow">
-              <div class="qrcodeCanvas"></div>
-              <span>Please scan the QR code</span>
-            </div>
-          </span>
-          </div>
+  <div class="cover-page-wrap">
+    <div class="table-nav clearfix">
+      <h3><i class="color-line color"></i>Cover Page</h3>
+      <div class="tool-box clearfix">
+        <div class="icon-box">
+          <span class="qrcode" @mouseenter="qrcodeShow" @mouseleave="qrcodeHide">
+              <svg-icon sign="icon-erweima" class="erweima-icon"></svg-icon>
+              <div class="qrcode-warp" v-show="isQrShow">
+                <div class="qrcodeCanvas"></div>
+                <span>Please scan the QR code</span>
         </div>
-      </div>
-      <div class="content">
-        <div class="wrap">
-          <p class="one">Philips One China Digital Dashboard</p>
-          <p class="two"><span>{{time}}</span> Performance Review</p>
-          <p class="three"><span @click="incrementType">Start here <svg-icon sign="icon-right" class="arrow-right"></svg-icon></span></p>
-          <p class="four">BC&D China</p>
-        </div>
+        </span>
       </div>
     </div>
+  </div>
+  <div class="content">
+    <div class="wrap">
+      <p class="one">Philips One China Digital Dashboard</p>
+      <p class="two"><span>{{time}}</span> Performance Review</p>
+      <p class="three"><span @click="incrementType">Start here <svg-icon sign="icon-right" class="arrow-right"></svg-icon></span></p>
+      <p class="four">BC&D China</p>
+    </div>
+  </div>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
   export default {
     name: "cover-page",
-    data(){
+    data() {
       return {
-        time:'',
+        time: '',
         isQrShow: false,
       }
     },
@@ -47,30 +47,39 @@
     },
     methods: {
       incrementType() {
-        this.$router.push({name:'overview'})
+        this.$router.push({
+          name: 'overview'
+        })
         this.$store.commit('increment')
       },
-      getTime(){
+      getTime() {
         let val = this.getYearMonth
         this.time = val.slice(0, 4) + '/' + val.slice(4, 6)
       },
       qrcodeShow() {
-        let nowTime
+        let nowTime, baseUrl;
         let nowDateYear = new Date().getFullYear()
-        let nowDateMonth = new Date().getMonth()+1
+        let nowDateMonth = new Date().getMonth() + 1
         if (nowDateMonth < 10) {
-
+  
           nowTime = nowDateYear + '0' + nowDateMonth
-
+  
         } else {
-
+  
           nowTime = nowDateYear.toString() + nowDateMonth.toString()
-
+  
         }
-        let baseUrl = `${window.location}`;
-        console.log(baseUrl)
+        if(QRCODE_URL){
+          baseUrl = `http://www.philipsreport.cn`;
+        }else{
+          baseUrl = `${window.location}`;
+        }
         $('.qrcodeCanvas').html('')
-        $('.qrcodeCanvas').qrcode({width: 150,height: 150,text: baseUrl});
+        $('.qrcodeCanvas').qrcode({
+          width: 150,
+          height: 150,
+          text: baseUrl
+        });
         this.isQrShow = true
       },
       qrcodeHide() {
@@ -78,7 +87,7 @@
       },
     },
     watch: {
-      getYearMonth(){
+      getYearMonth() {
         this.getTime()
       }
     }
