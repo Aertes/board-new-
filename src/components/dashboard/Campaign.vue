@@ -139,7 +139,7 @@
                 <div>{{item.costLead | round }}</div>
               </td>
               <td>
-                <div>{{item.costLeadTarget | formatThousands }}</div>
+                <div>{{item.baseLine | formatThousands }}</div>
               </td>
               <td v-if="item.p==1">
                 <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
@@ -157,7 +157,7 @@
                 <div>{{item.conversionRate | percentile }}</div>
               </td>
               <td>
-                <div>{{item.conversionRateTarget  | percentile }}</div>
+                <div>{{item.baseLineConversion  | percentile }}</div>
               </td>
               <td v-if="item.s==1">
                 <div style="width: 15px;height: 15px;border-radius: 50%;background-color: #CECECE"></div>
